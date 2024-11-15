@@ -19,6 +19,12 @@
     <Canvas x:Name="MyCanvas">
       <TextBox Text="TextInCanvas" x:Name="MyText"/>
       <TextBox Text="TextInCanvas" x:Name="MyText2" Canvas.Top="50" Canvas.Left="50"/>
+      <Grid x:Name="MyGrid1" Canvas.Top="30" Canvas.Left="100" Background="WhiteSmoke">
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="20" BorderThickness="1" BorderBrush="Cyan"
+                Margin="10,10,0,0"/>
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="20" BorderThickness="1" BorderBrush="Magenta"
+                Margin="100,20,0,0"/>
+      </Grid>
     </Canvas>
 
     <StackPanel Grid.Column="1" x:Name="MyStackPanel1">
