@@ -5,8 +5,44 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241113"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="250" Width="600">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="200"/>
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition/>
+      <RowDefinition/>
+    </Grid.RowDefinitions>
 
-    </Grid>
+    <Canvas x:Name="MyCanvas">
+      <TextBox Text="TextInCanvas" x:Name="MyText"/>
+      <TextBox Text="TextInCanvas" x:Name="MyText2" Canvas.Top="50" Canvas.Left="50"/>
+    </Canvas>
+
+    <StackPanel Grid.Column="1" x:Name="MyStackPanel1">
+      <TextBlock Text="{Binding ElementName=MyCanvas, Path=Width, StringFormat=CanvasWidth \= {0:f}}"/>
+      <TextBlock Text="{Binding ElementName=MyCanvas, Path=ActualWidth, StringFormat=CanvasActualWidth \= {0:f}}"/>
+      <TextBlock Text="{Binding ElementName=MyText, Path=Width, StringFormat=Width \= {0}}"/>
+      <TextBlock Text="{Binding ElementName=MyText, Path=ActualWidth, StringFormat=ActualWidth \= {0:f}}"/>
+      <Button x:Name="MyButtonTest1" Content="test1"/>
+      <local:CustomButton x:Name="MyCustomButton" Content="Custom" ConditionalClick="Handler_ConditionalClick"/>
+    </StackPanel>
+
+    <local:TCanvas x:Name="MyCanvas2" Grid.Row="1" Background="Orange">
+          <TextBox Text="TextInCanvas" x:Name="MyText21" Canvas.Top="0" Canvas.Left="0"/>
+          <TextBox Text="TextIn      Canvas" x:Name="MyText22" Canvas.Top="50" Canvas.Left="50"/>
+    </local:TCanvas>
+
+    <StackPanel Grid.Column="1" Grid.Row="1">      
+      <TextBlock Text="{Binding ElementName=MyCanvas2, Path=ActualWidth, StringFormat=CanvasActualWidth \= {0:f}}"/>      
+      <TextBlock Text="{Binding ElementName=MyText21, Path=ActualWidth, StringFormat=Text21ActualWidth \= {0:f}}"/>
+      <TextBlock Text="{Binding ElementName=MyText22, Path=ActualWidth, StringFormat=Text22ActualWidth \= {0:f}}"/>
+      <Button Content="test1" Click="Button_Click"/>
+    </StackPanel>
+
+
+
+  </Grid>
 </Window>
