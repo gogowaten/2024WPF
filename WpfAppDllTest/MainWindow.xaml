@@ -10,8 +10,12 @@
   <Grid>
     <Canvas>
       <WpfLibrary1:FThumb x:Name="MyThumb1" Width="100" Height="100">
-
+        
       </WpfLibrary1:FThumb>
+      
+      <WpfLibrary1:ContentThumb Canvas.Top="20" Canvas.Left="20">
+        <TextBlock Text="bbbbbb"/>
+      </WpfLibrary1:ContentThumb>
     </Canvas>
   </Grid>
 </Window>

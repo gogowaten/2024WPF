@@ -8,4 +8,10 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Reference Include="WpfLibrary1">
+      <HintPath>..\WpfLibrary1\bin\Release\net8.0-windows\WpfLibrary1.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

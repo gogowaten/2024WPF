@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241113"
+        xmlns:tt="clr-namespace:WpfLibrary1;assembly=WpfLibrary1"
         mc:Ignorable="d"
         Title="MainWindow" Height="250" Width="600">
   <Grid>
@@ -23,8 +24,11 @@
         <Border HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="20" BorderThickness="1" BorderBrush="Cyan"
                 Margin="10,10,0,0"/>
         <Border HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="20" BorderThickness="1" BorderBrush="Magenta"
-                Margin="100,20,0,0"/>
+                Margin="100,20,0,0"/>        
       </Grid>
+      <tt:FThumb x:Name="MyFThumb" Canvas.Top="20" Canvas.Left="30">
+        
+      </tt:FThumb>
     </Canvas>
 
     <StackPanel Grid.Column="1" x:Name="MyStackPanel1">
@@ -37,12 +41,12 @@
     </StackPanel>
 
     <local:TCanvas x:Name="MyCanvas2" Grid.Row="1" Background="Orange">
-          <TextBox Text="TextInCanvas" x:Name="MyText21" Canvas.Top="0" Canvas.Left="0"/>
-          <TextBox Text="TextIn      Canvas" x:Name="MyText22" Canvas.Top="50" Canvas.Left="50"/>
+      <TextBox Text="TextInCanvas" x:Name="MyText21" Canvas.Top="0" Canvas.Left="0"/>
+      <TextBox Text="TextIn      Canvas" x:Name="MyText22" Canvas.Top="50" Canvas.Left="50"/>
     </local:TCanvas>
 
-    <StackPanel Grid.Column="1" Grid.Row="1">      
-      <TextBlock Text="{Binding ElementName=MyCanvas2, Path=ActualWidth, StringFormat=CanvasActualWidth \= {0:f}}"/>      
+    <StackPanel Grid.Column="1" Grid.Row="1">
+      <TextBlock Text="{Binding ElementName=MyCanvas2, Path=ActualWidth, StringFormat=CanvasActualWidth \= {0:f}}"/>
       <TextBlock Text="{Binding ElementName=MyText21, Path=ActualWidth, StringFormat=Text21ActualWidth \= {0:f}}"/>
       <TextBlock Text="{Binding ElementName=MyText22, Path=ActualWidth, StringFormat=Text22ActualWidth \= {0:f}}"/>
       <Button Content="test1" Click="Button_Click"/>

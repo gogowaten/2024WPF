@@ -9,6 +9,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfLibrary1;
+using System.Windows.Controls.Primitives;
 
 namespace _20241113
 {
@@ -38,7 +40,15 @@ namespace _20241113
             MyStackPanel1.AddHandler(MouseDownEvent, new RoutedEventHandler(MyButtonTest1_Click));
             //MyStackPanel1.MouseDown += MyStackPanel1_MouseDown;
 
+            MyFThumb.MyTemplateCanvas.Children.Add(new TextBlock() { Text = "flatThumb" });
+            MyFThumb.DragDelta += MyFThumb_DragDelta;
+        }
 
+        private void MyFThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            FThumb thumb = (FThumb)sender;
+            Canvas.SetLeft(thumb, Canvas.GetLeft(thumb) + e.HorizontalChange);
+            Canvas.SetTop(thumb, Canvas.GetTop(thumb) + e.VerticalChange);
         }
 
         private void MyStackPanel1_MouseDown(object sender, MouseButtonEventArgs e)
