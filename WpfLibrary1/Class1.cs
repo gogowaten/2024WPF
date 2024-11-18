@@ -36,22 +36,13 @@ namespace WpfLibrary1
         }
     }
 
+    /// <summary>
+    /// ContentControlÇÉxÅ[ÉXÇ…ÇµÇΩThumb
+    /// XAMLÇ≈Ç‡íºê⁄TextBlockÇ»Ç«Çí«â¡Ç≈Ç´ÇÈ
+    /// </summary>
     [ContentProperty(nameof(MyObj))]
     public class ContentThumb : Thumb
     {
-
-        //public ContentControl MyContent
-        //{
-        //    get { return (ContentControl)GetValue(MyContentProperty); }
-        //    set { SetValue(MyContentProperty, value); }
-        //}
-        //public static readonly DependencyProperty MyContentProperty =
-        //    DependencyProperty.Register(nameof(MyContent), typeof(ContentControl), typeof(ContentThumb),
-        //        new FrameworkPropertyMetadata(null,
-        //            FrameworkPropertyMetadataOptions.AffectsRender |
-        //            FrameworkPropertyMetadataOptions.AffectsMeasure |
-        //            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
         public ContentControl MyContent {  get; set; }
 
         public object MyObj
@@ -66,7 +57,6 @@ namespace WpfLibrary1
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        //        public ContentControl MyContentControl { get;  set; }
         public ContentThumb()
         {
             this.MyContent = MakeTemplate<ContentControl>();

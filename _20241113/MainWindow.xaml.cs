@@ -30,14 +30,13 @@ namespace _20241113
             //匿名
             //MyButtonTest1.Click += (sender, e) => { MessageBox.Show("ok"); };
 
+        //以下の3行は同じ効果
+        //MyButtonTest1.Click += new RoutedEventHandler(MyButtonTest1_Click);
+        //MyButtonTest1.Click += MyButtonTest1_Click;//普通はこれを使う
+        //MyButtonTest1.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(MyButtonTest1_Click));
 
-            //以下の3行は同じ効果
-            //MyButtonTest1.Click += new RoutedEventHandler(MyButtonTest1_Click);
-            //MyButtonTest1.Click += MyButtonTest1_Click;//普通はこれを使う
-            //MyButtonTest1.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(MyButtonTest1_Click));
-
-            //MyStackPanel1.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(MyButtonTest1_Click));
-            MyStackPanel1.AddHandler(MouseDownEvent, new RoutedEventHandler(MyButtonTest1_Click));
+        //MyStackPanel1.AddHandler(System.Windows.Controls.Primitives.ButtonBase.ClickEvent, new RoutedEventHandler(MyButtonTest1_Click));
+        MyStackPanel1.AddHandler(MouseDownEvent, new RoutedEventHandler(MyButtonTest1_Click));
             //MyStackPanel1.MouseDown += MyStackPanel1_MouseDown;
 
             MyFThumb.MyTemplateCanvas.Children.Add(new TextBlock() { Text = "flatThumb" });
