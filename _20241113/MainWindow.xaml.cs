@@ -51,6 +51,13 @@ namespace _20241113
             Canvas.SetTop(thumb, Canvas.GetTop(thumb) + e.VerticalChange);
         }
 
+        private void MyCustomThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            Thumb t = (Thumb)sender;
+            Canvas.SetLeft(t, Canvas.GetLeft(t) + e.HorizontalChange);
+            Canvas.SetTop(t, Canvas.GetTop(t) + e.VerticalChange);
+        }
+
         private void MyStackPanel1_MouseDown(object sender, MouseButtonEventArgs e)
         {
             MessageBox.Show("stackpanel");

@@ -24,11 +24,14 @@
         <Border HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="20" BorderThickness="1" BorderBrush="Cyan"
                 Margin="10,10,0,0"/>
         <Border HorizontalAlignment="Left" VerticalAlignment="Top" Width="20" Height="20" BorderThickness="1" BorderBrush="Magenta"
-                Margin="100,20,0,0"/>        
+                Margin="100,20,0,0"/>
       </Grid>
       <tt:FThumb x:Name="MyFThumb" Canvas.Top="20" Canvas.Left="30">
-        
+
       </tt:FThumb>
+      <tt:ContentThumb x:Name="MyContentThumb" Canvas.Left="10" Canvas.Top="20" DragDelta="MyCustomThumb_DragDelta">
+        <TextBlock Text="ContentThumb" Background="MediumAquamarine"/>
+      </tt:ContentThumb>
     </Canvas>
 
     <StackPanel Grid.Column="1" x:Name="MyStackPanel1">
