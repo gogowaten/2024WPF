@@ -11,6 +11,65 @@ namespace _20241113
 {
     public enum TType { None = 0, TextBlock, Rectangle, }
 
+    public class DBase : DependencyObject, INotifyPropertyChanged, IExtensibleDataObject
+    {
+        #region インターフェースとの関連
+        //IExtensibleDataObjectとの関連、Dataの互換性維持のため？
+        public ExtensionDataObject? ExtensionData { get; set; }
+
+        //INotifyPropertyChangedとの関連、依存関係プロパティ
+        public event PropertyChangedEventHandler? PropertyChanged;
+        protected void SetProperty<T>(ref T oldValue, ref T newValue,
+            [System.Runtime.CompilerServices.CallerMemberName] string? name = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(oldValue, newValue)) return;
+            oldValue = newValue;
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
+        #endregion インターフェースとの関連
+
+        public double X
+        {
+            get { return (double)GetValue(XProperty); }
+            set { SetValue(XProperty, value); }
+        }
+        public static readonly DependencyProperty XProperty =
+            DependencyProperty.Register(nameof(X), typeof(double), typeof(DBase),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
+        public double Y
+        {
+            get { return (double)GetValue(YProperty); }
+            set { SetValue(YProperty, value); }
+        }
+        public static readonly DependencyProperty YProperty =
+            DependencyProperty.Register(nameof(Y), typeof(double), typeof(DBase),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(DBase),
+                new FrameworkPropertyMetadata("",
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public DBase() { }
+    }
+
 
     public class DataThumb : DependencyObject, IExtensibleDataObject, INotifyPropertyChanged
     {

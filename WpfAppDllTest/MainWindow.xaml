@@ -8,14 +8,21 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600">
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="200"/>
+    </Grid.ColumnDefinitions>
     <Canvas>
-      <WpfLibrary1:FThumb x:Name="MyThumb1" Width="100" Height="100">
-        
-      </WpfLibrary1:FThumb>
-      
+      <WpfLibrary1:FThumb x:Name="MyThumb1" Width="100" Height="100"/>
       <WpfLibrary1:ContentThumb Canvas.Top="20" Canvas.Left="20">
         <TextBlock Text="bbbbbb"/>
       </WpfLibrary1:ContentThumb>
+      <WpfLibrary1:TTextBlock Canvas.Top="40" Canvas.Left="20" MyText="TTextBlock"/>
+      <WpfLibrary1:TTextBlock2 x:Name="MyThumb" MyText="TTextBlock2" Canvas.Top="60"/>
     </Canvas>
+
+    <StackPanel Grid.Column="1">
+      <TextBlock Text="{Binding ElementName=MyThumb, Path=ActualWidth, StringFormat=0.0}"/>
+    </StackPanel>
   </Grid>
 </Window>

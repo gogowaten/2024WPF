@@ -43,7 +43,6 @@ namespace WpfLibrary1
     [ContentProperty(nameof(MyObj))]
     public class ContentThumb : Thumb
     {
-        public ContentControl MyContent {  get; set; }
 
         public object MyObj
         {
@@ -57,17 +56,78 @@ namespace WpfLibrary1
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        public ContentControl MyContentControl { get; set; }
         public ContentThumb()
         {
-            this.MyContent = MakeTemplate<ContentControl>();
-            
-            MyContent.SetBinding(ContentControl.ContentProperty, new Binding()
+            this.MyContentControl = MakeTemplate<ContentControl>();
+
+            MyContentControl.SetBinding(ContentControl.ContentProperty, new Binding()
             {
                 Source = this,
                 Path = new PropertyPath(MyObjProperty)
             });
+        }
 
-            //MyObj = new TextBlock() { Text = "object" };
+        private T MakeTemplate<T>()
+        {
+            FrameworkElementFactory factory = new(typeof(T), "nemo");
+            this.Template = new ControlTemplate() { VisualTree = factory };
+            ApplyTemplate();
+            return (T)this.Template.FindName("nemo", this);
+        }
+    }
+
+    public class TTextBlock : ContentThumb
+    {
+
+        public string MyText
+        {
+            get { return (string)GetValue(MyTextProperty); }
+            set { SetValue(MyTextProperty, value); }
+        }
+        public static readonly DependencyProperty MyTextProperty =
+            DependencyProperty.Register(nameof(MyText), typeof(string), typeof(TTextBlock),
+                new FrameworkPropertyMetadata("",
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public TTextBlock()
+        {
+            TextBlock tb = new();
+            tb.SetBinding(TextBlock.TextProperty, new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath(MyTextProperty)
+            });
+            MyObj = tb;
+        }
+
+    }
+
+    public class TTextBlock2 : Thumb
+    {
+        public string MyText
+        {
+            get { return (string)GetValue(MyTextProperty); }
+            set { SetValue(MyTextProperty, value); }
+        }
+        public static readonly DependencyProperty MyTextProperty =
+            DependencyProperty.Register(nameof(MyText), typeof(string), typeof(TTextBlock2),
+                new FrameworkPropertyMetadata("",
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public TTextBlock2()
+        {
+
+            TextBlock t = MakeTemplate<TextBlock>();
+            t.SetBinding(TextBlock.TextProperty, new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath(MyTextProperty)
+            });
         }
 
         private T MakeTemplate<T>()
@@ -80,4 +140,32 @@ namespace WpfLibrary1
     }
 
 
+    public class TRectAngle : ContentThumb
+    {
+
+        public double MyWidth
+        {
+            get { return (double)GetValue(MyWidthProperty); }
+            set { SetValue(MyWidthProperty, value); }
+        }
+        public static readonly DependencyProperty MyWidthProperty =
+            DependencyProperty.Register(nameof(MyWidth), typeof(double), typeof(TRectAngle),
+                new FrameworkPropertyMetadata(0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public double MyHeight
+        {
+            get { return (double)GetValue(MyHeightProperty); }
+            set { SetValue(MyHeightProperty, value); }
+        }
+        public static readonly DependencyProperty MyHeightProperty =
+            DependencyProperty.Register(nameof(MyHeight), typeof(double), typeof(TRectAngle),
+                new FrameworkPropertyMetadata(0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    }
 }
