@@ -6,6 +6,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Markup;
 using System.Windows.Media;
+using System.Windows.Shapes;
 
 namespace WpfLibrary1
 {
@@ -168,4 +169,118 @@ namespace WpfLibrary1
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
     }
+
+
+    //.net - ContentControl Ç∆ ContentPresenter ÇÃà·Ç¢ÇÕâΩÇ≈Ç∑Ç©? - Stack Overflow
+    //    https://stackoverflow.com/questions/1287995/whats-the-difference-between-contentcontrol-and-contentpresenter
+
+    /// <summary>
+    /// ContentPresenterÇégÇ¡ÇΩThumbÅAContentControlÇÊÇËÇ±ÇøÇÁÇÃÇŸÇ§Ç™åyó 
+    /// </summary>
+    [ContentProperty(nameof(MyObj))]
+    public class ContentPThumb : Thumb
+    {
+
+        public object MyObj
+        {
+            get { return (object)GetValue(MyObjProperty); }
+            set { SetValue(MyObjProperty, value); }
+        }
+        public static readonly DependencyProperty MyObjProperty =
+            DependencyProperty.Register(nameof(MyObj), typeof(object), typeof(ContentPThumb),
+                new FrameworkPropertyMetadata(null,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public ContentPresenter MyContentPresenter { get; set; }
+        public ContentPThumb()
+        {
+            this.MyContentPresenter = MakeTemplate<ContentPresenter>();
+
+            MyContentPresenter.SetBinding(ContentPresenter.ContentProperty, new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath(MyObjProperty)
+            });
+        }
+
+        private T MakeTemplate<T>()
+        {
+            FrameworkElementFactory factory = new(typeof(T), "nemo");
+            this.Template = new ControlTemplate() { VisualTree = factory };
+            ApplyTemplate();
+            return (T)this.Template.FindName("nemo", this);
+        }
+    }
+
+    [ContentProperty(nameof(MyObj))]
+    public class ContentPThumb2 : ContentPThumb
+    {
+        public ContentPThumb2()
+        {
+            Trigger trigger = new();
+            trigger.Property = Button.IsMouseOverProperty;
+            trigger.Value = true;
+            Setter setter = new();
+            setter.Property = Shape.FillProperty;
+            setter.Value = Brushes.Magenta;
+            setter.TargetName = "nemo";
+            this.Template.Triggers.Add(trigger);
+        }
+
+
+    }
+
+    [ContentProperty(nameof(MyObj))]
+    public class ContentPThumb3 : Thumb
+    {
+
+        public object MyObj
+        {
+            get { return (object)GetValue(MyObjProperty); }
+            set { SetValue(MyObjProperty, value); }
+        }
+        public static readonly DependencyProperty MyObjProperty =
+            DependencyProperty.Register(nameof(MyObj), typeof(object), typeof(ContentPThumb3),
+                new FrameworkPropertyMetadata(null,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public ContentPresenter MyContentPresenter { get; set; }
+        public ContentPThumb3()
+        {
+            this.MyContentPresenter = MakeTemplate<ContentPresenter>();
+
+            MyContentPresenter.SetBinding(ContentPresenter.ContentProperty, new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath(MyObjProperty)
+            });
+
+        }
+
+
+
+        private T MakeTemplate<T>()
+        {
+            Trigger trigger = new() { Property = Thumb.IsMouseOverProperty, Value = true };
+            Setter setter = new() { Property = Thumb.BackgroundProperty, Value = Brushes.Magenta, TargetName = "nemo" };
+            trigger.Setters.Add(setter);
+            Style styleCopy = new(typeof(ContentPThumb3), this.Style);
+            styleCopy.Triggers.Add(trigger);
+
+            FrameworkElementFactory factory = new(typeof(T), "nemo");
+            ControlTemplate ct = new();
+            ct.VisualTree = factory;
+            ct.Triggers.Add(trigger);
+            this.Template = ct;
+            ApplyTemplate();
+            
+            return (T)this.Template.FindName("nemo", this);
+        }
+    }
+
+
 }

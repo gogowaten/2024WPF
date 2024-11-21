@@ -15,14 +15,21 @@
     <Canvas>
       <WpfLibrary1:FThumb x:Name="MyThumb1" Width="100" Height="100"/>
       <WpfLibrary1:ContentThumb Canvas.Top="20" Canvas.Left="20">
-        <TextBlock Text="bbbbbb"/>
+        <TextBlock Text="ContentControl"/>
       </WpfLibrary1:ContentThumb>
       <WpfLibrary1:TTextBlock Canvas.Top="40" Canvas.Left="20" MyText="TTextBlock"/>
       <WpfLibrary1:TTextBlock2 x:Name="MyThumb" MyText="TTextBlock2" Canvas.Top="60"/>
+      <WpfLibrary1:ContentPThumb Canvas.Top="80" Canvas.Left="20">
+        <TextBlock Text="ContentPresenterこっちのほうがいい軽量"/>
+      </WpfLibrary1:ContentPThumb>
+      <WpfLibrary1:ContentPThumb3 Canvas.Top="100" Canvas.Left="20">
+        <TextBlock Text="ppp"/>
+      </WpfLibrary1:ContentPThumb3>
     </Canvas>
 
-    <StackPanel Grid.Column="1">
+    <StackPanel Grid.Column="1" x:Name="MyStackPanel">
       <TextBlock Text="{Binding ElementName=MyThumb, Path=ActualWidth, StringFormat=0.0}"/>
+      <Button Content="button"/>
     </StackPanel>
   </Grid>
 </Window>
