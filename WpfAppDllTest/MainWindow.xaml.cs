@@ -111,11 +111,9 @@ namespace WpfAppDllTest
             factory.AppendChild(contentPresenterF);
             ControlTemplate ct = new() { TargetType = typeof(Button), VisualTree = factory };
             Button button = new() { Template = ct, Content = "button3" };
-            MyStackPanel.Children.Add(button);
             //↓ここ
             //button.Background = Brushes.Orange;
             //button.Foreground = Brushes.MediumAquamarine;
-
             //Trigger
 
             Setter setter = new() { Property = Shape.FillProperty, Value = Brushes.Magenta, TargetName = "ell" };
@@ -125,11 +123,9 @@ namespace WpfAppDllTest
             //Style styleCopy = new(typeof(Ellipse), button.Style);//どちらも変化なし
             Style styleCopy = new(typeof(Button), button.Style);//どちらも変化なし
 
-
             styleCopy.Triggers.Add(trigger);
+            MyStackPanel.Children.Add(button);
         }
-
-
 
 
     }
