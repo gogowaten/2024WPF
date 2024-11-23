@@ -19,10 +19,6 @@
 </ResourceDictionary>-->
 
 
-<!--
-  カスタムコントロール(CustomControl)を作る - tera1707’s blog
-https://tera1707.com/entry/2023/06/16/135543
--->
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

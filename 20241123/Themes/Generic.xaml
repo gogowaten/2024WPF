@@ -1,0 +1,60 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:_20241123">
+
+
+  <Style TargetType="{x:Type local:CustomControl1}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:CustomControl1}">
+
+          <!--<ItemsControl x:Name="PART_ItemsControl" ItemsSource="{Binding}" DataContext="{x:Type local:CustomControl1}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <Canvas/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            --><!--<ItemsControl.ItemContainerStyleSelector/>
+            <ItemsControl.ItemTemplateSelector/>--><!--
+
+
+            <ItemsControl.ItemContainerStyle>
+              <Style TargetType="ContentPresenter">
+                <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+              </Style>
+            </ItemsControl.ItemContainerStyle>
+          </ItemsControl>-->
+
+          <Thumb x:Name="PART_Thumb">
+            <Thumb.Resources>
+              <DataTemplate DataType="{x:Type local:TextBlockItem}">
+                <TextBlock Text="{Binding Text}" Background="Red"/>
+              </DataTemplate>
+            </Thumb.Resources>
+            <Thumb.Template>
+              <ControlTemplate>
+                <ItemsControl ItemsSource="{Binding}">
+                  <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                      <Canvas/>
+                    </ItemsPanelTemplate>
+                  </ItemsControl.ItemsPanel>
+                  <ItemsControl.ItemContainerStyle>
+                    <Style>
+                      <Setter Property="Canvas.Left" Value="{Binding X}"/>
+                      <Setter Property="Canvas.Top" Value="{Binding Y}"/>
+                    </Style>
+                  </ItemsControl.ItemContainerStyle>
+                </ItemsControl>
+              </ControlTemplate>
+            </Thumb.Template>
+          </Thumb>
+          
+          
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+</ResourceDictionary>
