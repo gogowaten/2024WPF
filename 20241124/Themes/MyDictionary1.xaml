@@ -1,0 +1,29 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+  <ControlTemplate TargetType="Thumb" x:Key="tb">
+    <TextBlock Text="CustomControlResourceDictionaryTextBlockThumb"/>
+  </ControlTemplate>
+
+  <ControlTemplate TargetType="Thumb" x:Key="tb2">
+    <TextBlock Text="{Binding Text}"/>
+  </ControlTemplate>
+
+
+  <ControlTemplate TargetType="Thumb" x:Key="rect">
+    <Rectangle Fill="Orange"/>
+  </ControlTemplate>
+
+  <ControlTemplate TargetType="Thumb" x:Key="elli">
+    <Ellipse Fill="MediumBlue"/>
+  </ControlTemplate>
+
+  <ControlTemplate TargetType="Thumb" x:Key="elli2">
+    <Border Background="{TemplateBinding Background}">
+      <Ellipse Fill="{Binding Fill}"/>
+    </Border>
+  </ControlTemplate>
+
+
+</ResourceDictionary>
