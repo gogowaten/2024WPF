@@ -25,9 +25,9 @@ namespace _20241124
 
         private void AddEllipseThumb()
         {
-            //MyCanvas.Children.Add(new CustomControl2() { Width = 50, Height = 50, Fill = Brushes.Red, Background = Brushes.MediumPurple });
+            MyCanvas.Children.Add(new CustomControl2() { Width = 50, Height = 50, Fill = Brushes.Red, Background = Brushes.MediumPurple });
             //var aa = new CustomControl2();
-            
+
 
         }
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)

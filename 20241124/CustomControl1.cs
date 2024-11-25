@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -10,6 +11,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -61,47 +63,167 @@ namespace _20241124
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public CustomControl1()
+        static CustomControl1()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomControl1), new FrameworkPropertyMetadata(typeof(CustomControl1)));
-
-            DataContext = this;
         }
 
-        //public override void OnApplyTemplate()
-        //{
-        //    base.OnApplyTemplate();
-        //    Thumb tt = this.GetTemplateChild("PART_Thumb") as Thumb;
-        //}
+        public CustomControl1() { DataContext = this; }
     }
 
-    //public class CustomControl2 : Thumb
-    //{
+    public class CustomControl2 : Thumb
+    {
 
-    //    public Brush Fill
-    //    {
-    //        get { return (Brush)GetValue(FillProperty); }
-    //        set { SetValue(FillProperty, value); }
-    //    }
-    //    public static readonly DependencyProperty FillProperty =
-    //        DependencyProperty.Register(nameof(Fill), typeof(Brush), typeof(CustomControl2),
-    //            new FrameworkPropertyMetadata(Brushes.Beige,
-    //                FrameworkPropertyMetadataOptions.AffectsRender |
-    //                FrameworkPropertyMetadataOptions.AffectsMeasure |
-    //                FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public Brush Fill
+        {
+            get { return (Brush)GetValue(FillProperty); }
+            set { SetValue(FillProperty, value); }
+        }
+        public static readonly DependencyProperty FillProperty =
+            DependencyProperty.Register(nameof(Fill), typeof(Brush), typeof(CustomControl2),
+                new FrameworkPropertyMetadata(Brushes.Beige,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-    //    public CustomControl2()
-    //    {
-    //        DefaultStyleKeyProperty.OverrideMetadata(
-    //            typeof(CustomControl2), new FrameworkPropertyMetadata(typeof(CustomControl2)));
+        static CustomControl2()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(CustomControl2), new FrameworkPropertyMetadata(typeof(CustomControl2)));
 
-    //        DataContext = this;
+        }
 
-    //    }
-    //}
+        public CustomControl2() { DataContext = this; }
+    }
+
+    public class CustomControl3 : Thumb
+    {
+        public string Text
+        {
+            get { return (string)GetValue(TextProperty); }
+            set { SetValue(TextProperty, value); }
+        }
+        public static readonly DependencyProperty TextProperty =
+            DependencyProperty.Register(nameof(Text), typeof(string), typeof(CustomControl3),
+                new FrameworkPropertyMetadata(string.Empty,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        static CustomControl3()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(CustomControl3), new FrameworkPropertyMetadata(typeof(CustomControl3)));
+        }
+        public CustomControl3() { DataContext = this; }
+    }
 
 
+    [ContentProperty(nameof(MyItems))]
+    public class CustomControl4 : Thumb
+    {
+
+        public ObservableCollection<UIElement> MyItems
+        {
+            get { return (ObservableCollection<UIElement>)GetValue(MyItemsProperty); }
+            set { SetValue(MyItemsProperty, value); }
+        }
+        public static readonly DependencyProperty MyItemsProperty =
+            DependencyProperty.Register(nameof(MyItems), typeof(ObservableCollection<UIElement>), typeof(CustomControl4),
+                new FrameworkPropertyMetadata(null,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public double MyX
+        {
+            get { return (double)GetValue(MyXProperty); }
+            set { SetValue(MyXProperty, value); }
+        }
+        public static readonly DependencyProperty MyXProperty =
+            DependencyProperty.Register(nameof(MyX), typeof(double), typeof(CustomControl4),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public double MyY
+        {
+            get { return (double)GetValue(MyYProperty); }
+            set { SetValue(MyYProperty, value); }
+        }
+        public static readonly DependencyProperty MyYProperty =
+            DependencyProperty.Register(nameof(MyY), typeof(double), typeof(CustomControl4),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
 
+        static CustomControl4()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(CustomControl4), new FrameworkPropertyMetadata(typeof(CustomControl4)));
+        }
+        public CustomControl4()
+        {
+
+            DataContext = this;
+            MyItems = [];
+
+        }
+
+
+    }
+
+    public class CustomControl5 : Thumb
+    {
+        public double MyX2
+        {
+            get { return (double)GetValue(MyX2Property); }
+            set { SetValue(MyX2Property, value); }
+        }
+        public static readonly DependencyProperty MyX2Property =
+            DependencyProperty.Register(nameof(MyX2), typeof(double), typeof(CustomControl5),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public double MyY2
+        {
+            get { return (double)GetValue(MyY2Property); }
+            set { SetValue(MyY2Property, value); }
+        }
+        public static readonly DependencyProperty MyY2Property =
+            DependencyProperty.Register(nameof(MyY2), typeof(double), typeof(CustomControl5),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
+        public string MyText
+        {
+            get { return (string)GetValue(MyTextProperty); }
+            set { SetValue(MyTextProperty, value); }
+        }
+        public static readonly DependencyProperty MyTextProperty =
+            DependencyProperty.Register(nameof(MyText), typeof(string), typeof(CustomControl5),
+                new FrameworkPropertyMetadata(string.Empty,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        static CustomControl5()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(CustomControl5), new FrameworkPropertyMetadata(typeof(CustomControl5)));
+        }
+
+        public CustomControl5()
+        {
+            DataContext = this;
+        }
+    }
 
 }

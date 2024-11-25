@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241124"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="600">
   <Window.Resources>
 
     <ResourceDictionary>
@@ -29,10 +29,20 @@
       <local:CustomControl1 DragDelta="Thumb_DragDelta" Canvas.Top="50" Canvas.Left="20"
                             Text="aaaaaaaaaaa"/>
       
-      <!--<local:CustomControl2 DragDelta="Thumb_DragDelta" Canvas.Top="150" Canvas.Left="20" Width="100" Height="100"
-                            Fill="MediumSlateBlue" Background="Aqua"/>-->
+      <local:CustomControl2 DragDelta="Thumb_DragDelta" Canvas.Top="150" Canvas.Left="20" Width="100" Height="100"
+                            Fill="MediumSlateBlue" Background="Aqua"/>
 
-      
+      <local:CustomControl3 DragDelta="Thumb_DragDelta" Canvas.Top="20" Canvas.Left="200"
+                            Text="custom3"/>
+
+      <local:CustomControl4 DragDelta="Thumb_DragDelta" MyX="250" MyY="50" Width="100" Height="100">
+        <TextBlock Text="custom4"/>
+        <local:CustomControl5 MyText="custom5 in custom4" MyX2="20" MyY2="50"/>
+      </local:CustomControl4>
+
+      <local:CustomControl5 DragDelta="Thumb_DragDelta"
+                            MyText="Custom5" MyX2="150" MyY2="80"/>
+
     </Canvas>
 
   </Grid>
