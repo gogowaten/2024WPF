@@ -1,0 +1,21 @@
+﻿<Window x:Class="_20241126_CustomControlMultiple.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241126_CustomControlMultiple"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="250" Width="400">
+  <Grid>
+    <Canvas x:Name="MyCanvas">
+      <local:CustomControl1 Canvas.Left="20" Canvas.Top="20" DragDelta="CustomControl1_DragDelta"
+                            MyText="CustomTextBlockThumb" FontSize="20"/>
+      <local:EllipseThumb Canvas.Left="20" Canvas.Top="50" DragDelta="CustomControl1_DragDelta"
+                          Width="50" Height="50"/>
+      <local:EllipseThumb Canvas.Left="80" Canvas.Top="80" DragDelta="CustomControl1_DragDelta"
+                          Width="50" Height="50"
+                          MyFill="SandyBrown" Background="RosyBrown"/>
+
+    </Canvas>
+  </Grid>
+</Window>
