@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Media;
 
 namespace _20241126_CustomControlMultiple
@@ -71,7 +72,7 @@ namespace _20241126_CustomControlMultiple
         }
         public static readonly DependencyProperty MyFillProperty =
             DependencyProperty.Register(nameof(MyFill), typeof(Brush), typeof(EllipseThumb),
-                new FrameworkPropertyMetadata(Brushes.Salmon,
+                new FrameworkPropertyMetadata(Brushes.Transparent,
                     FrameworkPropertyMetadataOptions.AffectsRender |
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
@@ -79,5 +80,29 @@ namespace _20241126_CustomControlMultiple
         public EllipseThumb() { DataContext = this; }
 
     }
+
+
+    public class EllipseWithBGThumb : Thumb
+    {
+        static EllipseWithBGThumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(EllipseWithBGThumb), new FrameworkPropertyMetadata(typeof(EllipseWithBGThumb)));
+        }
+
+        public Brush MyFill
+        {
+            get { return (Brush)GetValue(MyFillProperty); }
+            set { SetValue(MyFillProperty, value); }
+        }
+        public static readonly DependencyProperty MyFillProperty =
+            DependencyProperty.Register(nameof(MyFill), typeof(Brush), typeof(EllipseWithBGThumb),
+                new FrameworkPropertyMetadata(Brushes.Transparent,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public EllipseWithBGThumb() { DataContext = this; }
+    }
+
 
 }

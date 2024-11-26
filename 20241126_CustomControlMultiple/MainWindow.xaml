@@ -10,12 +10,14 @@
     <Canvas x:Name="MyCanvas">
       <local:CustomControl1 Canvas.Left="20" Canvas.Top="20" DragDelta="CustomControl1_DragDelta"
                             MyText="CustomTextBlockThumb" FontSize="20"/>
-      <local:EllipseThumb Canvas.Left="20" Canvas.Top="50" DragDelta="CustomControl1_DragDelta"
-                          Width="50" Height="50"/>
-      <local:EllipseThumb Canvas.Left="80" Canvas.Top="80" DragDelta="CustomControl1_DragDelta"
-                          Width="50" Height="50"
-                          MyFill="SandyBrown" Background="RosyBrown"/>
 
+      <local:EllipseThumb Canvas.Left="20" Canvas.Top="50" DragDelta="CustomControl1_DragDelta"
+                          Width="50" Height="50"
+                          MyFill="Salmon"/>
+
+      <local:EllipseWithBGThumb Canvas.Left="80" Canvas.Top="80" DragDelta="CustomControl1_DragDelta"
+                          Width="50" Height="50"
+                          MyFill="Gold" Background="CornflowerBlue"/>
     </Canvas>
   </Grid>
 </Window>
