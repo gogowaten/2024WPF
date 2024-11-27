@@ -47,6 +47,12 @@
         <TextBlock local:AutoResizeCanvas.Left="0" local:AutoResizeCanvas.Top="0" Text="aaaaaaaaaaaaa"/>
         <TextBlock local:AutoResizeCanvas.Left="200" local:AutoResizeCanvas.Top="80" Text="rightbottom"/>
       </local:AutoResizeCanvas>
+      <local:AutoResizeCanvas2 Canvas.Left="20" Canvas.Top="150" Background="Beige">
+        <Rectangle local:AutoResizeCanvas2.Left="0" local:AutoResizeCanvas2.Top="0"
+                   Width="20" Height="20" Fill="RosyBrown"/>
+        <Rectangle local:AutoResizeCanvas2.Left="120" local:AutoResizeCanvas2.Top="50"
+                   Width="20" Height="20" Fill="DodgerBlue"/>
+      </local:AutoResizeCanvas2>
     </Canvas>
   </Grid>
 </Window>
