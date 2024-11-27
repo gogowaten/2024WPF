@@ -37,11 +37,41 @@
       </Setter.Value>
     </Setter>
   </Style>
+
+
+  <Style TargetType="{x:Type local:CustomBase}">
+    <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+    <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+  </Style>
   
   
-  
-  
-  
-  
-  
+  <Style TargetType="{x:Type local:CustomItemsThumb2}">    
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="local:CustomItemsThumb2">
+          <!--<ItemsPresenter/>-->
+          <ItemsControl ItemsSource="{Binding MyItems}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <Canvas/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+          </ItemsControl>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType="{x:Type local:CustomTextThumb2}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:CustomTextThumb2}">
+          <TextBlock Text="{Binding MyText}"/>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+
+
 </ResourceDictionary>

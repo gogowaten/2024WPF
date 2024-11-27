@@ -5,13 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241126"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600">
+        Title="MainWindow" Height="250" Width="600">
   <Grid>
     <Canvas x:Name="MyCanvas">
       <local:ItemsThumb MyX="10" MyY="10" DragDelta="ItemsThumb_DragDelta">
         <local:TextBlockThumb MyText="aaaaaaa" MyX="50" MyY="20"/>
         <local:ItemsThumb MyX="20">
           <local:TextBlockThumb MyX="10" MyY="50" MyText="bbbbb"/>
+          <local:CustomItemsThumb2 MyTop="100" MyLeft="100">
+            <local:TextBlockThumb MyText="Custom2" MyX="100"/>
+            <local:CustomTextThumb2 MyLeft="100" MyTop="20" MyText="CustomText2"/>
+          </local:CustomItemsThumb2>
         </local:ItemsThumb>
       </local:ItemsThumb>
     </Canvas>

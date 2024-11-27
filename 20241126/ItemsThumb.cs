@@ -174,11 +174,91 @@ namespace _20241126
 
         #endregion 依存関係プロパティ
         public TextBlockThumb() { DataContext = this; }
+
+
+
     }
 
 
+    public abstract class CustomBase : Thumb
+    {
+        static CustomBase()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomBase), new FrameworkPropertyMetadata(typeof(CustomBase)));
+        }
+        //public CustomBase() { }
+
+        public double MyLeft
+        {
+            get { return (double)GetValue(MyLeftProperty); }
+            set { SetValue(MyLeftProperty, value); }
+        }
+        public static readonly DependencyProperty MyLeftProperty =
+            DependencyProperty.Register(nameof(MyLeft), typeof(double), typeof(CustomBase),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public double MyTop
+        {
+            get { return (double)GetValue(MyTopProperty); }
+            set { SetValue(MyTopProperty, value); }
+        }
+        public static readonly DependencyProperty MyTopProperty =
+            DependencyProperty.Register(nameof(MyTop), typeof(double), typeof(CustomBase),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    }
+
+    //CustomBaseを継承してみたけど、Styleは継承されないのでMyLeftのBindingもされない
+    [ContentProperty(nameof(MyItems))]
+    public class CustomItemsThumb2 : CustomBase
+    {
+        static CustomItemsThumb2()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomItemsThumb2), new FrameworkPropertyMetadata(typeof(CustomItemsThumb2)));
+        }
+
+        public ObservableCollection<UIElement> MyItems
+        {
+            get { return (ObservableCollection<UIElement>)GetValue(MyItemsProperty); }
+            set { SetValue(MyItemsProperty, value); }
+        }
+        public static readonly DependencyProperty MyItemsProperty =
+            DependencyProperty.Register(nameof(MyItems), typeof(ObservableCollection<UIElement>), typeof(CustomItemsThumb2),
+                new FrameworkPropertyMetadata(null,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public CustomItemsThumb2() { DataContext = this; MyItems = []; }
+    }
+
+    public class CustomTextThumb2 : CustomBase
+    {
+        static CustomTextThumb2()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomTextThumb2), new FrameworkPropertyMetadata(typeof(CustomTextThumb2)));
+        }
+        public CustomTextThumb2() { DataContext = this; }
 
 
+        public string MyText
+        {
+            get { return (string)GetValue(MyTextProperty); }
+            set { SetValue(MyTextProperty, value); }
+        }
+        public static readonly DependencyProperty MyTextProperty =
+            DependencyProperty.Register(nameof(MyText), typeof(string), typeof(CustomTextThumb2),
+                new FrameworkPropertyMetadata(string.Empty,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    }
 
 
 
