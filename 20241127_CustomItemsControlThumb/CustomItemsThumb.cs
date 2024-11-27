@@ -10,6 +10,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -54,7 +55,8 @@ namespace _20241127_CustomItemsControlThumb
     //    }
     //}
 
-    [System.Windows.Markup.Ambient]
+    //[System.Windows.Markup.ContentProperty(nameof(MyItems))]
+    [ContentProperty(nameof(MyItems))]
     public class CustomItemsThumb : Thumb
     {
         static CustomItemsThumb()
@@ -120,12 +122,58 @@ namespace _20241127_CustomItemsControlThumb
 
         }
 
-        public static readonly DependencyProperty TextProperty = TextBlock.TextProperty.AddOwner(typeof(TextBlockThumb));
-        public string Text
+        #region 依存関係プロパティ
+        
+        //表示文字列用の依存関係プロパティはTextBlockにもとからあるTextプロパティを自身に登録するか
+        //新たに作成する
+
+        ////TextBlockのTextプロパティを登録する場合は、名前の変更はできない？
+        //public static readonly DependencyProperty TextProperty = TextBlock.TextProperty.AddOwner(typeof(TextBlockThumb));
+        //public string Text
+        //{
+        //    get => (string)GetValue(TextProperty);
+        //    set => SetValue(TextProperty, value);
+        //}
+
+        //新たに作成する場合(いつもの)は、任意の名前にできる
+        public string MyText
         {
-            get => (string)GetValue(TextProperty);
-            set => SetValue(TextProperty, value);
+            get { return (string)GetValue(MyTextProperty); }
+            set { SetValue(MyTextProperty, value); }
         }
+        public static readonly DependencyProperty MyTextProperty =
+            DependencyProperty.Register(nameof(MyText), typeof(string), typeof(TextBlockThumb),
+                new FrameworkPropertyMetadata(string.Empty,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
+        public double MyLeft
+        {
+            get { return (double)GetValue(MyLeftProperty); }
+            set { SetValue(MyLeftProperty, value); }
+        }
+        public static readonly DependencyProperty MyLeftProperty =
+            DependencyProperty.Register(nameof(MyLeft), typeof(double), typeof(TextBlockThumb),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public double MyTop
+        {
+            get { return (double)GetValue(MyTopProperty); }
+            set { SetValue(MyTopProperty, value); }
+        }
+        public static readonly DependencyProperty MyTopProperty =
+            DependencyProperty.Register(nameof(MyTop), typeof(double), typeof(TextBlockThumb),
+                new FrameworkPropertyMetadata(0.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        #endregion 依存関係プロパティ
         public TextBlockThumb() { DataContext = this; }
     }
 

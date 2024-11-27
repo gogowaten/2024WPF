@@ -5,12 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241127_CustomItemsControlThumb"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="600">
+ 
+  <Grid>
     <Canvas x:Name="MyCanvas">
-      <local:TextBlockThumb Text="aaaaa">
-        
-      </local:TextBlockThumb>
+      <local:CustomItemsThumb MyLeft="20" MyTop="20" DragDelta="CustomItemsThumb_DragDelta">
+        <local:TextBlockThumb MyLeft="0" MyTop="0" MyText="textblooooooooock"/>
+        <local:CustomItemsThumb>
+          <local:TextBlockThumb MyLeft="10" MyTop="20" MyText="nest1-1"/>
+          <local:TextBlockThumb MyLeft="10" MyTop="40" MyText="nest1-2"/>
+        </local:CustomItemsThumb>
+      </local:CustomItemsThumb>
     </Canvas>
   </Grid>
 </Window>
