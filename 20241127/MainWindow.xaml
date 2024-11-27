@@ -42,6 +42,11 @@
         </Thumb.Template>
       </Thumb>-->
 
+
+      <local:AutoResizeCanvas UseLayoutRounding="True">
+        <TextBlock local:AutoResizeCanvas.Left="0" local:AutoResizeCanvas.Top="0" Text="aaaaaaaaaaaaa"/>
+        <TextBlock local:AutoResizeCanvas.Left="200" local:AutoResizeCanvas.Top="80" Text="rightbottom"/>
+      </local:AutoResizeCanvas>
     </Canvas>
   </Grid>
 </Window>
