@@ -55,6 +55,8 @@ namespace _20241127_CustomItemsControlThumb
     //    }
     //}
 
+
+    //ContentPropertyはXAMLで直接子要素を追加するのに必要
     //[System.Windows.Markup.ContentProperty(nameof(MyItems))]
     [ContentProperty(nameof(MyItems))]
     public class CustomItemsThumb : Thumb
@@ -65,7 +67,23 @@ namespace _20241127_CustomItemsControlThumb
         }
 
         #region 依存関係プロパティ
+        //public ObservableCollection<UIElement> MyItems
+        //{
+        //    get { return (ObservableCollection<UIElement>)GetValue(MyItemsProperty); }
+        //    set { SetValue(MyItemsProperty, value); }
+        //}
+        //public static readonly DependencyProperty MyItemsProperty =
+        //    DependencyProperty.Register(nameof(MyItems),
+        //        typeof(ObservableCollection<UIElement>), typeof(ItemsThumb),
+        //        new FrameworkPropertyMetadata(new ObservableCollection<UIElement>(),
+        //            FrameworkPropertyMetadataOptions.AffectsRender |
+        //            FrameworkPropertyMetadataOptions.AffectsMeasure |
+        //            FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        //↑は無限ループになる
 
+        //FrameworkPropertyMetadata(null,
+        //ここはnull、もしここで初期化するとネストした時に無限ループになるので
+        //初期化はコンストラクタ内で行うことにした
         public ObservableCollection<UIElement> MyItems
         {
             get { return (ObservableCollection<UIElement>)GetValue(MyItemsProperty); }
