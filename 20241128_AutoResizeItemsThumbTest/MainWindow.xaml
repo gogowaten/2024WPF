@@ -1,0 +1,23 @@
+﻿<Window x:Class="_20241128_AutoResizeItemsThumbTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241128_AutoResizeItemsThumbTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="400">
+    <Grid>
+
+    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+
+      <local:AutoResizeCanvas>
+        <local:CustomItemsThumb Background="Beige" x:Name="MyItemsThumb">
+          <local:CustomTextThumb MyX="20" MyY="20" MyText="text0" DragDelta="CustomTextThumb_DragDelta"/>
+          <local:CustomTextThumb MyX="80" MyY="80" MyText="text1" DragDelta="CustomTextThumb_DragDelta"/>
+        </local:CustomItemsThumb>
+      </local:AutoResizeCanvas>
+
+    </ScrollViewer>
+
+  </Grid>
+</Window>
