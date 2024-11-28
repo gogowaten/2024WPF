@@ -15,7 +15,7 @@
       <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
         <local:AutoResizeCanvas>
-          <local:CustomItemsThumb MyX="50" MyY="50" Background="Beige" x:Name="MyItemsThumb">
+          <local:CustomItemsThumb MyX="50" MyY="50" x:Name="MyItemsThumb">
             <local:CustomTextThumb MyX="20" MyY="20" MyText="text0" DragDelta="CustomTextThumb_DragDelta"/>
             <local:CustomTextThumb MyX="80" MyY="80" MyText="text1" DragDelta="CustomTextThumb_DragDelta"/>
           </local:CustomItemsThumb>
