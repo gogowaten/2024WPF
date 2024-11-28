@@ -81,18 +81,33 @@ namespace _20241128
         #endregion 依存関係プロパティ
         public CustomBase()
         {
-            SetBinding(AutoResizeCanvas.LeftProperty, new Binding()
+            SetBinding(Canvas.LeftProperty, new Binding()
             {
                 Source = this,
                 Path = new PropertyPath(MyXProperty)
             });
-            SetBinding(AutoResizeCanvas.TopProperty, new Binding()
+            SetBinding(Canvas.TopProperty, new Binding()
             {
                 Source = this,
                 Path = new PropertyPath(MyYProperty)
             });
 
+
+            //  SetBinding(AutoResizeCanvas.LeftProperty, new Binding()
+            //{
+            //    Source = this,
+            //    Path = new PropertyPath(MyXProperty)
+            //});
+            //SetBinding(AutoResizeCanvas.TopProperty, new Binding()
+            //{
+            //    Source = this,
+            //    Path = new PropertyPath(MyYProperty)
+            //});
+
         }
+
+
+
     }
 
     [ContentProperty(nameof(MyItems))]
@@ -106,8 +121,94 @@ namespace _20241128
         {
             DataContext = this;
             MyItems = [];
+            //Background = Brushes.Red;
+            Loaded += CustomItemsThumb_Loaded;
         }
 
+        private static Canvas? GetCanvas(DependencyObject d)
+        {
+            if (d is Canvas canvas) return canvas;
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+            {
+                //Canvas? re = GetCanvas(VisualTreeHelper.GetChild(d, i));
+                //if (re != null)
+                //{
+                //    return re;
+                //}
+
+                return GetCanvas(VisualTreeHelper.GetChild(d, i));
+            }
+            return null;
+        }
+        private void CustomItemsThumb_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            //ControlTemplate tem = Template;
+            //object can2 = tem.FindName("MyTemp", this);//itemscontrol
+            //if (can2 is DependencyObject dp)
+            //{
+            //    if (GetCanvas(dp) is Canvas ccv)
+            //    {
+            //        var ccvn = ccv.Name;
+            //    }
+            //}
+            object temp = Template.FindName("MyTemp", this);
+            if (temp is DependencyObject d)
+            {
+                if (GetCanvas(d) is Canvas tpcan)
+                {
+                    //SetBinding(Thumb.WidthProperty,new Binding() { Source =tpcan,Path=new PropertyPath(Canvas.WidthProperty) });
+
+                    SetBinding(Thumb.WidthProperty, new Binding() { Source = tpcan, Path = new PropertyPath(Canvas.ActualWidthProperty) });
+
+                    SetBinding(Thumb.HeightProperty, new Binding() { Source = tpcan, Path = new PropertyPath(Canvas.ActualHeightProperty) });
+
+                    //SetBinding(Thumb.BackgroundProperty,new Binding() { Source =tpcan,Path=new PropertyPath(Canvas.BackgroundProperty) });
+
+                }
+            }
+
+            //if (can2 is ItemsControl ic)
+            //{
+            //    //int ccount = VisualTreeHelper.GetChildrenCount(ic);
+            //    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(ic); i++)
+            //    {
+
+            //        DependencyObject icc = VisualTreeHelper.GetChild(ic, i);
+            //        if (icc is Border border)
+            //        {
+            //            for (int j = 0; j < VisualTreeHelper.GetChildrenCount(border); i++)
+            //            {
+            //                DependencyObject jcc = VisualTreeHelper.GetChild(border, j);
+            //                if (jcc is ItemsPresenter itemP)
+            //                {
+            //                    for (int k = 0; k < VisualTreeHelper.GetChildrenCount(itemP); k++)
+            //                    {
+            //                        var kcc = VisualTreeHelper.GetChild(itemP, k);
+            //                        if (kcc is Canvas canvas)
+            //                        {
+            //                            string cc = canvas.Name;
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //        }
+            //    }
+            //    var can3 = ic.Template.FindName("MyCanvas", ic);
+            //    ItemsPanelTemplate ip = ic.ItemsPanel;
+            //    TemplateContent iptemp = ip.Template;
+            //    var c1 = VisualTreeHelper.GetChild(ic, 0);//border
+            //    var c2 = VisualTreeHelper.GetChild(c1, 0);//itemsPresenter
+            //    var c3 = VisualTreeHelper.GetChild(c2, 0);//canvas
+            //    ItemsPresenter ipp = new();
+
+            //}
+            //if(tem is FrameworkElement elm)
+            //{
+
+            //}
+            //var tt = VisualTreeHelper.GetChild(tem, 0);
+        }
 
         public ObservableCollection<UIElement> MyItems
         {

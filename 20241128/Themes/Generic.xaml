@@ -4,7 +4,7 @@
     xmlns:local="clr-namespace:_20241128">
 
 
-    <!--<Style TargetType="{x:Type local:CustomBase}">
+  <!--<Style TargetType="{x:Type local:CustomBase}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type local:CustomBase}">
@@ -17,7 +17,7 @@
         </Setter>
     </Style>-->
 
-  <Style TargetType="{x:Type local:CustomItemsThumb}">
+  <!--<Style TargetType="{x:Type local:CustomItemsThumb}">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type local:CustomItemsThumb}">
@@ -25,6 +25,37 @@
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
                 <local:AutoResizeCanvas Background="Beige"/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+          </ItemsControl>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>-->
+
+  <Style TargetType="{x:Type local:CustomItemsThumb}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:CustomItemsThumb}">
+          <ItemsControl ItemsSource="{Binding MyItems}" x:Name="MyTemp">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <!--<Canvas Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:CustomBase}},
+ Path=Background}" x:Name="MyCanvas"/>-->
+                
+                <!--名前をつけてあるけど、特に使っていない
+                ExCanvasは自動リサイズのCanvasだけど不完全かも
+                BackgroundのBindingソースは親要素のBackgroundにしている-->
+                <!--<local:ExCanvas Background="Beige" x:Name="MyCanvas"/>-->
+                <local:ExCanvas
+                  x:Name="MyCanvas"
+                  Background="{
+                    Binding
+                      RelativeSource={
+                        RelativeSource AncestorType={
+                          x:Type local:CustomBase}},
+                      Path=Background}"/>
+
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
           </ItemsControl>
