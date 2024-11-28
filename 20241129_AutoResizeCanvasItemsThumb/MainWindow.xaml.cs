@@ -10,11 +10,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-//AutoResizeCanvasを使ったThumbのテスト
-//スクロールバー表示しているときに外側のThumbを移動すると一気に縮小する動作がいまいち
-//できればドラッグ移動終了時にリサイズできるようにしたい
-namespace _20241128_AutoResizeItemsThumbTest
+namespace _20241129_AutoResizeCanvasItemsThumb
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -44,6 +40,14 @@ namespace _20241128_AutoResizeItemsThumbTest
                 cb.MyX += e.HorizontalChange;
                 cb.MyY += e.VerticalChange;
             }
+        }
+
+        private void MyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var parent = VisualTreeHelper.GetParent(this);
+            var child = VisualTreeHelper.GetChild(this, 0);
+            var h = MyItemsThumb.ActualHeight;
+            MyItemsThumb.MyX += 10;
         }
     }
 }

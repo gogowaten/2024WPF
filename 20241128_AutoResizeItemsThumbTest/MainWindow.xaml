@@ -6,18 +6,26 @@
         xmlns:local="clr-namespace:_20241128_AutoResizeItemsThumbTest"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="400">
-    <Grid>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="150"/>
+    </Grid.ColumnDefinitions>
+    <Canvas>
+      <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
 
-    <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+        <local:AutoResizeCanvas>
+          <local:CustomItemsThumb MyX="50" MyY="50" Background="Beige" x:Name="MyItemsThumb">
+            <local:CustomTextThumb MyX="20" MyY="20" MyText="text0" DragDelta="CustomTextThumb_DragDelta"/>
+            <local:CustomTextThumb MyX="80" MyY="80" MyText="text1" DragDelta="CustomTextThumb_DragDelta"/>
+          </local:CustomItemsThumb>
+        </local:AutoResizeCanvas>
 
-      <local:AutoResizeCanvas>
-        <local:CustomItemsThumb Background="Beige" x:Name="MyItemsThumb">
-          <local:CustomTextThumb MyX="20" MyY="20" MyText="text0" DragDelta="CustomTextThumb_DragDelta"/>
-          <local:CustomTextThumb MyX="80" MyY="80" MyText="text1" DragDelta="CustomTextThumb_DragDelta"/>
-        </local:CustomItemsThumb>
-      </local:AutoResizeCanvas>
-
-    </ScrollViewer>
-
+      </ScrollViewer>
+    </Canvas>
+    <StackPanel Grid.Column="1">
+      <Button Content="button"/>
+    </StackPanel>
   </Grid>
+
 </Window>
