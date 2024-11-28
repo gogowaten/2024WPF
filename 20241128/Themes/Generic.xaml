@@ -43,9 +43,7 @@
                 <!--<Canvas Background="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:CustomBase}},
  Path=Background}" x:Name="MyCanvas"/>-->
                 
-                <!--名前をつけてあるけど、特に使っていない
-                ExCanvasは自動リサイズのCanvasだけど不完全かも
-                BackgroundのBindingソースは親要素のBackgroundにしている-->
+                
                 <!--<local:ExCanvas Background="Beige" x:Name="MyCanvas"/>-->
                 <local:ExCanvas
                   x:Name="MyCanvas"

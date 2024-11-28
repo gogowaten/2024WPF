@@ -12,7 +12,6 @@
       <ColumnDefinition Width="100"/>
     </Grid.ColumnDefinitions>
     <Canvas>
-      <Button Canvas.Left="200" x:Name="MyButton" Content="test" Click="MyButton_Click"/>
 
 
       <local:CustomItemsThumb x:Name="MyItemsThumb" Background="RosyBrown">
@@ -23,6 +22,7 @@
 
     </Canvas>
     <StackPanel Grid.Column="1">
+      <Button Canvas.Left="200" x:Name="MyButton" Content="test" Click="MyButton_Click"/>
       <TextBlock Text="{Binding ElementName=MyItemsThumb, Path=ActualWidth, StringFormat=actuW \= 0.0}"/>
       <TextBlock Text="{Binding ElementName=MyItemsThumb, Path=ActualHeight, StringFormat=actuH \= 0.0}"/>
       <TextBlock Text="{Binding ElementName=MyItemsThumb, Path=Width, StringFormat=W \=0.0}"/>

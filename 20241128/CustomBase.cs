@@ -105,10 +105,10 @@ namespace _20241128
             //});
 
         }
-
-
-
     }
+
+
+
 
     [ContentProperty(nameof(MyItems))]
     public class CustomItemsThumb : CustomBase

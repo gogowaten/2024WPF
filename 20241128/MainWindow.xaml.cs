@@ -20,7 +20,7 @@ namespace _20241128
         public MainWindow()
         {
             InitializeComponent();
-
+            AddThumbs(20);
         }
         private void AddThumbs(int count)
         {
@@ -46,7 +46,7 @@ namespace _20241128
             var parent = VisualTreeHelper.GetParent(this);
             var child = VisualTreeHelper.GetChild(this, 0);
             var h = MyItemsThumb.ActualHeight;
-            
+            MyItemsThumb.MyX += 10;
         }
     }
 }
