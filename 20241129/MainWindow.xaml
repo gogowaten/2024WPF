@@ -7,33 +7,32 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="250" Width="400">
   <Window.Resources>
-    <!-- 偶数スタイル -->
-    <Style TargetType="ListBoxItem" x:Key="even" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-      <Setter Property="Background" Value="AntiqueWhite"/>
-    </Style>
-    <!--<Style TargetType="ListBoxItem" x:Key="even">
-      <Setter Property="Background" Value="AntiqueWhite" />
-    </Style>-->
-    <!-- 奇数スタイル -->
-    <Style TargetType="ListBoxItem" x:Key="odd" BasedOn="{StaticResource {x:Type ListBoxItem}}">
-      <Setter Property="Template">
-        <Setter.Value>
-          <ControlTemplate TargetType="ListBoxItem">
-            <StackPanel Orientation="Horizontal" Background="RosyBrown">
-              <Ellipse Width="10" Height="10" Fill="Gold"/>
-              <ContentPresenter/>
-            </StackPanel>
-          </ControlTemplate>
-        </Setter.Value>
-      </Setter>
-    </Style>
-    <!-- スタイルセレクター -->
-    <local:MySelector x:Key="ListBoxStyleSelector"
-                      EvenStyle="{StaticResource even}"
-                      OddStyle="{StaticResource odd}"/>
+    
   </Window.Resources>
   <Grid>
-    <!-- ListBox のプロパティにスタイルセレクターを設定します -->
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="150"/>
+    </Grid.ColumnDefinitions>
+    <Canvas>
+      <ItemsControl ItemsSource="{Binding MyData}">
+        
+      </ItemsControl>
+    </Canvas>
+    <StackPanel Grid.Column="1">
+      <Button Content="button"/>
+    </StackPanel>
+    
+    
+  </Grid>
+    
+    
+  <!--<ItemsControl ItemsSource="{Binding MainViewModel}"/>-->
+  
+  <!--<Grid>
+    -->
+  <!-- ListBox のプロパティにスタイルセレクターを設定します -->
+  <!--
     <ListBox ItemContainerStyleSelector="{StaticResource ListBoxStyleSelector}">
       <ListBoxItem Content="赤城改"/>
       <ListBoxItem Content="伊168改"/>
@@ -42,5 +41,5 @@
       <ListBoxItem Content="千代田航改二"/>
       <ListBoxItem Content="長門改"/>
     </ListBox>
-  </Grid>
+  </Grid>-->
 </Window>

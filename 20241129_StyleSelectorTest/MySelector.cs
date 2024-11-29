@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
+using System.Windows;
 
-namespace _20241129
+namespace _20241129_StyleSelectorTest
 {
-
     //Q102. ListBox で一行おきに背景色を変えるには？ - 周回遅れのブルース
     //https://hilapon.hatenadiary.org/entry/20130918/1379486632
 
@@ -34,31 +32,6 @@ namespace _20241129
                 return EvenStyle;
             }
             //return base.SelectStyle(item, container);
-        }
-    }
-    public class MyDataSelector : StyleSelector
-    {
-        public Style TextStyle { get; set; } = new Style();
-        public Style MaruStyle { get; set; } = new Style();
-        public Style RectStyle { get; set; } = new Style();
-        public override Style SelectStyle(object item, DependencyObject container)
-        {
-            if (item is DataMoto data)
-            {
-                DaType da = data.DaType;
-
-                switch (da)
-                {
-                    case DaType.Text:
-                        return TextStyle;
-                    case DaType.Maru:
-                        return MaruStyle;
-                    case DaType.Rect: return RectStyle;
-                    default: return base.SelectStyle(item, container);
-                }
-
-            }
-            return base.SelectStyle(item, container);
         }
     }
 }
