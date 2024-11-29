@@ -7,17 +7,38 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="250" Width="400">
   <Window.Resources>
+    <DataTemplate x:Key="text">
+      <TextBlock Text="{Binding MyText}"/>
+    </DataTemplate>
+    <DataTemplate x:Key="maru">
+      <Ellipse Fill="{Binding MyFill}" Width="50" Height="50"/>
+    </DataTemplate>
+    <DataTemplate x:Key="rect" DataType="{x:Type local:DataRect}">
+      <Rectangle Fill="{Binding MyFill}" Width="{Binding MyWidth}" Height="{Binding MyHeight}"/>
+    </DataTemplate>
+    <local:ItemDataTemplateSelector x:Key="dataSelect"
+                                    TextGata="{StaticResource text}"
+                                    MaruGata="{StaticResource maru}"
+                                    RectGata="{StaticResource rect}"/>
     
   </Window.Resources>
+  
+  
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
       <ColumnDefinition Width="150"/>
     </Grid.ColumnDefinitions>
     <Canvas>
-      <ItemsControl ItemsSource="{Binding MyData}">
+      <!--<ItemsControl ItemsSource="{Binding MyData}"/>-->
+      <ItemsControl ItemsSource="{Binding MyData}" 
+                    ItemTemplateSelector="{StaticResource dataSelect}">
         
       </ItemsControl>
+      <ListBox ItemsSource="{Binding MyData}" Canvas.Left="150" ItemTemplate="{StaticResource maru}"/>
+
+
+
     </Canvas>
     <StackPanel Grid.Column="1">
       <Button Content="button"/>
@@ -26,20 +47,4 @@
     
   </Grid>
     
-    
-  <!--<ItemsControl ItemsSource="{Binding MainViewModel}"/>-->
-  
-  <!--<Grid>
-    -->
-  <!-- ListBox のプロパティにスタイルセレクターを設定します -->
-  <!--
-    <ListBox ItemContainerStyleSelector="{StaticResource ListBoxStyleSelector}">
-      <ListBoxItem Content="赤城改"/>
-      <ListBoxItem Content="伊168改"/>
-      <ListBoxItem Content="加賀改"/>
-      <ListBoxItem Content="北上改二"/>
-      <ListBoxItem Content="千代田航改二"/>
-      <ListBoxItem Content="長門改"/>
-    </ListBox>
-  </Grid>-->
 </Window>

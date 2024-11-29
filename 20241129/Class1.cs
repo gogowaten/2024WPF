@@ -20,7 +20,7 @@ using System.Windows.Shapes;
 
 namespace _20241129
 {
-    public enum DaType {None = 0, Text, Maru, Rect }
+    public enum DaType { None = 0, Text, Maru, Rect }
     public abstract class DataMoto : DependencyObject
     {
         #region 依存関係プロパティ
@@ -71,10 +71,10 @@ namespace _20241129
 
 
         #endregion
-        public DataText() {this.DaType = DaType.Text; }
+        public DataText() { this.DaType = DaType.Text; }
     }
 
-    public class DataMaru : DataMoto
+    public abstract class DataShape : DataMoto
     {
         #region DependencyProperty
 
@@ -90,21 +90,46 @@ namespace _20241129
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
-        public double MySize
+        public double MyWidth
         {
-            get { return (double)GetValue(MySizeProperty); }
-            set { SetValue(MySizeProperty, value); }
+            get { return (double)GetValue(MyWidthProperty); }
+            set { SetValue(MyWidthProperty, value); }
         }
-        public static readonly DependencyProperty MySizeProperty =
-            DependencyProperty.Register(nameof(MySize), typeof(double), typeof(DataMaru),
+        public static readonly DependencyProperty MyWidthProperty =
+            DependencyProperty.Register(nameof(MyWidth), typeof(double), typeof(DataShape),
                 new FrameworkPropertyMetadata(20.0,
                     FrameworkPropertyMetadataOptions.AffectsRender |
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        public double MyHeight
+        {
+            get { return (double)GetValue(MyHeightProperty); }
+            set { SetValue(MyHeightProperty, value); }
+        }
+        public static readonly DependencyProperty MyHeightProperty =
+            DependencyProperty.Register(nameof(MyHeight), typeof(double), typeof(DataShape),
+                new FrameworkPropertyMetadata(20.0,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+
+
+
         #endregion
+    }
+    public class DataMaru : DataShape
+    {
         public DataMaru() { this.DaType = DaType.Maru; }
     }
+    public class DataRect : DataShape
+    {
+        public DataRect() { DaType = DaType.Rect; }
+    }
+
+
+
 }
 
 

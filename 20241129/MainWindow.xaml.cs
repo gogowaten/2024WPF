@@ -29,6 +29,7 @@ namespace _20241129
             DataContext = this;
             MyData.Add(new DataText() { MyText = "text" });
             MyData.Add(new DataMaru() { MyFill = Brushes.YellowGreen });
+            MyData.Add(new DataRect() { MyFill = Brushes.MediumAquamarine, MyWidth = 100, MyHeight = 50 });
         }
     }
 
