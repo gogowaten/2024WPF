@@ -17,6 +17,10 @@ namespace _20241129
         public Style EvenStyle { get; set; } = new Style();
         public Style OddStyle { get; set; } = new Style();
 
+        //起動時とかに要素一つ一つごとにここが実行される
+        //引数のitemは要素自体、containerも要素自体
+        //containerから親要素のListBoxを取得はItemsControlFromitemContainerメソッド
+        //親要素のItemsプロパティからitemのインデックスを取得、2で割って奇数偶数判別
         public override Style SelectStyle(object item, DependencyObject container)
         {
             ItemsControl control = ItemsControl.ItemsControlFromItemContainer(container);
