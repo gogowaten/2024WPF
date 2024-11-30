@@ -55,9 +55,17 @@ namespace _20241129
         }
     }
 
+    public enum ThumbType { None = 0, Items, Text, Rect }
+    //public interface IData
+    //{
+    //    DataMoto? MyData { get; set; }
+    //    abstract ThumbType Type { get; set; }
+    //}
+
     public abstract class BaseThumb : Thumb
     {
-        public DataMoto? MyData { get; set; }
+        public abstract ThumbType Type { get; set; }
+        public abstract DataMoto MyData { get; set; }
         static BaseThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseThumb), new FrameworkPropertyMetadata(typeof(BaseThumb)));
@@ -100,27 +108,36 @@ namespace _20241129
                 Source = this,
                 Path = new PropertyPath(MyTopProperty)
             });
-
-
-
         }
     }
 
 
 
 
-    [ContentProperty(nameof(MyItems))]
+    [ContentProperty(nameof(MyChildren))]
     public class ItemsThumb : BaseThumb
     {
+        public override ThumbType Type { get; set; }
+        public override DataMoto MyData { get; set; }
         static ItemsThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ItemsThumb), new FrameworkPropertyMetadata(typeof(ItemsThumb)));
         }
         public ItemsThumb()
         {
+            Type = ThumbType.Items;
+            MyData = new DataItems();
             DataContext = this;
-            MyItems = [];
-            Loaded += CustomItemsThumb_Loaded; MyData = new DataText();
+            MyChildren = [];
+            Loaded += CustomItemsThumb_Loaded;
+            MyChildren.CollectionChanged += MyChildren_CollectionChanged;
+        }
+
+        private void MyChildren_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            var neko = e.NewItems[0];
+            var tako = neko as BaseThumb;
+            var inu = tako.MyData;
         }
 
         private void CustomItemsThumb_Loaded(object sender, RoutedEventArgs e)
@@ -132,21 +149,16 @@ namespace _20241129
             {
                 if (GetCanvas(d) is Canvas templateCanvas)
                 {
-                    //SetBinding(Thumb.WidthProperty,new Binding() { Source =tpcan,Path=new PropertyPath(Canvas.WidthProperty) });
-
                     _ = SetBinding(WidthProperty, new Binding() { Source = templateCanvas, Path = new PropertyPath(ActualWidthProperty) });
 
                     _ = SetBinding(HeightProperty, new Binding() { Source = templateCanvas, Path = new PropertyPath(ActualHeightProperty) });
-
-                    //SetBinding(Thumb.BackgroundProperty,new Binding() { Source =tpcan,Path=new PropertyPath(Canvas.BackgroundProperty) });
-
                 }
             }
 
             //子要素を辿ってCanvasを取り出す
             static Canvas? GetCanvas(DependencyObject d)
             {
-                if (d is Canvas canvas) return canvas;                
+                if (d is Canvas canvas) return canvas;
                 for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
                 {
                     Canvas? c = GetCanvas(VisualTreeHelper.GetChild(d, i));
@@ -159,13 +171,13 @@ namespace _20241129
         }
 
 
-        public ObservableCollection<UIElement> MyItems
+        public ObservableCollection<UIElement> MyChildren
         {
-            get { return (ObservableCollection<UIElement>)GetValue(MyItemsProperty); }
-            set { SetValue(MyItemsProperty, value); }
+            get { return (ObservableCollection<UIElement>)GetValue(MyChildrenProperty); }
+            set { SetValue(MyChildrenProperty, value); }
         }
-        public static readonly DependencyProperty MyItemsProperty =
-            DependencyProperty.Register(nameof(MyItems), typeof(ObservableCollection<UIElement>), typeof(ItemsThumb),
+        public static readonly DependencyProperty MyChildrenProperty =
+            DependencyProperty.Register(nameof(MyChildren), typeof(ObservableCollection<UIElement>), typeof(ItemsThumb),
                 new FrameworkPropertyMetadata(null,
                     FrameworkPropertyMetadataOptions.AffectsRender |
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
@@ -176,6 +188,8 @@ namespace _20241129
 
     public class TextThumb : BaseThumb
     {
+        public override ThumbType Type { get; set; }
+        public override DataMoto MyData { get; set; }
         static TextThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextThumb), new FrameworkPropertyMetadata(typeof(TextThumb)));
@@ -195,6 +209,10 @@ namespace _20241129
         public TextThumb()
         {
             DataContext = this;
+            MyData = new DataText();
+            //SetBinding(MyTextProperty, new Binding() { Source = MyData, Path = new PropertyPath(MyData.MyText) });
+            Binding b = new() { Source = this, Path = new PropertyPath(MyTextProperty) };
+            BindingOperations.SetBinding(MyData, DataText.MyTextProperty, b);
         }
     }
 }

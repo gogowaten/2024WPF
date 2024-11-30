@@ -35,6 +35,11 @@ namespace _20241129
                 t.MyTop += e.VerticalChange;
             }
         }
+
+        private void MyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var neko = MyTextThumb1.MyData;
+        }
     }
 
 

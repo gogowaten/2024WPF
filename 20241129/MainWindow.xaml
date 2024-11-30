@@ -17,12 +17,13 @@
     </Grid.ColumnDefinitions>
     <Canvas>
       <local:ItemsThumb Background="YellowGreen">
-        <local:TextThumb MyText="topLeft"/>
+        <local:TextThumb x:Name="MyTextThumb1" MyText="topLeft"/>
         <local:TextThumb MyText="bottomRight" MyLeft="100" MyTop="50" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
       </local:ItemsThumb>
     </Canvas>
     <StackPanel Grid.Column="1">
-      <Button Content="button" Command="{Binding OkCommand}"/>
+      <Button Content="test" x:Name="MyButton" Click="MyButton_Click"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb1, Path=MyText}"/>
     </StackPanel>
 
 
