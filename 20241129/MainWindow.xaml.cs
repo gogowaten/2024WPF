@@ -33,13 +33,18 @@ namespace _20241129
             {
                 t.MyLeft += e.HorizontalChange;
                 t.MyTop += e.VerticalChange;
+                e.Handled = true;//これをつけておくと親子両方にイベントをつけてもクリックした方だけしか移動しなくなる、伝播が自身で止まる、つまり付け外しをしなくても良くなる
             }
         }
 
         private void MyButton_Click(object sender, RoutedEventArgs e)
         {
-            var neko = MyTextThumb1.MyData;
+            var neko = MyTextThumb2.MyData;
+            DataMoto inu = MyItemsThumb1.MyData;
+            var tako = (Datas)inu;
+            tako.MyDatas[0].MyTop = 100;
         }
+
     }
 
 

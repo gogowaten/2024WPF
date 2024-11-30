@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,13 +66,13 @@ namespace _20241129
     public abstract class BaseThumb : Thumb
     {
         public abstract ThumbType Type { get; set; }
-        public abstract DataMoto MyData { get; set; }
+        public DataMoto MyData { get; set; }
         static BaseThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseThumb), new FrameworkPropertyMetadata(typeof(BaseThumb)));
         }
         #region 依存関係プロパティ
-
+        [Category("My")]
         public double MyLeft
         {
             get { return (double)GetValue(MyLeftProperty); }
@@ -84,6 +85,7 @@ namespace _20241129
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
+        [Category("My")]
         public double MyTop
         {
             get { return (double)GetValue(MyTopProperty); }
@@ -98,17 +100,36 @@ namespace _20241129
         #endregion 依存関係プロパティ
         public BaseThumb()
         {
-            SetBinding(Canvas.LeftProperty, new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath(MyLeftProperty)
-            });
-            SetBinding(Canvas.TopProperty, new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath(MyTopProperty)
-            });
+            MyData = new DataMoto();
+            //DataContext = this;
+
+            Binding b = new() { Source = this, Path = new PropertyPath(MyLeftProperty) };
+            SetBinding(Canvas.LeftProperty, b);
+            b = new() { Source = this, Path = new PropertyPath(MyTopProperty) };
+            SetBinding(Canvas.TopProperty, b);
+
+            //DataのTopとLeftもBindingしたいけど、なぜかできない。派生先のクラスではできるので
+            //派生先のコンストラクタから、ここに戻って共通の処理にしたのがSetTopLeftBinding()
+            //b = new() { Source = this, Path = new PropertyPath(MyLeftProperty) };
+            //BindingOperations.SetBinding(MyData, DataMoto.MyLeftProperty, b);
+
         }
+
+        /// <summary>
+        /// 派生先クラスのコンストラクタから使う
+        /// </summary>
+        /// <param name="thumb"></param>
+        /// <param name="data"></param>
+        public static void SetTopLeftBinding(Thumb thumb, DataMoto data)
+        {
+            Binding b;
+            b = new() { Source = thumb, Path = new PropertyPath(MyLeftProperty) };
+            BindingOperations.SetBinding(data, DataMoto.MyLeftProperty, b);
+            b = new() { Source = thumb, Path = new PropertyPath(MyTopProperty) };
+            BindingOperations.SetBinding(data, DataMoto.MyTopProperty, b);
+
+        }
+
     }
 
 
@@ -118,7 +139,7 @@ namespace _20241129
     public class ItemsThumb : BaseThumb
     {
         public override ThumbType Type { get; set; }
-        public override DataMoto MyData { get; set; }
+        public new Datas MyData { get; set; }
         static ItemsThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(ItemsThumb), new FrameworkPropertyMetadata(typeof(ItemsThumb)));
@@ -126,11 +147,13 @@ namespace _20241129
         public ItemsThumb()
         {
             Type = ThumbType.Items;
-            MyData = new DataItems();
+            MyData = new Datas();
             DataContext = this;
             MyChildren = [];
             Loaded += CustomItemsThumb_Loaded;
             MyChildren.CollectionChanged += MyChildren_CollectionChanged;
+            SetTopLeftBinding(this, MyData);//DataのTopとLeftのBinding
+
         }
 
         private void MyChildren_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -138,6 +161,10 @@ namespace _20241129
             var neko = e.NewItems[0];
             var tako = neko as BaseThumb;
             var inu = tako.MyData;
+            if (e.NewItems[0] is BaseThumb t)
+            {
+                ((Datas)MyData).MyDatas.Add(t.MyData);
+            }
         }
 
         private void CustomItemsThumb_Loaded(object sender, RoutedEventArgs e)
@@ -189,12 +216,13 @@ namespace _20241129
     public class TextThumb : BaseThumb
     {
         public override ThumbType Type { get; set; }
-        public override DataMoto MyData { get; set; }
+        public new DataText MyData { get; set; }
         static TextThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextThumb), new FrameworkPropertyMetadata(typeof(TextThumb)));
         }
 
+        [Category("My")]
         public string MyText
         {
             get { return (string)GetValue(MyTextProperty); }
@@ -208,11 +236,15 @@ namespace _20241129
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         public TextThumb()
         {
-            DataContext = this;
             MyData = new DataText();
-            //SetBinding(MyTextProperty, new Binding() { Source = MyData, Path = new PropertyPath(MyData.MyText) });
+            DataContext = this;
+
             Binding b = new() { Source = this, Path = new PropertyPath(MyTextProperty) };
             BindingOperations.SetBinding(MyData, DataText.MyTextProperty, b);
+            SetTopLeftBinding(this, MyData);//DataのTopとLeftのBinding
+
         }
+
+
     }
 }

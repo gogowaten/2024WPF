@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 namespace _20241129
 {
     public enum DataType { None = 0, Items, Text, Maru, Rect }
-    public abstract class DataMoto : DependencyObject
+    public class DataMoto : DependencyObject
     {
         #region 依存関係プロパティ
 
@@ -54,21 +54,20 @@ namespace _20241129
         public DataMoto() { }
     }
 
-    public class DataItems : DataMoto
+    public class Datas : DataMoto
     {
-
-        public ObservableCollection<DataMoto> MyItems
+        public ObservableCollection<DataMoto> MyDatas
         {
-            get { return (ObservableCollection<DataMoto>)GetValue(MyItemsProperty); }
-            set { SetValue(MyItemsProperty, value); }
+            get { return (ObservableCollection<DataMoto>)GetValue(MyDatasProperty); }
+            set { SetValue(MyDatasProperty, value); }
         }
-        public static readonly DependencyProperty MyItemsProperty =
-            DependencyProperty.Register(nameof(MyItems), typeof(ObservableCollection<DataMoto>), typeof(DataItems),
+        public static readonly DependencyProperty MyDatasProperty =
+            DependencyProperty.Register(nameof(MyDatas), typeof(ObservableCollection<DataMoto>), typeof(Datas),
                 new FrameworkPropertyMetadata(null,
                     FrameworkPropertyMetadataOptions.AffectsRender |
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-        public DataItems() { Type = DataType.Items; }
+        public Datas() { Type = DataType.Items; MyDatas = []; }
     }
 
     public class DataText : DataMoto

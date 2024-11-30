@@ -3,6 +3,10 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:_20241129">
 
+  <!--<Style TargetType="{x:Type local:BaseThumb}">
+    <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+    <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+  </Style>-->
 
   <Style TargetType="{x:Type local:ItemsThumb}">
     <Setter Property="Template">

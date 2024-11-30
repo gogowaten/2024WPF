@@ -16,14 +16,19 @@
       <ColumnDefinition Width="150"/>
     </Grid.ColumnDefinitions>
     <Canvas>
-      <local:ItemsThumb Background="YellowGreen">
+      <local:ItemsThumb x:Name="MyItemsThumb1" Background="YellowGreen" DragDelta="TextThumb_DragDelta">
         <local:TextThumb x:Name="MyTextThumb1" MyText="topLeft"/>
-        <local:TextThumb MyText="bottomRight" MyLeft="100" MyTop="50" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
+        <local:TextThumb x:Name="MyTextThumb2" MyText="bottomRight" MyLeft="100" MyTop="50" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
       </local:ItemsThumb>
     </Canvas>
     <StackPanel Grid.Column="1">
       <Button Content="test" x:Name="MyButton" Click="MyButton_Click"/>
       <TextBlock Text="{Binding ElementName=MyTextThumb1, Path=MyText}"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyLeft, StringFormat=0.0_Left }"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyLeft, StringFormat=0.0_DataLeft}"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyTop, StringFormat=0.0_DataTop}"/>
+      <TextBlock Text="{Binding ElementName=MyItemsThumb1, Path=MyData.MyLeft}"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyText}"/>
     </StackPanel>
 
 
