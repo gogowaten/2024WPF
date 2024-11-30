@@ -138,13 +138,8 @@ namespace _20241129_AutoResizeCanvasItemsThumb
             if (d is Canvas canvas) return canvas;
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
             {
-                //Canvas? re = GetCanvas(VisualTreeHelper.GetChild(d, i));
-                //if (re != null)
-                //{
-                //    return re;
-                //}
-
-                return GetCanvas(VisualTreeHelper.GetChild(d, i));
+                Canvas? c = GetCanvas(VisualTreeHelper.GetChild(d, i));
+                if (c is not null) return c;
             }
             return null;
         }
