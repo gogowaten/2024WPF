@@ -11,6 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml;
+using System.Windows.Controls.Primitives;
 
 namespace _20241129
 {
@@ -19,18 +20,23 @@ namespace _20241129
     /// </summary>
     public partial class MainWindow : Window
     {
-        public ObservableCollection<DataMoto> MyData { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
+        }
 
-            MyData = [];
-            DataContext = this;
-            MyData.Add(new DataText() { MyText = "text" });
-            MyData.Add(new DataMaru() { MyFill = Brushes.YellowGreen });
-            MyData.Add(new DataRect() { MyFill = Brushes.MediumAquamarine, MyWidth = 100, MyHeight = 50 });
+        private void TextThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (sender is BaseThumb t)
+            {
+                t.MyLeft += e.HorizontalChange;
+                t.MyTop += e.VerticalChange;
+            }
         }
     }
+
+
 
 }

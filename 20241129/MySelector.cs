@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace _20241129
 {
@@ -46,15 +47,15 @@ namespace _20241129
         {
             if (item is DataMoto data)
             {
-                DaType da = data.DaType;
+                DataType da = data.Type;
 
                 switch (da)
                 {
-                    case DaType.Text:
+                    case DataType.Text:
                         return TextStyle;
-                    case DaType.Maru:
+                    case DataType.Maru:
                         return MaruStyle;
-                    case DaType.Rect: return RectStyle;
+                    case DataType.Rect: return RectStyle;
                     default: return base.SelectStyle(item, container);
                 }
 
@@ -80,15 +81,15 @@ namespace _20241129
 
             if (item is DataMoto data)
             {
-                DaType da = data.DaType;
+                DataType da = data.Type;
 
                 switch (da)
                 {
-                    case DaType.Text:
+                    case DataType.Text:
                         return TextGata;
-                    case DaType.Maru:
+                    case DataType.Maru:
                         return MaruGata;
-                    case DaType.Rect:
+                    case DataType.Rect:
                         return RectGata;
                     default:
                         return base.SelectTemplate(item, container);
@@ -96,9 +97,11 @@ namespace _20241129
 
             }
             return base.SelectTemplate(item, container);
-
+            
         }
-
-
     }
+
+  
+
+
 }

@@ -6,45 +6,26 @@
         xmlns:local="clr-namespace:_20241129"
         mc:Ignorable="d"
         Title="MainWindow" Height="250" Width="400">
-  <Window.Resources>
-    <DataTemplate x:Key="text">
-      <TextBlock Text="{Binding MyText}"/>
-    </DataTemplate>
-    <DataTemplate x:Key="maru">
-      <Ellipse Fill="{Binding MyFill}" Width="50" Height="50"/>
-    </DataTemplate>
-    <DataTemplate x:Key="rect" DataType="{x:Type local:DataRect}">
-      <Rectangle Fill="{Binding MyFill}" Width="{Binding MyWidth}" Height="{Binding MyHeight}"/>
-    </DataTemplate>
-    <local:ItemDataTemplateSelector x:Key="dataSelect"
-                                    TextGata="{StaticResource text}"
-                                    MaruGata="{StaticResource maru}"
-                                    RectGata="{StaticResource rect}"/>
-    
-  </Window.Resources>
-  
-  
+
+
+
+
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
       <ColumnDefinition Width="150"/>
     </Grid.ColumnDefinitions>
     <Canvas>
-      <!--<ItemsControl ItemsSource="{Binding MyData}"/>-->
-      <ItemsControl ItemsSource="{Binding MyData}" 
-                    ItemTemplateSelector="{StaticResource dataSelect}">
-        
-      </ItemsControl>
-      <ListBox ItemsSource="{Binding MyData}" Canvas.Left="150" ItemTemplate="{StaticResource maru}"/>
-
-
-
+      <local:ItemsThumb Background="YellowGreen">
+        <local:TextThumb MyText="topLeft"/>
+        <local:TextThumb MyText="bottomRight" MyLeft="100" MyTop="50" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
+      </local:ItemsThumb>
     </Canvas>
     <StackPanel Grid.Column="1">
-      <Button Content="button"/>
+      <Button Content="button" Command="{Binding OkCommand}"/>
     </StackPanel>
-    
-    
+
+
   </Grid>
-    
+
 </Window>

@@ -20,7 +20,7 @@ using System.Windows.Shapes;
 
 namespace _20241129
 {
-    public enum DaType { None = 0, Text, Maru, Rect }
+    public enum DataType { None = 0, Items, Text, Maru, Rect }
     public abstract class DataMoto : DependencyObject
     {
         #region 依存関係プロパティ
@@ -50,8 +50,25 @@ namespace _20241129
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         #endregion
-        public DaType DaType { get; set; }
+        public DataType Type { get; set; }
         public DataMoto() { }
+    }
+
+    public class DataItems : DataMoto
+    {
+
+        public ObservableCollection<DataMoto> MyItems
+        {
+            get { return (ObservableCollection<DataMoto>)GetValue(MyItemsProperty); }
+            set { SetValue(MyItemsProperty, value); }
+        }
+        public static readonly DependencyProperty MyItemsProperty =
+            DependencyProperty.Register(nameof(MyItems), typeof(ObservableCollection<DataMoto>), typeof(DataItems),
+                new FrameworkPropertyMetadata(null,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        public DataItems() { Type = DataType.Items; }
     }
 
     public class DataText : DataMoto
@@ -71,7 +88,7 @@ namespace _20241129
 
 
         #endregion
-        public DataText() { this.DaType = DaType.Text; }
+        public DataText() { this.Type = DataType.Text; }
     }
 
     public abstract class DataShape : DataMoto
@@ -121,14 +138,38 @@ namespace _20241129
     }
     public class DataMaru : DataShape
     {
-        public DataMaru() { this.DaType = DaType.Maru; }
+        public DataMaru() { this.Type = DataType.Maru; }
     }
     public class DataRect : DataShape
     {
-        public DataRect() { DaType = DaType.Rect; }
+        public DataRect() { Type = DataType.Rect; }
     }
 
-
+    //今回使っているCanvas
+    //これだけでは不十分かも？
+    public class ExCanvas : Canvas
+    {
+        protected override Size ArrangeOverride(Size arrangeSize)
+        {
+            if (double.IsNaN(Width) && double.IsNaN(Height))
+            {
+                base.ArrangeOverride(arrangeSize);
+                Size resultSize = new();
+                foreach (var item in Children.OfType<FrameworkElement>())
+                {
+                    double x = GetLeft(item) + item.ActualWidth;
+                    double y = GetTop(item) + item.ActualHeight;
+                    if (resultSize.Width < x) resultSize.Width = x;
+                    if (resultSize.Height < y) resultSize.Height = y;
+                }
+                return resultSize;
+            }
+            else
+            {
+                return base.ArrangeOverride(arrangeSize);
+            }
+        }
+    }
 
 }
 
