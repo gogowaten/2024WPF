@@ -24,8 +24,8 @@
     </Canvas>
     
     <StackPanel Grid.Column="1">
-      <Button Content="test" x:Name="MyButton" Click="MyButton_Click"/>
-      <Button Content="test" x:Name="MyButton2" Click="MyButton2_Click"/>
+      <Button Content="text2 left120" x:Name="MyButton" Click="MyButton_Click"/>
+      <Button Content="text3 remove" x:Name="MyButton2" Click="MyButton2_Click"/>
       <TextBlock Text="{Binding ElementName=MyTextThumb1, Path=MyText}"/>
       <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyLeft, StringFormat=000_tx2_Left }"/>
       <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyLeft, StringFormat=000_tx2_DataLeft}"/>

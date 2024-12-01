@@ -50,20 +50,15 @@ namespace _20241129
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    public class CustomThumb : Control
-    {
-        static CustomThumb()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomThumb), new FrameworkPropertyMetadata(typeof(CustomThumb)));
-        }
-    }
+    //public class CustomThumb : Control
+    //{
+    //    static CustomThumb()
+    //    {
+    //        DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomThumb), new FrameworkPropertyMetadata(typeof(CustomThumb)));
+    //    }
+    //}
 
     public enum ThumbType { None = 0, Items, Text, Rect }
-    //public interface IData
-    //{
-    //    DataMoto? MyData { get; set; }
-    //    abstract ThumbType Type { get; set; }
-    //}
 
     public abstract class BaseThumb : Thumb
     {
@@ -113,7 +108,9 @@ namespace _20241129
             b = new() { Source = this, Path = new PropertyPath(MyTopProperty) };
             SetBinding(Canvas.TopProperty, b);
 
-            //DataのTopとLeftもBindingしたいけど、なぜかできない。派生先のクラスではできるので
+            //DataのTopLeftと要素のTopLeftのBinding
+            //ここで行いたいけどなぜかできない、loadedイベントでもできない。
+            //しかし、派生先のクラスではできるので
             //派生先のコンストラクタから、ここに戻って共通の処理にしたのがSetTopLeftBinding()
             //b = new() { Source = this, Path = new PropertyPath(MyLeftProperty) };
             //BindingOperations.SetBinding(MyData, DataMoto.MyLeftProperty, b);
@@ -249,7 +246,9 @@ namespace _20241129
         public override ThumbType Type { get; set; } = ThumbType.Text;
         public new DataText MyData { get; set; }
 
+        #region DependencyProperty
 
+        
         [Category("My")]
         public string MyText
         {
@@ -262,13 +261,15 @@ namespace _20241129
                     FrameworkPropertyMetadataOptions.AffectsRender |
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        #endregion
+
         static TextThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextThumb), new FrameworkPropertyMetadata(typeof(TextThumb)));
         }
         public TextThumb()
         {
-            MyData = new DataText();// { Type = DataType.Text };
+            MyData = new DataText();
             DataContext = this;
 
             Binding b = new() { Source = this, Path = new PropertyPath(MyTextProperty) };
