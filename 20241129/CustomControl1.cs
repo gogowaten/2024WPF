@@ -17,6 +17,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+using System.Collections.Specialized;//collectionChenged
+
 namespace _20241129
 {
     /// <summary>
@@ -66,11 +68,8 @@ namespace _20241129
     public abstract class BaseThumb : Thumb
     {
         public abstract ThumbType Type { get; set; }
-        public DataMoto MyData { get; set; }
-        static BaseThumb()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseThumb), new FrameworkPropertyMetadata(typeof(BaseThumb)));
-        }
+        internal DataMoto? MyData { get; set; }
+
         #region 依存関係プロパティ
         [Category("My")]
         public double MyLeft
@@ -98,9 +97,15 @@ namespace _20241129
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
         #endregion 依存関係プロパティ
+
+        static BaseThumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseThumb), new FrameworkPropertyMetadata(typeof(BaseThumb)));
+        }
+
         public BaseThumb()
         {
-            MyData = new DataMoto();
+            //MyData = new DataMoto();
             //DataContext = this;
 
             Binding b = new() { Source = this, Path = new PropertyPath(MyLeftProperty) };
@@ -122,6 +127,7 @@ namespace _20241129
         /// <param name="data"></param>
         public static void SetTopLeftBinding(Thumb thumb, DataMoto data)
         {
+
             Binding b;
             b = new() { Source = thumb, Path = new PropertyPath(MyLeftProperty) };
             BindingOperations.SetBinding(data, DataMoto.MyLeftProperty, b);
@@ -138,7 +144,7 @@ namespace _20241129
     [ContentProperty(nameof(MyChildren))]
     public class ItemsThumb : BaseThumb
     {
-        public override ThumbType Type { get; set; }
+        public override ThumbType Type { get; set; } = ThumbType.Items;
         public new Datas MyData { get; set; }
         static ItemsThumb()
         {
@@ -156,14 +162,36 @@ namespace _20241129
 
         }
 
-        private void MyChildren_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        //元のそれぞれの型のThumbにキャストしてからDataをリストに追加しているのは、
+        //キャストしないとDataMotoにあるプロパティだけになってしまうから
+        //System.Collections.Specialized.NotifyCollectionChangedEventArgs
+        private void MyChildren_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
         {
-            var neko = e.NewItems[0];
-            var tako = neko as BaseThumb;
-            var inu = tako.MyData;
-            if (e.NewItems[0] is BaseThumb t)
+            if (e.Action is NotifyCollectionChangedAction.Add && e.NewItems != null)
             {
-                ((Datas)MyData).MyDatas.Add(t.MyData);
+                DataMoto? data = null;
+
+                switch (e.NewItems[0])
+                {
+                    case TextThumb txt:
+                        data = txt.MyData;
+                        break;
+                    case ItemsThumb items:
+                        data = items.MyData;
+                        break;
+                }
+
+                if (data is not null)
+                {
+                    MyData.MyDatas.Add(data);
+                }
+
+            }
+
+         
+            if (e.Action is NotifyCollectionChangedAction.Remove && e.OldItems?[0] is BaseThumb tt && tt.MyData != null)
+            {
+                _ = MyData.MyDatas.Remove(tt.MyData);
             }
         }
 
@@ -197,6 +225,8 @@ namespace _20241129
 
         }
 
+        #region DependencyProperty
+
 
         public ObservableCollection<UIElement> MyChildren
         {
@@ -209,18 +239,16 @@ namespace _20241129
                     FrameworkPropertyMetadataOptions.AffectsRender |
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        #endregion
 
     }
 
 
     public class TextThumb : BaseThumb
     {
-        public override ThumbType Type { get; set; }
+        public override ThumbType Type { get; set; } = ThumbType.Text;
         public new DataText MyData { get; set; }
-        static TextThumb()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(TextThumb), new FrameworkPropertyMetadata(typeof(TextThumb)));
-        }
+
 
         [Category("My")]
         public string MyText
@@ -234,9 +262,13 @@ namespace _20241129
                     FrameworkPropertyMetadataOptions.AffectsRender |
                     FrameworkPropertyMetadataOptions.AffectsMeasure |
                     FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        static TextThumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(TextThumb), new FrameworkPropertyMetadata(typeof(TextThumb)));
+        }
         public TextThumb()
         {
-            MyData = new DataText();
+            MyData = new DataText();// { Type = DataType.Text };
             DataContext = this;
 
             Binding b = new() { Source = this, Path = new PropertyPath(MyTextProperty) };

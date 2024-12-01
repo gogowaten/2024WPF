@@ -25,6 +25,9 @@ namespace _20241129
         {
             InitializeComponent();
 
+            DataText dt = new();
+            ObservableCollection<DataMoto> dm = [];
+            dm.Add(dt);
         }
 
         private void TextThumb_DragDelta(object sender, DragDeltaEventArgs e)
@@ -40,11 +43,14 @@ namespace _20241129
         private void MyButton_Click(object sender, RoutedEventArgs e)
         {
             var neko = MyTextThumb2.MyData;
-            DataMoto inu = MyItemsThumb1.MyData;
-            var tako = (Datas)inu;
-            tako.MyDatas[0].MyTop = 100;
+            Datas inu = MyItemsThumb1.MyData;            
+            inu.MyDatas[1].MyLeft = 120;
         }
 
+        private void MyButton2_Click(object sender, RoutedEventArgs e)
+        {
+            MyItemsThumb1.MyChildren.Remove(MyTextThumb3);
+        }
     }
 
 

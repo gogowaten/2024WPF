@@ -21,7 +21,7 @@ using System.Windows.Shapes;
 namespace _20241129
 {
     public enum DataType { None = 0, Items, Text, Maru, Rect }
-    public class DataMoto : DependencyObject
+    public abstract class DataMoto : DependencyObject
     {
         #region 依存関係プロパティ
 
@@ -51,6 +51,7 @@ namespace _20241129
 
         #endregion
         public DataType Type { get; set; }
+        
         public DataMoto() { }
     }
 
@@ -87,7 +88,7 @@ namespace _20241129
 
 
         #endregion
-        public DataText() { this.Type = DataType.Text; }
+        public DataText() { this.Type = DataType.Text;}
     }
 
     public abstract class DataShape : DataMoto
@@ -169,6 +170,12 @@ namespace _20241129
             }
         }
     }
+
+    //public class DType
+    //{
+    //    public DataType Type { get; private set; }
+    //    public DType(DataType type) { this.Type = type; }
+    //}
 
 }
 

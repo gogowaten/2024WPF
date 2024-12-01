@@ -17,18 +17,22 @@
     </Grid.ColumnDefinitions>
     <Canvas>
       <local:ItemsThumb x:Name="MyItemsThumb1" Background="YellowGreen" DragDelta="TextThumb_DragDelta">
-        <local:TextThumb x:Name="MyTextThumb1" MyText="topLeft"/>
-        <local:TextThumb x:Name="MyTextThumb2" MyText="bottomRight" MyLeft="100" MyTop="50" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
+        <local:TextThumb x:Name="MyTextThumb1" MyText="text1"/>
+        <local:TextThumb x:Name="MyTextThumb2" MyText="Text2" MyLeft="100" MyTop="50" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
+        <local:TextThumb x:Name="MyTextThumb3" MyText="text3" MyLeft="200" MyTop="80" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
       </local:ItemsThumb>
     </Canvas>
+    
     <StackPanel Grid.Column="1">
       <Button Content="test" x:Name="MyButton" Click="MyButton_Click"/>
+      <Button Content="test" x:Name="MyButton2" Click="MyButton2_Click"/>
       <TextBlock Text="{Binding ElementName=MyTextThumb1, Path=MyText}"/>
-      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyLeft, StringFormat=0.0_Left }"/>
-      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyLeft, StringFormat=0.0_DataLeft}"/>
-      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyTop, StringFormat=0.0_DataTop}"/>
-      <TextBlock Text="{Binding ElementName=MyItemsThumb1, Path=MyData.MyLeft}"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyLeft, StringFormat=000_tx2_Left }"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyLeft, StringFormat=000_tx2_DataLeft}"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyTop, StringFormat=000_tx2_DataTop}"/>
       <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyText}"/>
+      <TextBlock Text="{Binding ElementName=MyItemsThumb1, Path=MyData.MyLeft}"/>
+      <TextBlock Text="{Binding ElementName=MyItemsThumb1, Path=MyData.MyDatas[1].MyLeft, StringFormat=000_Datas_tx2_Left}"/>
     </StackPanel>
 
 
