@@ -15,24 +15,34 @@
       <ColumnDefinition/>
       <ColumnDefinition Width="150"/>
     </Grid.ColumnDefinitions>
-    <Canvas>
-      <local:ItemsThumb x:Name="MyItemsThumb1" Background="YellowGreen" DragDelta="TextThumb_DragDelta">
-        <local:TextThumb x:Name="MyTextThumb1" MyText="text1"/>
-        <local:TextThumb x:Name="MyTextThumb2" MyText="Text2" MyLeft="100" MyTop="50" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
-        <local:TextThumb x:Name="MyTextThumb3" MyText="text3" MyLeft="200" MyTop="80" Background="Khaki" DragDelta="TextThumb_DragDelta"/>
-      </local:ItemsThumb>
+    <Canvas x:Name="MyCanvas">
+      <local:RootThumb x:Name="MyRootThumb" Background="Olive">
+        <local:GroupThumb x:Name="MyGroupThumb1" MyLeft="0" MyTop="0" Background="YellowGreen" DragDelta="TextThumb_DragDelta">
+          <local:TextThumb x:Name="MyTextThumb1" Background="Khaki" MyText="text1"/>
+          <local:TextThumb x:Name="MyTextThumb2" Background="Khaki" MyText="Text2" MyLeft="50" MyTop="20" DragDelta="TextThumb_DragDelta"/>
+          <local:TextThumb x:Name="MyTextThumb3" Background="Khaki" MyText="text3" MyLeft="100" MyTop="50" DragDelta="TextThumb_DragDelta"/>
+        </local:GroupThumb>
+        <local:GroupThumb MyLeft="120" MyTop="90" Background="Green">
+          <local:TextThumb MyText="2-1" Background="Khaki"/>
+          <local:TextThumb MyText="2-2" Background="Khaki" MyLeft="50" MyTop="20"/>
+        </local:GroupThumb>
+      </local:RootThumb>
     </Canvas>
-    
+
     <StackPanel Grid.Column="1">
       <Button Content="text2 left120" x:Name="MyButton" Click="MyButton_Click"/>
       <Button Content="text3 remove" x:Name="MyButton2" Click="MyButton2_Click"/>
-      <TextBlock Text="{Binding ElementName=MyTextThumb1, Path=MyText}"/>
+      <Button Content="textAdd" x:Name="MyButtonAdd" Click="MyButtonAdd_Click"/>
+      <Button Content="check" x:Name="MyButtonCheck" Click="MyButtonCheck_Click"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyText, StringFormat={}{0}_MyText}"/>
+      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyText, StringFormat={}{0}_MyData.MyText}"/>
+      <TextBlock Text="{Binding ElementName=MyGroupThumb1, Path=MyData.MyDatas[1].MyText, StringFormat={}{0}_DatasText}"/>
       <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyLeft, StringFormat=000_tx2_Left }"/>
       <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyLeft, StringFormat=000_tx2_DataLeft}"/>
+      <TextBlock Text="{Binding ElementName=MyGroupThumb1, Path=MyData.MyDatas[1].MyLeft, StringFormat=000_Datas_tx2_Left}"/>
+      <Separator/>
       <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyTop, StringFormat=000_tx2_DataTop}"/>
-      <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyText}"/>
-      <TextBlock Text="{Binding ElementName=MyItemsThumb1, Path=MyData.MyLeft}"/>
-      <TextBlock Text="{Binding ElementName=MyItemsThumb1, Path=MyData.MyDatas[1].MyLeft, StringFormat=000_Datas_tx2_Left}"/>
+      <TextBlock Text="{Binding ElementName=MyGroupThumb1, Path=MyData.MyLeft}"/>
     </StackPanel>
 
 

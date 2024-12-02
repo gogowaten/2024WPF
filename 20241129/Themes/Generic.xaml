@@ -8,10 +8,56 @@
     <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
   </Style>-->
 
-  <Style TargetType="{x:Type local:ItemsThumb}">
+  <Style TargetType="{x:Type local:BaseCollectionThumb}">
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type local:ItemsThumb}">
+        <ControlTemplate TargetType="{x:Type local:BaseCollectionThumb}">
+          <ItemsControl ItemsSource="{Binding MyChildren}"
+                        x:Name="MyTemp"
+                        Background="{TemplateBinding Background}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <local:ExCanvas x:Name="MyCanvas"/>
+                <!--<local:ExCanvas x:Name="MyCanvas"
+                                Background="{Binding
+                  RelativeSource={RelativeSource AncestorType={x:Type local:BaseThumb}},
+                  Path=Background}"/>-->
+
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+          </ItemsControl>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType="{x:Type local:RootThumb}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:RootThumb}">
+          <ItemsControl ItemsSource="{Binding MyChildren}"
+                        x:Name="MyTemp"
+                        Background="{TemplateBinding Background}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <local:ExCanvas x:Name="MyCanvas"/>
+                <!--<local:ExCanvas x:Name="MyCanvas"
+                                Background="{Binding
+                  RelativeSource={RelativeSource AncestorType={x:Type local:BaseThumb}},
+                  Path=Background}"/>-->
+
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+          </ItemsControl>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType="{x:Type local:GroupThumb}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:GroupThumb}">
           <ItemsControl ItemsSource="{Binding MyChildren}"
                         x:Name="MyTemp"
                         Background="{TemplateBinding Background}">
@@ -36,11 +82,22 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type local:TextThumb}">
-          <TextBlock Text="{Binding MyText}" Background="{TemplateBinding Background}"/>
+          <TextBlock Text="{Binding MyData.MyText}" Background="{TemplateBinding Background}"/>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
+  
+  
+  <!--<Style TargetType="{x:Type local:TextThumb}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type local:TextThumb}">
+          <TextBlock Text="{Binding MyText}" Background="{TemplateBinding Background}"/>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>-->
 
 
 

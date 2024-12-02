@@ -45,7 +45,7 @@ namespace _20241129
         public Style RectStyle { get; set; } = new Style();
         public override Style SelectStyle(object item, DependencyObject container)
         {
-            if (item is DataMoto data)
+            if (item is Data data)
             {
                 DataType da = data.Type;
 
@@ -79,7 +79,7 @@ namespace _20241129
         public override DataTemplate? SelectTemplate(object item, DependencyObject container)
         {
 
-            if (item is DataMoto data)
+            if (item is Data data)
             {
                 DataType da = data.Type;
 
