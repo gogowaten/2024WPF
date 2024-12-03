@@ -24,10 +24,18 @@ namespace WpfAppDllTest
             TextBlock textBlock = new() { Text = "textblock" };
             MyThumb1.MyTemplateCanvas.Children.Add(textBlock);
             MyThumb1.DragDelta += MyThumb1_DragDelta;
-
+            MyCustomControlTextThumb.PreviewMouseDown += MyCustomControlTextThumb_PreviewMouseDown;
+            
             AddRoundButton();
             AddRoundButton2();
             AddRoundButton3();
+        }
+
+        private void MyCustomControlTextThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var sen = sender;
+            var sour = e.Source;
+            var ori = e.OriginalSource;
         }
 
         private void MyThumb1_DragDelta(object sender, DragDeltaEventArgs e)

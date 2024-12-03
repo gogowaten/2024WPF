@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241129"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="400">
+        Title="MainWindow" Height="350" Width="400">
 
 
 
@@ -16,10 +16,11 @@
       <ColumnDefinition Width="150"/>
     </Grid.ColumnDefinitions>
     <Canvas x:Name="MyCanvas">
+      <local:TextThumb MyText="aaaaaaaaaaaaaaaaaaaaa" MyTop="150" Background="Khaki" PreviewMouseDown="TextThumb_PreviewMouseDown"/>
       <local:RootThumb x:Name="MyRootThumb" Background="Olive">
         <local:GroupThumb x:Name="MyGroupThumb1" MyLeft="0" MyTop="0" Background="YellowGreen" DragDelta="TextThumb_DragDelta">
           <local:TextThumb x:Name="MyTextThumb1" Background="Khaki" MyText="text1"/>
-          <local:TextThumb x:Name="MyTextThumb2" Background="Khaki" MyText="Text2" MyLeft="50" MyTop="20" DragDelta="TextThumb_DragDelta"/>
+          <local:TextThumb x:Name="MyTextThumb2" Background="Khaki" MyText="Text2" MyLeft="50" MyTop="20" DragDelta="TextThumb_DragDelta" PreviewMouseDown="TextThumb_PreviewMouseDown"/>
           <local:TextThumb x:Name="MyTextThumb3" Background="Khaki" MyText="text3" MyLeft="100" MyTop="50" DragDelta="TextThumb_DragDelta"/>
         </local:GroupThumb>
         <local:GroupThumb MyLeft="120" MyTop="90" Background="Green">
@@ -43,6 +44,7 @@
       <Separator/>
       <TextBlock Text="{Binding ElementName=MyTextThumb2, Path=MyData.MyTop, StringFormat=000_tx2_DataTop}"/>
       <TextBlock Text="{Binding ElementName=MyGroupThumb1, Path=MyData.MyLeft}"/>
+      <TextBlock Text="{Binding ElementName=MyRootThumb, Path=ClickedThumb.Name, StringFormat={}{0}_clicked}"/>
     </StackPanel>
 
 

@@ -25,7 +25,7 @@
       <WpfLibrary1:ContentPThumb3 Canvas.Top="100" Canvas.Left="20">
         <TextBlock Text="ppp"/>
       </WpfLibrary1:ContentPThumb3>
-      
+      <WpfLibrary1:TextThumb x:Name="MyCustomControlTextThumb" Canvas.Left="200" Canvas.Top="50" MyText="CustomControlTextThumb" Background="Khaki"/>
     </Canvas>
 
     <StackPanel Grid.Column="1" x:Name="MyStackPanel">

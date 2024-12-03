@@ -1,0 +1,55 @@
+﻿<Window x:Class="_20241203.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241203"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="250" Width="400">
+  
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="150"/>
+    </Grid.ColumnDefinitions>
+
+    
+      
+    
+      <Canvas x:Name="MyCanvas" FocusManager.IsFocusScope="True">
+        <Thumb x:Name="MyThumb1" Canvas.Left="10" Canvas.Top="10" Width="30" Height="30" Focusable="True" PreviewKeyDown="MyThumb1_PreviewKeyDown"/>
+        <Thumb x:Name="MyThumb2" Canvas.Left="30" Canvas.Top="40" Width="30" Height="30" Focusable="True" PreviewKeyDown="MyThumb1_PreviewKeyDown"/>
+        <Thumb x:Name="MyThumb3" Canvas.Left="50" Canvas.Top="80" Width="30" Height="30" PreviewKeyDown="MyThumb1_PreviewKeyDown"/>
+      </Canvas>
+    
+    <StackPanel Grid.Column="1" KeyboardNavigation.DirectionalNavigation="Continue">
+        <TextBlock Text="{Binding ElementName=MyThumb1, Path=IsFocused, StringFormat=T1Focused : {0}}"/>
+        <TextBlock Text="{Binding ElementName=MyThumb2, Path=IsFocused, StringFormat=T2Focused : {0}}"/>
+        <TextBlock Text="{Binding ElementName=MyThumb3, Path=IsFocused, StringFormat=T3Focused : {0}}"/>
+        <TextBlock Text="{Binding ElementName=MyGrid, Path=(KeyboardNavigation.DirectionalNavigation)}"/>
+        <TextBlock Text="{Binding ElementName=MyCanvas, Path=(KeyboardNavigation.ControlTabNavigation)}"/>
+        <TextBlock Text="{Binding ElementName=MyThumb1, Path=IsKeyboardFocused}"/>
+        <Button x:Name="MyButtonCheck" Content="check" Click="MyButtonCheck_Click"/>
+        <Button Content="aaaaaaaaa"/>
+      </StackPanel>
+    
+  </Grid>
+  
+  <!--<DockPanel>
+    <Menu DockPanel.Dock="Top" KeyboardNavigation.DirectionalNavigation="None">
+      <MenuItem Header="ファイル(_F)">
+        <MenuItem Header="新規作成(_N)" />
+        <MenuItem Header="終了(_X)" />
+      </MenuItem>
+      <MenuItem Header="編集(_E)">
+        <MenuItem Header="元に戻す(_U)" />
+        <MenuItem Header="やり直す(_R)" />
+      </MenuItem>
+    </Menu>
+    <StackPanel Orientation="Horizontal">
+      <Button Content="ボタン1" />
+      <Button Content="ボタン2" />
+    </StackPanel>
+  </DockPanel>-->
+  
+</Window>

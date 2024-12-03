@@ -20,11 +20,15 @@ namespace _20241129
 
     public partial class MainWindow : Window
     {
-        public BaseThumb? ClickedThumb { get; set; }
+        //public BaseThumb? ClickedThumb { get; set; }
+        //public BaseCollectionThumb ActiveGroup { get; set; }
+        //public BaseThumb? FocusedThumb { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
 
+            //ActiveGroup = MyRootThumb;
             MyCanvas.PreviewMouseDown += MyCanvas_PreviewMouseDown;
         }
 
@@ -35,10 +39,7 @@ namespace _20241129
            var ev = e.RoutedEvent;
         }
 
-        private void MyCanvas_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
+      
 
         private void TextThumb_DragDelta(object sender, DragDeltaEventArgs e)
         {
@@ -78,13 +79,19 @@ namespace _20241129
 
         private void MyButtonCheck_Click(object sender, RoutedEventArgs e)
         {
-            var datas = MyGroupThumb1.MyData.MyDatas;
-            if (MyGroupThumb1.MyChildren[2] is TextThumb thumb)
-            {
-                var left = thumb.MyLeft; 
-                thumb.MyData.MyLeft = 50;
-               var canleft=  Canvas.GetLeft(thumb);
-            }
+            var kf = MyTextThumb2.IsKeyboardFocused;
+            //MyTextThumb2.FocusVisualStyle focusVisualStyle = null;
+           var fo = MyTextThumb2.IsFocused;
+            var fa = MyTextThumb2.Focusable;
+            MyTextThumb2.Focusable = true;
+            MyTextThumb2.Focus();
+        }
+
+        private void TextThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            var sen = sender;
+            var sou = e.Source;
+            var ori = e.OriginalSource;
         }
     }
 

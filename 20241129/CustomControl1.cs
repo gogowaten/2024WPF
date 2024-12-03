@@ -118,8 +118,6 @@ namespace _20241129
             b = new() { Source = this, Path = new PropertyPath(MyTopProperty) };
             SetBinding(Canvas.TopProperty, b);
 
-            PreviewMouseDown += OnMouseDown;
-            MouseDown += BaseThumb_MouseDown;
 
             //DataのTopLeftと要素のTopLeftのBinding
             //ここで行いたいけどなぜかできない、loadedイベントでもできない。
@@ -130,16 +128,6 @@ namespace _20241129
 
         }
 
-        private void BaseThumb_MouseDown(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void OnMouseDown(object sender, MouseButtonEventArgs e)
-        {
-            var source = e.Source;
-            var osource = e.OriginalSource;
-        }
 
         //public BaseThumb(Data data)
         //{
@@ -296,6 +284,27 @@ namespace _20241129
     [ContentProperty(nameof(MyChildren))]
     public class RootThumb : BaseCollectionThumb
     {
+        #region root専用Property
+
+
+        //public BaseThumb? ClickedThumb { get; set; }
+
+        public BaseMonoThumb ClickedThumb
+        {
+            get { return (BaseMonoThumb)GetValue(ClickedThumbProperty); }
+            set { SetValue(ClickedThumbProperty, value); }
+        }
+        public static readonly DependencyProperty ClickedThumbProperty =
+            DependencyProperty.Register(nameof(ClickedThumb), typeof(BaseMonoThumb), typeof(RootThumb),
+                new FrameworkPropertyMetadata(null,
+                    FrameworkPropertyMetadataOptions.AffectsRender |
+                    FrameworkPropertyMetadataOptions.AffectsMeasure |
+                    FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+        public BaseCollectionThumb ActiveGroup { get; set; }
+        public BaseThumb? FocusedThumb { get; set; }
+        #endregion
+
         public override ThumbType Type { get; set; }
         static RootThumb()
         {
@@ -303,11 +312,42 @@ namespace _20241129
         }
         public RootThumb()
         {
+            ActiveGroup = this;
             RootThumb = this;
             ParentThumb = null;
             Type = ThumbType.Root;
+
+            PreviewMouseDown += RootThumb_PreviewMouseDown;
+            KeyDown += RootThumb_KeyDown;
+            PreviewKeyDown += RootThumb_PreviewKeyDown;
+            
         }
 
+        private void RootThumb_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            var kf = Keyboard.FocusedElement;
+            if (e.Key == Key.Right)
+            {
+                ClickedThumb.MyLeft += 10;
+            }
+        }
+
+        private void RootThumb_KeyDown(object sender, KeyEventArgs e)
+        {
+            
+        }
+
+        //ClickedThumbの登録
+        private void RootThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.OriginalSource is FrameworkElement el)
+            {
+                if (el.TemplatedParent is BaseMonoThumb bt)
+                {
+                    ClickedThumb = bt;
+                }
+            }
+        }
     }
 
 
@@ -461,7 +501,24 @@ namespace _20241129
 
 
 
-    public class TextThumb : BaseThumb
+    public class BaseMonoThumb : BaseThumb
+    {
+        public override ThumbType Type { get; set; }
+        static BaseMonoThumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(BaseMonoThumb), new FrameworkPropertyMetadata(typeof(BaseMonoThumb)));
+        }
+        public BaseMonoThumb()
+        {
+            
+        }
+
+
+       
+
+    }
+
+    public class TextThumb : BaseMonoThumb
     {
         public override ThumbType Type { get; set; } = ThumbType.Text;
         public Data MyData { get; set; }
