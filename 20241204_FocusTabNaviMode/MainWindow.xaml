@@ -1,0 +1,42 @@
+﻿<Window x:Class="_20241204_FocusTabNaviMode.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241204_FocusTabNaviMode"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="250" Width="400">
+  <Grid>
+    
+    <Grid.Resources>
+      <Style TargetType="TextBox">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Text" Value="TextBox"/>
+        <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+      </Style>
+    </Grid.Resources>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+
+    <StackPanel Margin="10" Background="BurlyWood"
+                KeyboardNavigation.TabNavigation="{Binding ElementName=MyCombo, Path=SelectedValue}">
+      <TextBlock Text="StackPanel A" TextAlignment="Center"/>
+      <TextBox/>
+      <TextBox/>
+      <TextBlock Text="StackPanel A TabNavigation"/>
+      <ComboBox x:Name="MyCombo" ItemsSource="{Binding MyEnumArray}" SelectedIndex="0"/>
+      <TextBox/>
+    </StackPanel>
+
+    <StackPanel Margin="10" Background="BurlyWood" Grid.Column="1">
+      <TextBlock Text="StackPanel B" TextAlignment="Center"/>
+      <TextBox/>
+      <TextBox/>
+      <TextBox/>
+    </StackPanel>
+
+  </Grid>
+</Window>
