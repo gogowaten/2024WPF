@@ -6,34 +6,69 @@
         xmlns:local="clr-namespace:_20241203"
         mc:Ignorable="d"
         Title="MainWindow" Height="250" Width="400">
-  
+  <Window.Resources>
+    <Style TargetType="FrameworkElement">
+      <Setter Property="Margin" Value="10"/>
+    </Style>
+  </Window.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
-      <ColumnDefinition Width="150"/>
+      <ColumnDefinition/>
     </Grid.ColumnDefinitions>
-
     
-      
-    
-      <Canvas x:Name="MyCanvas" FocusManager.IsFocusScope="True">
-        <Thumb x:Name="MyThumb1" Canvas.Left="10" Canvas.Top="10" Width="30" Height="30" Focusable="True" PreviewKeyDown="MyThumb1_PreviewKeyDown"/>
-        <Thumb x:Name="MyThumb2" Canvas.Left="30" Canvas.Top="40" Width="30" Height="30" Focusable="True" PreviewKeyDown="MyThumb1_PreviewKeyDown"/>
-        <Thumb x:Name="MyThumb3" Canvas.Left="50" Canvas.Top="80" Width="30" Height="30" PreviewKeyDown="MyThumb1_PreviewKeyDown"/>
-      </Canvas>
-    
-    <StackPanel Grid.Column="1" KeyboardNavigation.DirectionalNavigation="Continue">
-        <TextBlock Text="{Binding ElementName=MyThumb1, Path=IsFocused, StringFormat=T1Focused : {0}}"/>
-        <TextBlock Text="{Binding ElementName=MyThumb2, Path=IsFocused, StringFormat=T2Focused : {0}}"/>
-        <TextBlock Text="{Binding ElementName=MyThumb3, Path=IsFocused, StringFormat=T3Focused : {0}}"/>
-        <TextBlock Text="{Binding ElementName=MyGrid, Path=(KeyboardNavigation.DirectionalNavigation)}"/>
-        <TextBlock Text="{Binding ElementName=MyCanvas, Path=(KeyboardNavigation.ControlTabNavigation)}"/>
-        <TextBlock Text="{Binding ElementName=MyThumb1, Path=IsKeyboardFocused}"/>
-        <Button x:Name="MyButtonCheck" Content="check" Click="MyButtonCheck_Click"/>
-        <Button Content="aaaaaaaaa"/>
-      </StackPanel>
-    
+    <StackPanel>
+      <TextBox Text="text"/>
+      <TextBox Text="text"/>
+    </StackPanel>
+    <StackPanel Margin="10" Grid.Column="1">
+      <TextBox Text="text"/>
+      <TextBox Text="text"/>
+    </StackPanel>
   </Grid>
+  
+
+  <!--<DockPanel Grid.ColumnSpan="2">
+
+    <StatusBar DockPanel.Dock="Bottom" Height="20"/>
+    <TabControl Grid.Column="0" Width="250" Visibility="Visible">
+      <TabItem Header="tab1">
+        <StackPanel>
+          <TextBlock Text="{Binding FocusedThumb }"/>
+          <TextBlock Text="{Binding FocusedThumb.(Canvas.Left), StringFormat=Left : {0} }"/>
+          <TextBlock Text="{Binding FocusedThumb.(Canvas.Top), StringFormat=Top : {0}}"/>
+        </StackPanel>
+      </TabItem>
+      <TabItem Header="tab2">
+        <TextBlock Text="text"/>
+      </TabItem>
+    </TabControl>
+    <Canvas Grid.Column="1" DockPanel.Dock="Right" Background="Beige"
+            KeyboardNavigation.DirectionalNavigation="Contained"
+            KeyboardNavigation.TabNavigation="Local">
+      <Canvas.Resources>
+        <Style TargetType="Thumb">
+          <Setter Property="Height" Value="30"/>
+          <Setter Property="Width" Value="30"/>
+          <Setter Property="Focusable" Value="True"/>
+          <EventSetter Event="PreviewKeyDown" Handler="Thumb_PreviewKeyDown"/>
+          <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="None"/>
+          <Setter Property="KeyboardNavigation.TabNavigation" Value="Contained"/>
+        </Style>
+      </Canvas.Resources>
+      <Thumb DragDelta="Thumb_DragDelta" Canvas.Left="10" Canvas.Top="10"/>
+      <Thumb DragDelta="Thumb_DragDelta" Canvas.Left="10" Canvas.Top="100"/>
+      <Thumb DragDelta="Thumb_DragDelta" Canvas.Left="100" Canvas.Top="10"/>
+    </Canvas>
+
+
+
+
+
+
+  </DockPanel>-->
+
+  
   
   <!--<DockPanel>
     <Menu DockPanel.Dock="Top" KeyboardNavigation.DirectionalNavigation="None">
@@ -51,5 +86,5 @@
       <Button Content="ボタン2" />
     </StackPanel>
   </DockPanel>-->
-  
+
 </Window>
