@@ -5,28 +5,41 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241203"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="400">
-  <Window.Resources>
-    <Style TargetType="FrameworkElement">
-      <Setter Property="Margin" Value="10"/>
-    </Style>
-  </Window.Resources>
+        Title="MainWindow" Height="200" Width="400">
+
   <Grid>
+    <Grid.Resources>
+      <Style TargetType="TextBox">
+        <Setter Property="Margin" Value="5"/>
+        <Setter Property="Text" Value="TextBox"/>
+        <EventSetter Event="GotFocus" Handler="TextBox_GotFocus"/>
+      </Style>
+    </Grid.Resources>
+
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
       <ColumnDefinition/>
     </Grid.ColumnDefinitions>
-    
-    <StackPanel>
-      <TextBox Text="text"/>
-      <TextBox Text="text"/>
+
+    <StackPanel Margin="10" Background="BurlyWood"
+                KeyboardNavigation.TabNavigation="{Binding ElementName=MyCombo, Path=SelectedValue}">
+      <TextBlock Text="StackPanel A" TextAlignment="Center"/>
+      <TextBox/>
+      <TextBox/>
+      <TextBlock Text="StackPanel A TabNavigation"/>
+      <ComboBox x:Name="MyCombo" ItemsSource="{Binding MyEnumArray}" SelectedIndex="0"/>
+      <TextBox/>
     </StackPanel>
-    <StackPanel Margin="10" Grid.Column="1">
-      <TextBox Text="text"/>
-      <TextBox Text="text"/>
+
+    <StackPanel Margin="10" Background="BurlyWood" Grid.Column="1">
+      <TextBlock Text="StackPanel B" TextAlignment="Center"/>
+      <TextBox/>
+      <TextBox/>
+      <TextBox/>
     </StackPanel>
+
   </Grid>
-  
+
 
   <!--<DockPanel Grid.ColumnSpan="2">
 
@@ -68,8 +81,8 @@
 
   </DockPanel>-->
 
-  
-  
+
+
   <!--<DockPanel>
     <Menu DockPanel.Dock="Top" KeyboardNavigation.DirectionalNavigation="None">
       <MenuItem Header="ファイル(_F)">

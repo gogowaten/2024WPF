@@ -100,6 +100,8 @@ namespace _20241203
             DependencyProperty.Register(nameof(FocusedThumb), typeof(Thumb), typeof(MainWindow),
                 new FrameworkPropertyMetadata(null));
 
+        //public static Array MyEnumArray => Enum.GetValues(typeof(KeyboardNavigationMode));
+        public Array MyEnumArray { get; set; }
 
         public MainWindow()
         {
@@ -107,6 +109,8 @@ namespace _20241203
 
             DataContext = this;
             PreviewMouseDown += MainWindow_PreviewMouseDown;
+            MyEnumArray = Enum.GetValues(typeof(KeyboardNavigationMode));
+            //MyEnumArray = Enum.GetValues(typeof(KeyboardNavigationMode)).Cast<KeyboardNavigationMode>();
         }
 
         private void MainWindow_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -170,5 +174,12 @@ namespace _20241203
 
         }
 
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if(sender is TextBox tb)
+            {
+                tb.SelectAll();
+            }
+        }
     }
 }
