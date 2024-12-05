@@ -100,8 +100,24 @@ namespace _20241203
             DependencyProperty.Register(nameof(FocusedThumb), typeof(Thumb), typeof(MainWindow),
                 new FrameworkPropertyMetadata(null));
 
-        //public static Array MyEnumArray => Enum.GetValues(typeof(KeyboardNavigationMode));
-        //public Array MyEnumArray { get; set; }
+
+        public KeyboardNavigationMode MyThumbDirectionNaviMode
+        {
+            get { return (KeyboardNavigationMode)GetValue(MyThumbDirectionNaviModeProperty); }
+            set { SetValue(MyThumbDirectionNaviModeProperty, value); }
+        }
+        public static readonly DependencyProperty MyThumbDirectionNaviModeProperty =
+            DependencyProperty.Register(nameof(MyThumbDirectionNaviMode), typeof(KeyboardNavigationMode), typeof(MainWindow), new PropertyMetadata(KeyboardNavigationMode.Continue));
+
+
+        public KeyboardNavigationMode MyThumbTbaNaviMode
+        {
+            get { return (KeyboardNavigationMode)GetValue(MyThumbTbaNaviModeProperty); }
+            set { SetValue(MyThumbTbaNaviModeProperty, value); }
+        }
+        public static readonly DependencyProperty MyThumbTbaNaviModeProperty =
+            DependencyProperty.Register(nameof(MyThumbTbaNaviMode), typeof(KeyboardNavigationMode), typeof(MainWindow), new PropertyMetadata(KeyboardNavigationMode.Continue));
+
 
         public MainWindow()
         {
@@ -109,7 +125,14 @@ namespace _20241203
 
             DataContext = this;
             PreviewMouseDown += MainWindow_PreviewMouseDown;
-            //MyEnumArray = Enum.GetValues(typeof(KeyboardNavigationMode));
+            MyComboThumbDirection.ItemsSource = Enum.GetValues(typeof(KeyboardNavigationMode));
+            SetBinding(MyThumbDirectionNaviModeProperty, new Binding()
+            {
+                Source = MyComboThumbDirection,
+                Path = new PropertyPath(ComboBox.SelectedValueProperty),
+            });
+            MyComboCanvasDirection.ItemsSource = Enum.GetValues(typeof(KeyboardNavigationMode));
+            MyComboCanvasTabNavi.ItemsSource = Enum.GetValues(typeof(KeyboardNavigationMode));
         }
 
         private void MainWindow_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -175,7 +198,7 @@ namespace _20241203
 
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if(sender is TextBox tb)
+            if (sender is TextBox tb)
             {
                 tb.SelectAll();
             }
