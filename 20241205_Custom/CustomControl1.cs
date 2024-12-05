@@ -14,6 +14,9 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//WPF、カスタムコントロール使ってみた、マウスドラッグ移動できるTextBlockを作成 - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2024/12/05/182418
+
 namespace _20241205_Custom
 {
     /// <summary>
