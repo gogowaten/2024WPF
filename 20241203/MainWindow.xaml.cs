@@ -177,20 +177,22 @@ namespace _20241203
                 if (e.Key == Key.Right)
                 {
                     Canvas.SetLeft(t, Canvas.GetLeft(t) + 10);
-                    //e.Handled = true;
+                    e.Handled = true;
                 }
                 else if (e.Key == Key.Left)
                 {
                     Canvas.SetLeft(t, Canvas.GetLeft(t) - 10);
-                    //e.Handled = true;
+                    e.Handled = true;
                 }
                 else if (e.Key == Key.Up)
                 {
                     Canvas.SetTop(t, Canvas.GetTop(t) - 10);
+                    e.Handled = true;
                 }
                 else if (e.Key == Key.Down)
                 {
                     Canvas.SetTop(t, Canvas.GetTop(t) + 10);
+                    e.Handled = true;
                 }
             }
 

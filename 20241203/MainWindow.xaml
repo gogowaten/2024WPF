@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241203"
         mc:Ignorable="d"
-        Title="MainWindow" Height="200" Width="400">
+        Title="MainWindow" Height="300" Width="500">
   <Window.Resources>
     
   </Window.Resources>
@@ -13,7 +13,8 @@
 
   <DockPanel Grid.ColumnSpan="2">
 
-    <Menu DockPanel.Dock="Top">
+    <Menu DockPanel.Dock="Top"
+          KeyboardNavigation.DirectionalNavigation="Continue">
       <MenuItem Header="item1">
         <MenuItem Header="item1-1"/>
       </MenuItem>
@@ -21,11 +22,10 @@
         <MenuItem Header="item2-1"/>
       </MenuItem>
     </Menu>
-    <StatusBar DockPanel.Dock="Bottom">      
+    <StatusBar DockPanel.Dock="Bottom"
+               KeyboardNavigation.DirectionalNavigation="Continue">      
       <TextBlock Text="thumbDirection"/>
-      <ComboBox x:Name="MyComboThumbDirection" Width="100"/>
-      <TextBlock Text="CanvasDirection"/>
-      <ComboBox x:Name="MyComboCanvasDirection" Width="100"/>
+      <ComboBox x:Name="MyComboThumbDirection" Width="100"/>      
     </StatusBar>
     
     <StackPanel DockPanel.Dock="Right" Width="200">
@@ -34,7 +34,14 @@
       <TextBlock Text="{Binding ElementName=MyCanvas,Path=(KeyboardNavigation.TabNavigation) ,StringFormat=CanvasTabNavi {0}}"/>
       <TextBlock Text="{Binding FocusedThumb.(Canvas.Left), StringFormat=Left : {0} }"/>
       <TextBlock Text="{Binding FocusedThumb.(Canvas.Top), StringFormat=Top : {0}}"/>
-      <ComboBox x:Name="MyComboCanvasTabNavi" Width="100"/>
+      <StackPanel Orientation="Horizontal">
+        <ComboBox x:Name="MyComboCanvasTabNavi" Width="100"/>
+        <TextBlock Text="CanvasTabNavi"/>
+      </StackPanel>
+      <StackPanel Orientation="Horizontal">
+        <ComboBox x:Name="MyComboCanvasDirection" Width="100"/>
+        <TextBlock Text="CanvasDirection"/>
+      </StackPanel>
     </StackPanel>
     
     <Canvas x:Name="MyCanvas" Grid.Column="1" DockPanel.Dock="Left" Background="Beige"
@@ -47,7 +54,7 @@
           <Setter Property="Focusable" Value="True"/>
           <EventSetter Event="PreviewKeyDown" Handler="Thumb_PreviewKeyDown"/>
           <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="{Binding MyThumbDirectionNaviMode}"/>
-          <Setter Property="KeyboardNavigation.TabNavigation" Value="Contained"/>
+          <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue"/>
         </Style>
       </Canvas.Resources>
       <Thumb DragDelta="Thumb_DragDelta" Canvas.Left="10" Canvas.Top="10"/>
