@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_20241206_FocusKeyNavigation"
         mc:Ignorable="d"
         Title="MainWindow" Height="300" Width="580">
-  <DockPanel Grid.ColumnSpan="2">
+  <DockPanel>
 
     <Menu DockPanel.Dock="Top">
       <MenuItem Header="item1">
