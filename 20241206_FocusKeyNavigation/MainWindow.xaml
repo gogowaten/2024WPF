@@ -1,0 +1,77 @@
+﻿<Window x:Class="_20241206_FocusKeyNavigation.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241206_FocusKeyNavigation"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="300" Width="580">
+  <DockPanel Grid.ColumnSpan="2">
+
+    <Menu DockPanel.Dock="Top">
+      <MenuItem Header="item1">
+        <MenuItem Header="item1-1"/>
+        <MenuItem Header="item1-2"/>
+      </MenuItem>
+      <MenuItem Header="item2">
+        <MenuItem Header="item2-1"/>
+        <MenuItem Header="item2-2"/>
+      </MenuItem>
+    </Menu>
+
+    <StatusBar DockPanel.Dock="Bottom">
+      <TextBlock Text="ThumbDirectionNavi"/>
+      <ComboBox x:Name="MyComboThumbDirection" Width="100"/>
+    </StatusBar>
+
+    <StackPanel DockPanel.Dock="Right" Width="300">
+      <GroupBox Header="FocusElement">
+        <StackPanel>
+          <TextBlock Text="{Binding MyFocusedElement.(Canvas.Left), StringFormat=Left : {0:000.0} }"/>
+          <TextBlock Text="{Binding MyFocusedElement.(Canvas.Top), StringFormat=Top : {0:000.0}}"/>
+          <Separator/>
+          <TextBlock x:Name="MyFocus" Text="focus"/>
+          <TextBlock x:Name="MyKeyFocus" Text="keyfocus"/>
+          <TextBlock x:Name="MyPreKeyFocus"/>
+        </StackPanel>
+      </GroupBox>
+      <TextBlock Text="{Binding ElementName=MyCanvas,Path=(KeyboardNavigation.TabNavigation) ,StringFormat=CanvasTabNavi {0}}"/>
+      <StackPanel Orientation="Horizontal">
+        <ComboBox x:Name="MyComboCanvasTabNavi" Width="100"/>
+        <TextBlock Text="CanvasTabNavi"/>
+      </StackPanel>
+      <TextBlock Text="{Binding ElementName=MyCanvas,Path=(KeyboardNavigation.DirectionalNavigation) ,StringFormat=CanvasDirection {0}}"/>
+      <StackPanel Orientation="Horizontal">
+        <ComboBox x:Name="MyComboCanvasDirection" Width="100"/>
+        <TextBlock Text="CanvasDirection"/>
+      </StackPanel>
+    </StackPanel>
+
+    <Canvas x:Name="MyCanvas" Grid.Column="1" DockPanel.Dock="Left" Background="Beige"
+            KeyboardNavigation.DirectionalNavigation="{Binding ElementName=MyComboCanvasDirection, Path=SelectedItem}"
+            KeyboardNavigation.TabNavigation="{Binding ElementName=MyComboCanvasTabNavi, Path=SelectedItem}">
+      <Canvas.Resources>
+        <Style TargetType="Thumb">
+          <Setter Property="Height" Value="30"/>
+          <Setter Property="Width" Value="30"/>
+          <Setter Property="Focusable" Value="True"/>
+          <EventSetter Event="PreviewKeyDown" Handler="Thumb_PreviewKeyDown"/>
+          <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+          <Setter Property="KeyboardNavigation.DirectionalNavigation" Value="{Binding MyThumbDirectionNaviMode}"/>
+          <Setter Property="KeyboardNavigation.TabNavigation" Value="Continue"/>
+        </Style>
+      </Canvas.Resources>
+      <Thumb Canvas.Left="10" Canvas.Top="10"/>
+      <Thumb Canvas.Left="10" Canvas.Top="100"/>
+      <Thumb Canvas.Left="100" Canvas.Top="10"/>
+      <Thumb Canvas.Left="100" Canvas.Top="100"/>
+    </Canvas>
+
+
+
+
+
+
+  </DockPanel>
+
+</Window>
