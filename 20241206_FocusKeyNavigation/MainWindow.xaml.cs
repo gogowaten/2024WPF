@@ -4,6 +4,9 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 
+//WPF、フォーカスのあるThumbを方向キーで移動(方向キーでフォーカスを移動させない) - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2024/12/07/142426
+
 
 //目的はカーソルキーによるThumbの移動とTabキーによるフォーカス移動
 
