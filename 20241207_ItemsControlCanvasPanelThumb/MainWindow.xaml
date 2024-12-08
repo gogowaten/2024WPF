@@ -15,23 +15,23 @@
       </Canvas.Resources>
 
       <local:ItemsControlThumb Canvas.Left="0" Canvas.Top="0" Width="300" Height="200" Background="MistyRose">
-        <TextBlock Canvas.Left="10" Canvas.Top="10" Text="ItemsControlCanvasPanelThumb 1"/>
-        <TextBlock Canvas.Left="10" Canvas.Top="30" Text="Group 1"/>
+        <TextBlock Canvas.Left="10" Canvas.Top="10" Text="Group 1"/>
+        <TextBlock Canvas.Left="10" Canvas.Top="30" Text="ItemsControlCanvasPanelThumb 1"/>
         <Button Canvas.Left="10" Canvas.Top="50" Content="Button"/>
         
         <local:ItemsControlThumb Canvas.Left="20" Canvas.Top="100" Width="100" Height="100" Background="LightSalmon">
-          <TextBlock Canvas.Left="10" Canvas.Top="10" Text="ItemsControlCanvasPanelThumb 2"/>
-          <TextBlock Canvas.Left="10" Canvas.Top="30" Text="Group 1-1"/>
+          <TextBlock Canvas.Left="10" Canvas.Top="10" Text="Group 1-1"/>
+          <TextBlock Canvas.Left="10" Canvas.Top="30" Text="ItemsControlCanvasPanelThumb 2"/>
           <CheckBox Canvas.Left="10" Canvas.Top="50" Content="CheckBox"/>
         </local:ItemsControlThumb>
         
         <local:ItemsControlThumb Canvas.Left="150" Canvas.Top="60" Width="120" Height="100" Background="LightSalmon">
-          <TextBlock Canvas.Left="10" Canvas.Top="10" Text="ItemsControlCanvasPanelThumb 3"/>
-          <TextBlock Canvas.Left="10" Canvas.Top="30" Text="Group 1-2"/>
+          <TextBlock Canvas.Left="10" Canvas.Top="10" Text="Group 1-2"/>
+          <TextBlock Canvas.Left="10" Canvas.Top="30" Text="ItemsControlCanvasPanelThumb 3"/>
           
           <local:ItemsControlThumb Canvas.Left="10" Canvas.Top="50" Width="100" Height="50" Background="Tomato">
-            <TextBlock Canvas.Left="10" Canvas.Top="10" Text="ItemsControlCanvasPanelThumb 4"/>
-            <TextBlock Canvas.Left="10" Canvas.Top="30" Text="Group 1-2-1"/>
+            <TextBlock Canvas.Left="10" Canvas.Top="10" Text="Group 1-2-1"/>
+            <TextBlock Canvas.Left="10" Canvas.Top="30" Text="ItemsControlCanvasPanelThumb 4"/>
           </local:ItemsControlThumb>
           
         </local:ItemsControlThumb>

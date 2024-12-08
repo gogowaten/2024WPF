@@ -20,6 +20,20 @@ namespace _20241207
         public MainWindow()
         {
             InitializeComponent();
+
+            Array list = Enum.GetValues(typeof(KeyboardNavigationMode));
+            MyComboGroup1TabNavi.ItemsSource = list;
+            MyComboGroup2TabNavi.ItemsSource = list;
+
+            GotKeyboardFocus += MainWindow_GotKeyboardFocus;
+        }
+
+        private void MainWindow_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if (e.NewFocus is FrameworkElement el)
+            {
+                MyGotKeyFocusElementType.Text = el.GetType().Name;
+            }
         }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
