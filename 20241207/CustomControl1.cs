@@ -55,9 +55,22 @@ namespace _20241207
         }
     }
 
+    //[TemplatePart(Name = nameof(TempName), Type = typeof(ItemsControl))]
     [ContentProperty(nameof(MyThumbs))]
     public class GroupThumb : Thumb
     {
+        private const string TempName = "PART_ItemsControl";
+
+        //public ObservableCollection<Thumb> MyThumbs
+        //{
+        //    get { return (ObservableCollection<Thumb>)GetValue(MyThumbsProperty); }
+        //    set { SetValue(MyThumbsProperty, value); }
+        //}
+        //public static readonly DependencyProperty MyThumbsProperty =
+        //    DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<Thumb>), typeof(GroupThumb), new FrameworkPropertyMetadata(null,
+        //        FrameworkPropertyMetadataOptions.AffectsRender |
+        //        FrameworkPropertyMetadataOptions.AffectsMeasure |
+        //        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
 
         public ObservableCollection<Thumb> MyThumbs
         {
@@ -75,8 +88,114 @@ namespace _20241207
         {
             DataContext = this;
             MyThumbs = [];
+            Loaded += GroupThumb_Loaded;
         }
+
+        //TemplateのItemsControlのItemPanelのExCanvasを取得して、サイズをBinding
+        private void GroupThumb_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            if (GetTemplateChild(TempName) is ItemsControl ic)
+            {
+                var c = GetCanvas(ic);
+                if (c != null)
+                {
+                    _ = SetBinding(WidthProperty, new Binding() { Source = c, Path = new PropertyPath(ActualWidthProperty) });
+
+                    _ = SetBinding(HeightProperty, new Binding() { Source = c, Path = new PropertyPath(ActualHeightProperty) });
+                }
+            }
+        }
+
+        ////TemplateのItemsControlのItemPanelのExCanvasを取得して、サイズをBindingなんだけど
+        ////OnApplyTempleteではExCanvasが取得できない、この時点ではItemPanelが構築されていないみたい？
+        ////なので、この処理はLoadedですることにした
+        //public override void OnApplyTemplate()
+        //{
+        //    base.OnApplyTemplate();
+        //    if (GetTemplateChild(TempName) is ItemsControl ic)
+        //    {
+        //        //ic.OnApplyTemplate();//効果がない
+        //        var c = GetCanvas(ic);//null
+        //        if (c != null)
+        //        {
+        //            _ = SetBinding(WidthProperty, new Binding() { Source = c, Path = new PropertyPath(ActualWidthProperty) });
+        //            _ = SetBinding(HeightProperty, new Binding() { Source = c, Path = new PropertyPath(ActualHeightProperty) });
+        //        }
+        //    }
+        //}
+
+        //子要素を辿ってCanvasを取り出す
+        private static Canvas? GetCanvas(DependencyObject d)
+        {
+            if (d is Canvas canvas) return canvas;
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+            {
+                Canvas? c = GetCanvas(VisualTreeHelper.GetChild(d, i));
+                if (c is not null) return c;
+            }
+            return null;
+        }
+
+
+
+        //public override void OnApplyTemplate()
+        //{
+        //    base.OnApplyTemplate();
+        //    DependencyObject temp = GetTemplateChild(TempName);
+        //    if (temp is ItemsControl ic)
+        //    {
+        //        SetBinding(WidthProperty, new Binding() { Source = ic, Path = new PropertyPath(ActualWidthProperty) });
+        //        SetBinding(HeightProperty, new Binding() { Source = ic, Path = new PropertyPath(ActualHeightProperty) });
+        //    }
+
+        //}
+
+
+        //protected override Size ArrangeOverride(Size arrangeBounds)
+        //{
+        //    if (double.IsNaN(Width) && double.IsNaN(Height))
+        //    {
+        //        base.ArrangeOverride(arrangeBounds);
+        //        Size resultSize = new();
+        //        foreach (var item in MyThumbs.OfType<FrameworkElement>())
+        //        {
+        //            double x = Canvas.GetLeft(item) + item.ActualWidth;
+        //            double y = Canvas.GetTop(item) + item.ActualHeight;
+        //            if (resultSize.Width < x) resultSize.Width = x;
+        //            if (resultSize.Height < y) resultSize.Height = y;
+        //        }
+        //        return resultSize;
+        //    }
+        //    else
+        //    {
+        //        return base.ArrangeOverride(arrangeBounds);
+        //    }
+        //}
+
+        //[ContentProperty(nameof(MyThumbs))]
+        //public class GroupThumb : Thumb
+        //{
+
+        //    public ObservableCollection<Thumb> MyThumbs
+        //    {
+        //        get { return (ObservableCollection<Thumb>)GetValue(MyThumbsProperty); }
+        //        set { SetValue(MyThumbsProperty, value); }
+        //    }
+        //    public static readonly DependencyProperty MyThumbsProperty =
+        //        DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<Thumb>), typeof(GroupThumb), new PropertyMetadata(null));
+
+        //    static GroupThumb()
+        //    {
+        //        DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupThumb), new FrameworkPropertyMetadata(typeof(GroupThumb)));
+        //    }
+        //    public GroupThumb()
+        //    {
+        //        DataContext = this;
+        //        MyThumbs = [];
+        //    }
+        //}
+
+
     }
-
-
 }

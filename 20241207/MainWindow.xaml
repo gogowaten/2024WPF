@@ -12,6 +12,7 @@
       <Button Content="button"/>
       <ComboBox x:Name="MyComboGroup1TabNavi"/>
       <ComboBox x:Name="MyComboGroup2TabNavi"/>
+      <TextBlock Text="{Binding ElementName=MyGroup1, Path=ActualWidth}"/>
     </StackPanel>
     <Canvas>
       <Canvas.Resources>
@@ -30,12 +31,24 @@
         </Style>
       </Canvas.Resources>
       
-      <local:GroupThumb Canvas.Left="10" Canvas.Top="10" Width="300" Height="200" Background="Beige"
+      <!--<local:GroupThumb x:Name="MyGroup1"
+       local:AutoResizeCanvas.Left="10" local:AutoResizeCanvas.Top="10" Background="Beige"
+                        KeyboardNavigation.TabNavigation="{Binding ElementName=MyComboGroup1TabNavi, Path=SelectedItem}">
+        <Thumb local:AutoResizeCanvas.Left="10" local:AutoResizeCanvas.Top="10"/>
+        <Thumb local:AutoResizeCanvas.Left="100" local:AutoResizeCanvas.Top="20"/>
+        <local:GroupThumb local:AutoResizeCanvas.Left="100" local:AutoResizeCanvas.Top="100" Background="MistyRose"
+                          KeyboardNavigation.TabNavigation="{Binding ElementName=MyComboGroup2TabNavi, Path=SelectedItem}">
+          <Thumb local:AutoResizeCanvas.Left="-10" local:AutoResizeCanvas.Top="10"/>
+          <Thumb local:AutoResizeCanvas.Left="100" local:AutoResizeCanvas.Top="50"/>
+        </local:GroupThumb>
+      </local:GroupThumb>-->
+      
+      <local:GroupThumb x:Name="MyGroup1"
+        Canvas.Left="10" Canvas.Top="10" Background="Beige"
                         KeyboardNavigation.TabNavigation="{Binding ElementName=MyComboGroup1TabNavi, Path=SelectedItem}">
         <Thumb Canvas.Left="10" Canvas.Top="10"/>
         <Thumb Canvas.Left="100" Canvas.Top="20"/>
-
-        <local:GroupThumb Canvas.Left="100" Canvas.Top="100" Width="200" Height="100" Background="MistyRose"
+        <local:GroupThumb Canvas.Left="100" Canvas.Top="100" Background="MistyRose"
                           KeyboardNavigation.TabNavigation="{Binding ElementName=MyComboGroup2TabNavi, Path=SelectedItem}">
           <Thumb Canvas.Left="10" Canvas.Top="10"/>
           <Thumb Canvas.Left="100" Canvas.Top="20"/>
