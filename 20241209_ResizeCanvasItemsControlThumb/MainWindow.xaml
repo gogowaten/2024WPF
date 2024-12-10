@@ -28,7 +28,7 @@
         <Thumb Canvas.Left="200" Canvas.Top="100"/>
         <local:GroupThumb Canvas.Left="50" Canvas.Top="50" Background="Salmon">
           <Thumb Canvas.Left="0" Canvas.Top="0"/>
-          <Thumb Canvas.Left="100" Canvas.Top="100"/>
+          <Thumb Canvas.Left="100" Canvas.Top="20"/>
         </local:GroupThumb>
       </local:GroupThumb>
     </Canvas>

@@ -1,20 +1,14 @@
-﻿using System.Text;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+//WPF、自動サイズCanvasをGroupThumbに使ってみた - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2024/12/10/154802
+
 
 namespace _20241209_ResizeCanvasItemsControlThumb
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()

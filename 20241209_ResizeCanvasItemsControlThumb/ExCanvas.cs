@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
 namespace _20241209_ResizeCanvasItemsControlThumb
 {
     /// <summary>
     /// 子要素に従って自動でサイズ変更するCanvas
-    /// ただし、不完全でマイナス座標には非対応
+    /// ただし、不完全でマイナス座標とか位置の移動には非対応
     /// </summary>
-    public class ExCanvas:Canvas
+    public class ExCanvas : Canvas
     {
         protected override Size ArrangeOverride(Size arrangeSize)
         {
