@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Collections.Specialized;
 
 namespace _20241207
 {
@@ -47,21 +48,108 @@ namespace _20241207
     ///     <MyNamespace:CustomControl1/>
     ///
     /// </summary>
-    public class CustomControl1 : Control
-    {
-        static CustomControl1()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(CustomControl1), new FrameworkPropertyMetadata(typeof(CustomControl1)));
-        }
-    }
 
-    public class GroupThumb2 : Thumb
-    {
+    ///// <summary>
+    ///// GroupThumb自体に自動サイズのためにArrangeOverrideを書いてみたけど違った
+    ///// GroupThumbのサイズは決まるけど
+    ///// 子要素を移動してもArrangeOverrideは動かないし、ItemsControlのサイズが0のままなので
+    ///// 何も表示されない
+    ///// </summary>
+    //[ContentProperty(nameof(MyThumbs))]
+    //public class GroupThumb2 : Thumb
+    //{
+    //    public ObservableCollection<Thumb> MyThumbs
+    //    {
+    //        get { return (ObservableCollection<Thumb>)GetValue(MyThumbsProperty); }
+    //        set { SetValue(MyThumbsProperty, value); }
+    //    }
+    //    public static readonly DependencyProperty MyThumbsProperty =
+    //        DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<Thumb>), typeof(GroupThumb2), new PropertyMetadata(null));
+    //    static GroupThumb2()
+    //    {
+    //        DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupThumb2), new FrameworkPropertyMetadata(typeof(GroupThumb2)));
+    //    }
 
-    }
+    //    public GroupThumb2()
+    //    {
+    //        DataContext = this;
+    //        MyThumbs = [];
+
+    //    }
+
+    //    public override void OnApplyTemplate()
+    //    {
+    //        base.OnApplyTemplate();
+    //        var temp = GetTemplateChild("PART_ItemsControl");
+    //        if (temp is ItemsControl ic)
+    //        {
+    //            ic.SetBinding(WidthProperty, new Binding() { Source = this, Path = new PropertyPath(ActualWidthProperty) });
+    //            ic.SetBinding(HeightProperty, new Binding() { Source = this, Path= new PropertyPath(ActualHeightProperty) });
+    //        }
+    //    }
+
+
+    //    protected override Size ArrangeOverride(Size arrangeBounds)
+    //    {
+    //        if (double.IsNaN(Width) && double.IsNaN(Height))
+    //        {
+    //            base.ArrangeOverride(arrangeBounds);
+    //            Size resultSize = new();
+    //            foreach (var item in MyThumbs.OfType<FrameworkElement>())
+    //            {
+    //                double x = Canvas.GetLeft(item) + item.ActualWidth;
+    //                double y = Canvas.GetTop(item) + item.ActualHeight;
+    //                if (resultSize.Width < x) resultSize.Width = x;
+    //                if (resultSize.Height < y) resultSize.Height = y;
+    //            }
+    //            return resultSize;
+    //        }
+    //        else
+    //        {
+    //            return base.ArrangeOverride(arrangeBounds);
+    //        }
+    //    }
+
+    //    protected override Size MeasureOverride(Size constraint)
+    //    {
+    //        return base.MeasureOverride(constraint);
+    //    }
+
+    //}
 
 
     //[TemplatePart(Name = nameof(TempName), Type = typeof(ItemsControl))]
+
+
+
+    [ContentProperty(nameof(MyThumbs2))]
+    public class GroupThumb3 : Thumb
+    {
+        #region DepandencyProperty
+
+
+        public ObservableCollection<Thumb> MyThumbs2
+        {
+            get { return (ObservableCollection<Thumb>)GetValue(MyThumbsProperty); }
+            set { SetValue(MyThumbsProperty, value); }
+        }
+        public static readonly DependencyProperty MyThumbsProperty =
+            DependencyProperty.Register(nameof(MyThumbs2), typeof(ObservableCollection<Thumb>), typeof(GroupThumb3), new PropertyMetadata(null));
+        #endregion
+        static GroupThumb3()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupThumb3), new FrameworkPropertyMetadata(typeof(GroupThumb3)));
+        }
+
+        public GroupThumb3()
+        {
+            DataContext = this;
+            MyThumbs2 = [];
+        }
+
+    }
+
+
     [ContentProperty(nameof(MyThumbs))]
     public class GroupThumb : Thumb
     {
@@ -77,6 +165,7 @@ namespace _20241207
         //        FrameworkPropertyMetadataOptions.AffectsRender |
         //        FrameworkPropertyMetadataOptions.AffectsMeasure |
         //        FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+        #region DepandencyProperty
 
         public ObservableCollection<Thumb> MyThumbs
         {
@@ -85,6 +174,8 @@ namespace _20241207
         }
         public static readonly DependencyProperty MyThumbsProperty =
             DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<Thumb>), typeof(GroupThumb), new PropertyMetadata(null));
+        #endregion
+
 
         static GroupThumb()
         {
@@ -95,6 +186,22 @@ namespace _20241207
             DataContext = this;
             MyThumbs = [];
             Loaded += GroupThumb_Loaded;
+            MyThumbs.CollectionChanged += MyThumbs_CollectionChanged;
+        }
+
+        private void MyThumbs_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.Action == NotifyCollectionChangedAction.Add)
+            {
+                if (e.NewItems?[0] is Thumb t)
+                {
+                    t.Tag = this;
+                }
+            }
+            else if (e.Action == NotifyCollectionChangedAction.Remove)
+            {
+                if (e.OldItems?[0] is Thumb t) { t.Tag = null; }
+            }
         }
 
         //TemplateのItemsControlのItemPanelのExCanvasを取得して、サイズをBinding
@@ -191,4 +298,7 @@ namespace _20241207
 
 
     }
+
+
+
 }

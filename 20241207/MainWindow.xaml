@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:_20241207"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="600">
+  
   <DockPanel>
     <StackPanel DockPanel.Dock="Right" Width="200">
       <TextBlock x:Name="MyGotKeyFocusElementType" Text="GotKeyboardFocus"/>
@@ -21,6 +22,7 @@
           <Setter Property="Height" Value="30"/>
           <Setter Property="Focusable" Value="True"/>
           <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+          <EventSetter Event="DragCompleted" Handler="GroupThumb_DragCompleted"/>
           <!--<EventSetter Event="PreviewKeyDown" Handler="Thumb_PreviewKeyDown"/>-->
           <EventSetter Event="KeyDown" Handler="Thumb_KeyDown"/>
         </Style>
@@ -28,6 +30,7 @@
           <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
           <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
           <EventSetter Event="KeyDown" Handler="Thumb_KeyDown"/>
+          <!--<EventSetter Event="DragCompleted" Handler="GroupThumb_DragCompleted"/>-->
         </Style>
       </Canvas.Resources>
       
@@ -42,6 +45,11 @@
           <Thumb local:AutoResizeCanvas.Left="100" local:AutoResizeCanvas.Top="50"/>
         </local:GroupThumb>
       </local:GroupThumb>-->
+
+      <!--<local:GroupThumb3 Background="MistyRose">
+        <Thumb Canvas.Left="10"/>
+        <Thumb Canvas.Left="100" Canvas.Top="50"/>
+      </local:GroupThumb3>-->
       
       <local:GroupThumb x:Name="MyGroup1"
         Canvas.Left="10" Canvas.Top="10" Background="Beige"

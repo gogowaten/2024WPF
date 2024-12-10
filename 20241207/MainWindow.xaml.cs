@@ -10,6 +10,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
+//GroupThumb
+//  ItemsControl
+//      Border
+//          ItemsPresenter
+//              ExCanvas
+//                  Thumb
+//                  Thumb
+
+//ExCanvasやItemsControlのサイズが変化してもGroupThumbのサイズは変化しないので
+//Bindingする必要がある
+//またThumbの座標が変化したときにArrangeOverrideが動くのはExCanvasだけなので
+//GroupThumbはExCanvasとBindingすることになる
+
 namespace _20241207
 {
     /// <summary>
@@ -46,6 +59,17 @@ namespace _20241207
             }
         }
 
+        private void Thumb_DragDelta2(object sender, DragDeltaEventArgs e)
+        {
+            if (sender is Thumb t)
+            {
+                Canvas.SetLeft(t, Canvas.GetLeft(t) + e.HorizontalChange);
+                Canvas.SetTop(t, Canvas.GetTop(t) + e.VerticalChange);
+                e.Handled = true;
+            }
+        }
+
+
         private void Thumb_PreviewKeyDown(object sender, KeyEventArgs e)
         {
             //if(sender is Thumb t)
@@ -81,6 +105,31 @@ namespace _20241207
                 {
                     Canvas.SetTop(t, Canvas.GetTop(t) - 10);
                     e.Handled = true;
+                }
+            }
+        }
+
+        private void GroupThumb_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            if (sender is Thumb t)
+            {
+                double xDiff = Canvas.GetLeft(t) + e.HorizontalChange;
+                double yDiff = Canvas.GetTop(t) + e.VerticalChange;
+                var pare = t.Parent;
+                //t.UpdateLayout();//無反応
+                //                t.UpdateDefaultStyle();
+                //t.Arrange(new Rect(xDiff, 0, 30, 30));
+                //t.Measure(new Size(30, 30));
+                //t.InvalidateArrange();
+                var pa = VisualTreeHelper.GetParent(t);//excanvas
+                var paa = VisualTreeHelper.GetParent(pa);//itemspresenter
+                var paaa = VisualTreeHelper.GetParent(paa);//border
+                var paaaa = VisualTreeHelper.GetParent(paaa);//itemsconterol
+                var paaaaa = VisualTreeHelper.GetParent(paaaa);//groupthumb
+
+                if(t.Tag is GroupThumb gt)
+                {
+                    var neko = 0;
                 }
             }
         }
