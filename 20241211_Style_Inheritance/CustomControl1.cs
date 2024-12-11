@@ -193,9 +193,6 @@ namespace _20241211_Style_Inheritance
             //Rectでまとめて計算したほうがラクかも
 
 
-
-
-
         }
     }
 

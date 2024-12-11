@@ -28,7 +28,8 @@
       <Setter.Value>
         <ControlTemplate>
           <Grid>
-            <Ellipse Width="{Binding MySize}" Height="{Binding MySize}"
+            <Ellipse Width="{Binding MySize}"
+                     Height="{Binding MySize}"
                      Fill="{TemplateBinding Background}"/>
             <TextBlock Text="{Binding MyText}"
                        HorizontalAlignment="Center"
@@ -44,7 +45,8 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <ItemsControl x:Name="PART_ItemsControl" ItemsSource="{Binding MyThumbs}"
+          <ItemsControl x:Name="PART_ItemsControl"
+                        ItemsSource="{Binding MyThumbs}"
                         Background="{TemplateBinding Background}">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>

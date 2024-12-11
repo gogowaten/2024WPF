@@ -22,20 +22,24 @@
         <Style TargetType="{x:Type local:EllipseTextThumb}" BasedOn="{StaticResource kiso}"/>
         <Style TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}"/>
       </Canvas.Resources>
-      <local:GroupThumb Background="SeaShell">
-        <local:TextBlockThumb MyText="GroupRoot"/>
-        <local:GroupThumb x:Name="MyGroup1" Background="MistyRose">
+      
+      <local:GroupThumb x:Name="MyRootGroup" Background="SeaShell">
+        <local:TextBlockThumb MyText="Group0"/>
+        
+        <local:GroupThumb x:Name="MyGroup1" MyLeft="0" MyTop="20" Background="MistyRose">
           <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="10" MyTop="10" FontSize="14"
-                      MyText="Group1-1" Background="LemonChiffon"/>
+                                MyText="Group1-1" Background="LemonChiffon"/>
           <local:EllipseTextThumb MyLeft="50" MyTop="50" MySize="60"
-                        MyText="Group1-2" Background="Gold"/>
+                                  MyText="Group1-2" Background="Gold"/>
         </local:GroupThumb>
-        <local:GroupThumb x:Name="MyGroup2" MyLeft="100" MyTop="120" Background="AliceBlue">
-          <local:TextBlockThumb MyLeft="30" MyTop="0" FontSize="14"
-                MyText="Group2-1" Background="LemonChiffon"/>
-          <local:EllipseTextThumb MyLeft="50" MyTop="50" MySize="60"
-                  MyText="Group2-2" Background="Gold"/>
+        
+        <local:GroupThumb x:Name="MyGroup2" MyLeft="100" MyTop="140" Background="AliceBlue">
+          <local:TextBlockThumb x:Name="MyItem2_1" MyLeft="30" MyTop="0" FontSize="14"
+                                MyText="Group2-1" Background="LemonChiffon"/>
+          <local:EllipseTextThumb MyLeft="50" MyTop="30" MySize="60"
+                                  MyText="Group2-2" Background="Gold"/>
         </local:GroupThumb>
+        
       </local:GroupThumb>
     </Canvas>
 
