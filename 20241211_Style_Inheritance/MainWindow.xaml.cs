@@ -16,7 +16,30 @@ namespace _20241211_Style_Inheritance
             {
                 t.MyLeft += e.HorizontalChange;
                 t.MyTop += e.VerticalChange;
+                e.Handled = true;
             }
         }
+
+        private void MyButtonText_Click(object sender, RoutedEventArgs e)
+        {
+            MyItem1_1.MyLeft -= 100;
+            MyItem1_1.ParentThumb?.ReLayout();
+        }
+
+        private void KisoThumb_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            if (sender is KisoThumb t) {
+                var sen = sender;
+                var sou = e.Source;
+                var ori = e.OriginalSource;
+                if(t.ParentThumb is GroupThumb gt)
+                {
+                    gt.ReLayout();
+                }
+            }
+            e.Handled = true;
+        }
+
+
     }
 }

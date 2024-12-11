@@ -5,17 +5,45 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241211_Style_Inheritance"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="400">
+        Title="MainWindow" Height="350" Width="500">
   <Grid>
-    <Canvas>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="200"/>
+    </Grid.ColumnDefinitions>
 
-      <local:TextBlockThumb MyLeft="30" MyTop="10" FontSize="20"
-                            MyText="TextBlockThumb" Background="LemonChiffon"
-                            DragDelta="Thumb_DragDelta"/>
-      <local:EllipseTextThumb MyLeft="50" MyTop="50" MySize="100"
-                              MyText="EllipseTextThumb" Background="Gold"
-                              DragDelta="Thumb_DragDelta"/>
-      
+    <Canvas>
+      <Canvas.Resources>
+        <Style TargetType="{x:Type local:KisoThumb}" x:Key="kiso">
+          <EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted"/>
+          <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+        </Style>
+        <Style TargetType="{x:Type local:TextBlockThumb}" BasedOn="{StaticResource kiso}"/>
+        <Style TargetType="{x:Type local:EllipseTextThumb}" BasedOn="{StaticResource kiso}"/>
+        <Style TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}"/>
+      </Canvas.Resources>
+      <local:GroupThumb Background="SeaShell">
+        <local:TextBlockThumb MyText="GroupRoot"/>
+        <local:GroupThumb x:Name="MyGroup1" Background="MistyRose">
+          <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="10" MyTop="10" FontSize="14"
+                      MyText="Group1-1" Background="LemonChiffon"/>
+          <local:EllipseTextThumb MyLeft="50" MyTop="50" MySize="60"
+                        MyText="Group1-2" Background="Gold"/>
+        </local:GroupThumb>
+        <local:GroupThumb x:Name="MyGroup2" MyLeft="100" MyTop="120" Background="AliceBlue">
+          <local:TextBlockThumb MyLeft="30" MyTop="0" FontSize="14"
+                MyText="Group2-1" Background="LemonChiffon"/>
+          <local:EllipseTextThumb MyLeft="50" MyTop="50" MySize="60"
+                  MyText="Group2-2" Background="Gold"/>
+        </local:GroupThumb>
+      </local:GroupThumb>
     </Canvas>
+
+    <StackPanel Grid.Column="1">
+      <Button x:Name="MyButtonText" Content="test" Click="MyButtonText_Click"/>
+      <TextBlock x:Name="MyTextBlock1" Text="test"/>
+      <TextBlock Text="{Binding ElementName=MyGroup1, Path=ActualWidth, StringFormat={}{0:0.0} width}"/>
+      <TextBlock Text="{Binding ElementName=MyGroup1, Path=ActualHeight, StringFormat={}{0:0.0} height}"/>
+    </StackPanel>
   </Grid>
 </Window>

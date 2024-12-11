@@ -33,11 +33,35 @@
             <TextBlock Text="{Binding MyText}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-            <local:TextBlockThumb/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
 
+  <Style TargetType="{x:Type local:GroupThumb}"
+         BasedOn="{StaticResource kiso}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <ItemsControl x:Name="PART_ItemsControl" ItemsSource="{Binding MyThumbs}"
+                        Background="{TemplateBinding Background}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <local:ExCanvas/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <!--<ItemsControl.ItemContainerStyle>
+              <Style TargetType="Thumb">
+                <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+                <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+              </Style>
+            </ItemsControl.ItemContainerStyle>-->
+          </ItemsControl>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  
+  
 </ResourceDictionary>
