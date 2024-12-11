@@ -154,6 +154,7 @@ namespace _20241207
     public class GroupThumb : Thumb
     {
         private const string TempName = "PART_ItemsControl";
+        
 
         //public ObservableCollection<Thumb> MyThumbs
         //{
@@ -216,7 +217,7 @@ namespace _20241207
                     _ = SetBinding(WidthProperty, new Binding() { Source = c, Path = new PropertyPath(ActualWidthProperty) });
 
                     _ = SetBinding(HeightProperty, new Binding() { Source = c, Path = new PropertyPath(ActualHeightProperty) });
-                }
+                }                
             }
         }
 

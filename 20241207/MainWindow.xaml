@@ -10,7 +10,7 @@
   <DockPanel>
     <StackPanel DockPanel.Dock="Right" Width="200">
       <TextBlock x:Name="MyGotKeyFocusElementType" Text="GotKeyboardFocus"/>
-      <Button Content="button"/>
+      <Button Content="button" Click="Button_Click"/>
       <ComboBox x:Name="MyComboGroup1TabNavi"/>
       <ComboBox x:Name="MyComboGroup2TabNavi"/>
       <TextBlock Text="{Binding ElementName=MyGroup1, Path=ActualWidth}"/>
