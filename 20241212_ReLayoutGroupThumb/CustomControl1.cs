@@ -158,27 +158,87 @@ namespace _20241212_ReLayoutGroupThumb
         }
         #endregion 初期化
 
-        public void ReLayout()
+        //public void ReLayout()
+        //{
+        //    //子要素すべてが収まる範囲Rectを計算
+        //    double left = double.MaxValue; double top = double.MaxValue;
+        //    double right = double.MinValue; double bottom = double.MinValue;
+        //    foreach (var item in MyThumbs)
+        //    {
+        //        if (left > item.MyLeft) { left = item.MyLeft; }
+        //        if (right < item.MyLeft + item.ActualWidth) { right = item.MyLeft + item.ActualWidth; }
+        //        if (top > item.MyTop) { top = item.MyTop; }
+        //        if (bottom < item.MyTop + item.ActualHeight) { bottom = item.MyTop + item.ActualHeight; }
+        //    }
+        //    //double width = right - left; double height = bottom - top;
+        //    //Rect rect = new(left, top, width, height);
+
+        //    //今の範囲Rectと比較、座標変化なしなら終了
+        //    if (left == MyLeft && top == MyTop) return;
+
+        //    //座標変化の場合は、自身と全ての子要素の座標を変更する
+        //    if (left != 0)
+        //    {
+        //        foreach (var item in MyThumbs) { item.MyLeft -= left; }
+        //        MyLeft += left;
+        //    }
+        //    if (top != 0)
+        //    {
+        //        foreach (var item in MyThumbs) { item.MyTop -= top; }
+        //        MyTop += top;
+        //    }
+
+        //    //ParentThumbにも伝播させる
+        //    ParentThumb?.ReLayout();
+        //    //Rectでまとめて計算したほうがラクかも
+
+
+        //}
+
+        public void ReLayout2()
         {
-            Size resultSize;
-            Rect ReBound = new();//まとめ？
-            double left = double.MaxValue; double top = double.MaxValue;
-            double right = double.MinValue; double bottom = double.MinValue;
+            //子要素すべてが収まる範囲Rectを計算
+            KisoThumb tt = MyThumbs[0];
+            Rect uRect = new(tt.MyLeft, tt.MyTop, tt.ActualWidth, tt.ActualHeight);
             foreach (var item in MyThumbs)
             {
-                if (left > item.MyLeft) { left = item.MyLeft; }
-                if (right < item.MyLeft + item.ActualWidth) { right = item.MyLeft + item.ActualWidth; }
-                if (top > item.MyTop) { top = item.MyTop; }
-                if (bottom < item.MyTop + item.ActualHeight) { bottom = item.MyTop + item.ActualHeight; }
-
+                Rect r = new(item.MyLeft, item.MyTop, item.ActualWidth, item.ActualHeight);
+                uRect.Union(r);
             }
-            double width = right - left; double height = bottom - top;
-            Rect rect = new(left, top, width, height);
 
-            //変化なしなら終了
-            if (left == MyLeft && top == MyTop && width == Width && height == Height) return;
+            //今の範囲Rectと比較、座標変化なしなら終了
+            if (uRect.Left == MyLeft && uRect.Top == MyTop) return;
 
-            //座標変化の場合はすべての子要素の座標も変更する
+            //座標変化の場合は、自身と全ての子要素の座標を変更する
+            if (uRect.Left != 0)
+            {
+                foreach (var item in MyThumbs) { item.MyLeft -= uRect.Left; }
+                MyLeft += uRect.Left;
+            }
+            if (uRect.Top != 0)
+            {
+                foreach (var item in MyThumbs) { item.MyTop -= uRect.Top; }
+                MyTop += uRect.Top;
+            }
+
+            ////ParentThumbにも伝播させる
+            ParentThumb?.ReLayout2();
+        }
+
+        public void ReLayout3()
+        {
+            //全子要素座標を比較して最も小さい値を取得、最左上座標を計算
+            double left = double.MaxValue; double top = double.MaxValue;
+            foreach (var item in MyThumbs)
+            {
+                if (item.MyLeft < left) left = item.MyLeft;
+                if (item.MyTop < top) top = item.MyTop;
+            }
+
+            //今の座標と計算した座標を比較、変化なしなら終了
+            if(left == 0 && top == 0) return;
+
+            //座標変化の場合は、自身と全ての子要素の座標を変更(再配置)する
             if (left != 0)
             {
                 foreach (var item in MyThumbs) { item.MyLeft -= left; }
@@ -190,13 +250,10 @@ namespace _20241212_ReLayoutGroupThumb
                 MyTop += top;
             }
 
-
-            //どれか一つでも変更があればParentThumbにも伝播させる
-            ParentThumb?.ReLayout();
-            //Rectでまとめて計算したほうがラクかも
-
-
+            //ParentThumbにも伝播させる
+            ParentThumb?.ReLayout3();
         }
+
     }
 
 }

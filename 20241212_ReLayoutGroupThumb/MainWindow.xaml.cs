@@ -34,8 +34,8 @@ namespace _20241212_ReLayoutGroupThumb
 
         private void MyButtonText_Click(object sender, RoutedEventArgs e)
         {
-            MyItem1_1.MyLeft -= 100;
-            MyItem1_1.ParentThumb?.ReLayout();
+            //MyItem1_1.MyLeft -= 100;
+            //MyItem1_1.ParentThumb?.ReLayout2();
         }
 
         //ドラッグ移動終了時
@@ -44,7 +44,7 @@ namespace _20241212_ReLayoutGroupThumb
             //親要素の再配置
             if (sender is KisoThumb t && t.ParentThumb is not null)
             {
-                t.ParentThumb.ReLayout();
+                t.ParentThumb.ReLayout3();
             }
             //イベント通知をここで停止
             e.Handled = true;

@@ -9,7 +9,7 @@
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
-      <ColumnDefinition Width="200"/>
+      <ColumnDefinition Width="150"/>
     </Grid.ColumnDefinitions>
 
     <Canvas>
@@ -26,15 +26,15 @@
       <local:GroupThumb x:Name="MyRootGroup" Background="SeaShell">
         <local:TextBlockThumb MyText="Group0"/>
 
-        <local:GroupThumb x:Name="MyGroup1" MyLeft="0" MyTop="20" Background="MistyRose">
-          <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="10" MyTop="10" FontSize="14"
+        <local:GroupThumb x:Name="MyGroup1" MyLeft="0" MyTop="20" Background="Salmon">
+          <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="10" MyTop="10"
                                 MyText="Group1-1" Background="LemonChiffon"/>
           <local:EllipseTextThumb MyLeft="50" MyTop="50" MySize="60"
                                   MyText="Group1-2" Background="Gold"/>
         </local:GroupThumb>
 
-        <local:GroupThumb x:Name="MyGroup2" MyLeft="100" MyTop="140" Background="AliceBlue">
-          <local:TextBlockThumb x:Name="MyItem2_1" MyLeft="30" MyTop="0" FontSize="14"
+        <local:GroupThumb x:Name="MyGroup2" MyLeft="100" MyTop="140" Background="CornflowerBlue">
+          <local:TextBlockThumb x:Name="MyItem2_1" MyLeft="30" MyTop="0"
                                 MyText="Group2-1" Background="LemonChiffon"/>
           <local:EllipseTextThumb MyLeft="50" MyTop="30" MySize="60"
                                   MyText="Group2-2" Background="Gold"/>
@@ -46,8 +46,31 @@
     <StackPanel Grid.Column="1">
       <Button x:Name="MyButtonText" Content="test" Click="MyButtonText_Click"/>
       <TextBlock x:Name="MyTextBlock1" Text="test"/>
-      <TextBlock Text="{Binding ElementName=MyGroup1, Path=ActualWidth, StringFormat={}{0:0.0} width}"/>
-      <TextBlock Text="{Binding ElementName=MyGroup1, Path=ActualHeight, StringFormat={}{0:0.0} height}"/>
+      <GroupBox Header="Group0" Background="{Binding Background}" DataContext="{Binding ElementName=MyRootGroup}">
+        <StackPanel>
+          <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
+          <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
+          <TextBlock Text="{Binding Path=ActualWidth, StringFormat={}{0:0.0} width}"/>
+          <TextBlock Text="{Binding Path=ActualHeight, StringFormat={}{0:0.0} height}"/>
+        </StackPanel>
+      </GroupBox>
+      <GroupBox Header="Group1" Background="{Binding Background}" DataContext="{Binding ElementName=MyGroup1}">
+        <StackPanel>
+          <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
+          <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
+          <TextBlock Text="{Binding Path=ActualWidth, StringFormat={}{0:0.0} width}"/>
+          <TextBlock Text="{Binding Path=ActualHeight, StringFormat={}{0:0.0} height}"/>
+        </StackPanel>
+      </GroupBox>
+      <GroupBox Header="Group2" Background="{Binding Background}" DataContext="{Binding ElementName=MyGroup2}">
+        <StackPanel>
+          <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
+          <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
+          <TextBlock Text="{Binding Path=ActualWidth, StringFormat={}{0:0.0} width}"/>
+          <TextBlock Text="{Binding Path=ActualHeight, StringFormat={}{0:0.0} height}"/>
+        </StackPanel>
+      </GroupBox>
+      
     </StackPanel>
   </Grid>
 </Window>
