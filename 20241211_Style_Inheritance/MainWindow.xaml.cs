@@ -26,17 +26,15 @@ namespace _20241211_Style_Inheritance
             MyItem1_1.ParentThumb?.ReLayout();
         }
 
+        //ドラッグ移動終了時
         private void KisoThumb_DragCompleted(object sender, DragCompletedEventArgs e)
         {
-            if (sender is KisoThumb t) {
-                var sen = sender;
-                var sou = e.Source;
-                var ori = e.OriginalSource;
-                if(t.ParentThumb is GroupThumb gt)
-                {
-                    gt.ReLayout();
-                }
+            //親要素の再配置
+            if (sender is KisoThumb t && t.ParentThumb is not null)
+            {
+                t.ParentThumb.ReLayout();
             }
+            //イベント通知をここで停止
             e.Handled = true;
         }
 

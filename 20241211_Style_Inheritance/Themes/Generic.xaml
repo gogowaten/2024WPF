@@ -10,6 +10,7 @@
     <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
   </Style>
 
+  
   <Style TargetType="{x:Type local:TextBlockThumb}"
          BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
@@ -22,6 +23,7 @@
     </Setter>
   </Style>
 
+  
   <Style TargetType="{x:Type local:EllipseTextThumb}"
          BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
@@ -40,6 +42,7 @@
     </Setter>
   </Style>
 
+  
   <Style TargetType="{x:Type local:GroupThumb}"
          BasedOn="{StaticResource kiso}">
     <Setter Property="Template">

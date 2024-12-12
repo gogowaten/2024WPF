@@ -9,6 +9,11 @@ using System.Windows;
 
 namespace _20241211_Style_Inheritance
 {
+    /// <summary>
+    /// 子要素に合わせてサイズが変化するCanvas
+    /// ただし、子要素のマージンとパディングは考慮していないし
+    /// ArrangeOverrideを理解していないので不具合があるかも
+    /// </summary>
     public class ExCanvas : Canvas
     {
         protected override Size ArrangeOverride(Size arrangeSize)

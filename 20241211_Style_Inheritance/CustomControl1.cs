@@ -10,7 +10,9 @@ using System.Collections.Specialized;
 namespace _20241211_Style_Inheritance
 {
 
-
+    /// <summary>
+    /// 基礎Thumb、すべてのCustomControlThumbの派生元
+    /// </summary>
     public abstract class KisoThumb : Thumb
     {
         #region 依存関係プロパティ
@@ -41,6 +43,7 @@ namespace _20241211_Style_Inheritance
 
         #endregion 依存関係プロパティ
 
+        //親要素の識別用。自身がグループ化されたときに親要素のGroupThumbを入れておく
         public GroupThumb? ParentThumb { get; internal set; }
         static KisoThumb()
         {
@@ -55,7 +58,6 @@ namespace _20241211_Style_Inheritance
 
     public class TextBlockThumb : KisoThumb
     {
-
         static TextBlockThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBlockThumb), new FrameworkPropertyMetadata(typeof(TextBlockThumb)));
