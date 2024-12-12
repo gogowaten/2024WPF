@@ -1,6 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 
+//参照したところ
+//【C#-WPF】XAMLの記述に便利なResourcesとStyleについて - 業務のためのC#・C言語・C++学習
+//https://gaishiengineer.hatenablog.com/entry/2022/09/18/131611
+
 namespace _20241211_Style_Inheritance
 {
     public partial class MainWindow : Window
@@ -19,25 +23,6 @@ namespace _20241211_Style_Inheritance
                 e.Handled = true;
             }
         }
-
-        private void MyButtonText_Click(object sender, RoutedEventArgs e)
-        {
-            MyItem1_1.MyLeft -= 100;
-            MyItem1_1.ParentThumb?.ReLayout();
-        }
-
-        //ドラッグ移動終了時
-        private void KisoThumb_DragCompleted(object sender, DragCompletedEventArgs e)
-        {
-            //親要素の再配置
-            if (sender is KisoThumb t && t.ParentThumb is not null)
-            {
-                t.ParentThumb.ReLayout();
-            }
-            //イベント通知をここで停止
-            e.Handled = true;
-        }
-
 
     }
 }

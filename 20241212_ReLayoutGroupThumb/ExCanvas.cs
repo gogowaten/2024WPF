@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media.Media3D;
+﻿using System.Windows.Controls;
 using System.Windows;
 
-namespace _20241211_Style_Inheritance
+namespace _20241212_ReLayoutGroupThumb
 {
     /// <summary>
     /// 子要素に合わせてサイズが変化するCanvas
@@ -37,5 +31,4 @@ namespace _20241211_Style_Inheritance
             }
         }
     }
-
 }

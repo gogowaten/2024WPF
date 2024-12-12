@@ -1,7 +1,7 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="clr-namespace:_20241211_Style_Inheritance">
+    xmlns:local="clr-namespace:_20241212_ReLayoutGroupThumb">
 
 
 
@@ -10,7 +10,7 @@
     <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
   </Style>
 
-  
+
   <Style TargetType="{x:Type local:TextBlockThumb}"
          BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
@@ -23,7 +23,7 @@
     </Setter>
   </Style>
 
-  
+
   <Style TargetType="{x:Type local:EllipseTextThumb}"
          BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
@@ -42,6 +42,31 @@
     </Setter>
   </Style>
 
-  
-  
+
+  <Style TargetType="{x:Type local:GroupThumb}"
+         BasedOn="{StaticResource kiso}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <ItemsControl x:Name="PART_ItemsControl"
+                        ItemsSource="{Binding MyThumbs}"
+                        Background="{TemplateBinding Background}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <local:ExCanvas/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <!--<ItemsControl.ItemContainerStyle>
+              <Style TargetType="Thumb">
+                <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+                <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+              </Style>
+            </ItemsControl.ItemContainerStyle>-->
+          </ItemsControl>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+
 </ResourceDictionary>
