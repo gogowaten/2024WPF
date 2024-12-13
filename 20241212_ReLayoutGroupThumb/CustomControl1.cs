@@ -45,7 +45,7 @@ namespace _20241212_ReLayoutGroupThumb
         #endregion 依存関係プロパティ
 
         //親要素の識別用。自身がグループ化されたときに親要素のGroupThumbを入れておく
-        public GroupThumb? ParentThumb { get; internal set; }
+        public GroupThumb? MyParentThumb { get; internal set; }
         static KisoThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(KisoThumb), new FrameworkPropertyMetadata(typeof(KisoThumb)));
@@ -113,6 +113,7 @@ namespace _20241212_ReLayoutGroupThumb
             Loaded += GroupThumb_Loaded;
             MyThumbs.CollectionChanged += MyThumbs_CollectionChanged;
         }
+
         #endregion コンストラクタ
 
         #region 初期化
@@ -149,52 +150,50 @@ namespace _20241212_ReLayoutGroupThumb
         {
             if (e.Action == NotifyCollectionChangedAction.Add && e.NewItems?[0] is KisoThumb nnt)
             {
-                nnt.ParentThumb = this;
+                nnt.MyParentThumb = this;
             }
             else if (e.Action == NotifyCollectionChangedAction.Remove && e.OldItems?[0] is KisoThumb ot)
             {
-                ot.ParentThumb = null;
+                ot.MyParentThumb = null;
             }
         }
         #endregion 初期化
 
-        //public void ReLayout()
-        //{
-        //    //子要素すべてが収まる範囲Rectを計算
-        //    double left = double.MaxValue; double top = double.MaxValue;
-        //    double right = double.MinValue; double bottom = double.MinValue;
-        //    foreach (var item in MyThumbs)
-        //    {
-        //        if (left > item.MyLeft) { left = item.MyLeft; }
-        //        if (right < item.MyLeft + item.ActualWidth) { right = item.MyLeft + item.ActualWidth; }
-        //        if (top > item.MyTop) { top = item.MyTop; }
-        //        if (bottom < item.MyTop + item.ActualHeight) { bottom = item.MyTop + item.ActualHeight; }
-        //    }
-        //    //double width = right - left; double height = bottom - top;
-        //    //Rect rect = new(left, top, width, height);
+        /// <summary>
+        /// 再配置、子要素の座標を元に位置を修正する
+        /// </summary>
+        public void ReLayout()
+        {
+            //すべての子要素で最も左上の座標を取得
+            double left = double.MaxValue; double top = double.MaxValue;
+            foreach (var item in MyThumbs)
+            {
+                if (left > item.MyLeft) { left = item.MyLeft; }
+                if (top > item.MyTop) { top = item.MyTop; }
+            }
 
-        //    //今の範囲Rectと比較、座標変化なしなら終了
-        //    if (left == MyLeft && top == MyTop) return;
+            //自身の座標と比較、同じ(変化なし)なら終了
+            if (left == MyLeft && top == MyTop) return;
 
-        //    //座標変化の場合は、自身と全ての子要素の座標を変更する
-        //    if (left != 0)
-        //    {
-        //        foreach (var item in MyThumbs) { item.MyLeft -= left; }
-        //        MyLeft += left;
-        //    }
-        //    if (top != 0)
-        //    {
-        //        foreach (var item in MyThumbs) { item.MyTop -= top; }
-        //        MyTop += top;
-        //    }
+            //座標変化の場合は、自身と全ての子要素の座標を変更する
+            if (left != 0)
+            {
+                foreach (var item in MyThumbs) { item.MyLeft -= left; }
+                MyLeft += left;
+            }
+            if (top != 0)
+            {
+                foreach (var item in MyThumbs) { item.MyTop -= top; }
+                MyTop += top;
+            }
 
-        //    //ParentThumbにも伝播させる
-        //    ParentThumb?.ReLayout();
-        //    //Rectでまとめて計算したほうがラクかも
+            //ParentThumbにも伝播させる
+            MyParentThumb?.ReLayout();
+        }
 
-
-        //}
-
+        /// <summary>
+        /// ReLayoutの左上座標取得をRectのUnion版、いまいちなので未使用
+        /// </summary>
         public void ReLayout2()
         {
             //子要素すべてが収まる範囲Rectを計算
@@ -221,37 +220,8 @@ namespace _20241212_ReLayoutGroupThumb
                 MyTop += uRect.Top;
             }
 
-            ////ParentThumbにも伝播させる
-            ParentThumb?.ReLayout2();
-        }
-
-        public void ReLayout3()
-        {
-            //全子要素座標を比較して最も小さい値を取得、最左上座標を計算
-            double left = double.MaxValue; double top = double.MaxValue;
-            foreach (var item in MyThumbs)
-            {
-                if (item.MyLeft < left) left = item.MyLeft;
-                if (item.MyTop < top) top = item.MyTop;
-            }
-
-            //今の座標と計算した座標を比較、変化なしなら終了
-            if(left == 0 && top == 0) return;
-
-            //座標変化の場合は、自身と全ての子要素の座標を変更(再配置)する
-            if (left != 0)
-            {
-                foreach (var item in MyThumbs) { item.MyLeft -= left; }
-                MyLeft += left;
-            }
-            if (top != 0)
-            {
-                foreach (var item in MyThumbs) { item.MyTop -= top; }
-                MyTop += top;
-            }
-
             //ParentThumbにも伝播させる
-            ParentThumb?.ReLayout3();
+            MyParentThumb?.ReLayout2();
         }
 
     }

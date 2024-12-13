@@ -1,20 +1,12 @@
-﻿using System.Text;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+
+//WPF、カスタムコントロール子要素の位置変更後に、親要素の位置とサイズを変更 - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2024/12/13/222822
+
 
 namespace _20241212_ReLayoutGroupThumb
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -34,19 +26,19 @@ namespace _20241212_ReLayoutGroupThumb
 
         private void MyButtonText_Click(object sender, RoutedEventArgs e)
         {
-            //MyItem1_1.MyLeft -= 100;
-            //MyItem1_1.ParentThumb?.ReLayout2();
+            MyItem1_1.MyLeft -= 100;
+            MyItem1_1.MyParentThumb?.ReLayout();
         }
 
         //ドラッグ移動終了時
         private void KisoThumb_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             //親要素の再配置
-            if (sender is KisoThumb t && t.ParentThumb is not null)
+            if (sender is KisoThumb t && t.MyParentThumb is not null)
             {
-                t.ParentThumb.ReLayout3();
+                t.MyParentThumb.ReLayout();
             }
-            //イベント通知をここで停止
+            //イベントをここで停止
             e.Handled = true;
         }
     }
