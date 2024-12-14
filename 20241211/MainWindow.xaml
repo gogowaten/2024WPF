@@ -5,10 +5,75 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241211"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="400">
+        Title="MainWindow" Height="450" Width="550">
   <Grid>
-    <Canvas>
-      <local:TextBlockThumb MyLeft="30" MyTop="30" MyText="aaaaaaaaaaa"/>
-    </Canvas>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="200"/>
+    </Grid.ColumnDefinitions>
+
+    <ScrollViewer x:Name="MyScroll" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+      <Canvas x:Name="MyCanvas"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Top"
+              Width="{Binding ElementName=MyRootGroup, Path=ActualWidth}"
+              Height="{Binding ElementName=MyRootGroup,Path=ActualHeight}">
+        <Canvas.Resources>
+          <Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
+            <!--<EventSetter Event="DragDelta" Handler="KisoThumb_DragDelta2"/>
+            <EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted2"/>-->
+            <EventSetter Event="DragDelta" Handler="KisoThumb_DragDelta"/>
+            <!--<EventSetter Event="DragDelta" Handler="KisoThumb_DragDeltaSleep1"/>-->
+            <!--<EventSetter Event="DragDelta" Handler="KisoThumb_DragDeltaSleep2"/>-->
+            <EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted"/>
+            <EventSetter Event="KeyDown" Handler="KisoThumb_KeyDown"/>
+          </Style>
+          <Style TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}"/>
+          <Style TargetType="{x:Type local:TextBlockThumb}" BasedOn="{StaticResource kiso}"/>
+          <Style TargetType="{x:Type local:EllipseTextThumb}" BasedOn="{StaticResource kiso}"/>
+        </Canvas.Resources>
+
+        <local:GroupThumb x:Name="MyRootGroup" MyLeft="0" MyTop="0" MyText="root" Background="RosyBrown"
+                          KeyboardNavigation.TabNavigation="Cycle">
+          <local:TextBlockThumb MyLeft="0" MyTop="0" MyText="Item1" Background="Salmon"/>
+          <local:EllipseTextThumb MyLeft="30" MyTop="30" MySize="100" MyText="Item2" Background="Salmon"/>
+          <local:EllipseTextThumb MyLeft="300" MyTop="120" MySize="100" MyText="Item3" Background="Salmon"/>
+          <local:EllipseTextThumb MyLeft="100" MyTop="220" MySize="100" MyText="Item4" Background="Salmon"/>
+        </local:GroupThumb>
+
+        <!--<local:GroupThumb2 x:Name="MyRootGroup" MyLeft="0" MyTop="0" Background="RosyBrown">
+          <local:EllipseTextThumb MyLeft="0" MyTop="0" MySize="50" MyText="Item" Background="Salmon"/>
+          <local:EllipseTextThumb MyLeft="130" MyTop="30" MySize="50" MyText="Item" Background="Salmon"/>
+          <local:TextBlockThumb MyLeft="300" MyTop="20" MyText="Item" Background="Salmon"/>
+        </local:GroupThumb2>-->
+
+
+      </Canvas>
+    </ScrollViewer>
+
+    <StackPanel Grid.Column="1">
+      <TextBlock Text="{Binding ElementName=MyRootGroup, Path=ActualWidth, StringFormat=0.0}"/>
+      <TextBlock Text="{Binding ElementName=MyRootGroup, Path=ActualHeight, StringFormat=0.0}"/>
+      <TextBlock Text="{Binding ElementName=MyRootGroup, Path=(Canvas.Left), StringFormat=0.0}"/>
+      <TextBlock x:Name="MyFocus"/>
+      <TextBlock x:Name="MyKeyFocus"/>
+      <TextBlock x:Name="MyPreKeyFocus"/>
+      <!--<Rectangle Width="50" Height="50">
+        <Rectangle.Fill>
+          <VisualBrush Visual="{Binding ElementName=MyCanvas}" Stretch="Uniform"/>
+        </Rectangle.Fill>
+      </Rectangle>
+      <Grid Width="50" Height="50">
+        <Grid.Background>
+          <VisualBrush Visual="{Binding ElementName=MyCanvas}" Stretch="Uniform"/>
+        </Grid.Background>
+      </Grid>-->
+      <Canvas Width="50" Height="50">
+        <Canvas.Background>
+          <VisualBrush Visual="{Binding ElementName=MyCanvas}" Stretch="Uniform"/>
+        </Canvas.Background>
+      </Canvas>
+
+    </StackPanel>
   </Grid>
 </Window>

@@ -3,39 +3,95 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:_20241211">
 
-  <Style TargetType="{x:Type local:KisoThumb}" x:Key="kiso">
+
+  <Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
     <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
     <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
   </Style>
 
-  <Style TargetType="{x:Type local:TextBlockThumb}" BasedOn="{StaticResource kiso}">
+
+  <Style TargetType="{x:Type local:TextBlockThumb}"
+         BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type local:TextBlockThumb}">
-          <TextBlock Text="{Binding MyText}"/>
+        <ControlTemplate>
+          <TextBlock Text="{Binding MyText}"
+                     Background="{TemplateBinding Background}"/>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
 
 
-  <Style TargetType="{x:Type local:GroupThumb}">
+  <Style TargetType="{x:Type local:EllipseTextThumb}"
+         BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
       <Setter.Value>
-        <ControlTemplate TargetType="{x:Type local:GroupThumb}">
+        <ControlTemplate>
+          <Grid>
+            <Ellipse Width="{Binding MySize}"
+                     Height="{Binding MySize}"
+                     Fill="{TemplateBinding Background}"/>
+            <TextBlock Text="{Binding MyText}"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+
+  <Style TargetType="{x:Type local:GroupThumb}"
+         BasedOn="{StaticResource kiso}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
           <ItemsControl x:Name="PART_ItemsControl"
                         ItemsSource="{Binding MyThumbs}"
                         Background="{TemplateBinding Background}">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
-                <local:ExCanvas x:Name="PART_canvas"/>
+                <local:ExCanvas/>
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+            <!--<ItemsControl.ItemContainerStyle>
+              <Style TargetType="Thumb">
+                <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+                <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+              </Style>
+            </ItemsControl.ItemContainerStyle>-->
           </ItemsControl>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
+
+
+  <!--<Style TargetType="{x:Type local:GroupThumb2}"
+         BasedOn="{StaticResource kiso}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <ItemsControl x:Name="PART_ItemsControl"
+                        ItemsSource="{Binding MyThumbs}"
+                        Background="{TemplateBinding Background}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <Canvas/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            --><!--<ItemsControl.ItemContainerStyle>
+              <Style TargetType="Thumb">
+                <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+                <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+              </Style>
+            </ItemsControl.ItemContainerStyle>--><!--
+          </ItemsControl>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>-->
 
 
 
