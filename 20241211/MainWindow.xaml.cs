@@ -37,9 +37,10 @@ namespace _20241211
                 GotFocus += MainWindow_GotFocus;
                 GotKeyboardFocus += MainWindow_GotKeyboardFocus;
                 PreviewGotKeyboardFocus += MainWindow_PreviewGotKeyboardFocus;
-                //GotFocus += (a, b) => { if (a is KisoThumb kiso) MyFocus.Text = "GotFocus = " + kiso.MyText; };
-                //GotKeyboardFocus += (a, b) => { if (sender is KisoThumb kiso) MyKeyFocus.Text = "GotKeyFocus = " + kiso.MyText; };
-                //PreviewGotKeyboardFocus += (a, b) => { if (sender is KisoThumb kiso) { MyPreKeyFocus.Text = "PreGotKeyFocus = " + kiso.MyText; } };
+
+                //BindingOperations.ClearBinding(MyRootGroup, KisoThumb.MyLeftProperty);
+                //BindingOperations.ClearBinding(MyRootGroup, KisoThumb.MyTopProperty);
+
             }
 
 
@@ -177,8 +178,8 @@ namespace _20241211
             {
                 t.MyParentThumb?.ReLayout();
 
-                MyRootGroup.MyLeft = 0;
-                MyRootGroup.MyTop = 0;
+                //MyRootGroup.MyLeft = 0;
+                //MyRootGroup.MyTop = 0;
                 //t.Focus();
 
                 e.Handled = true;
@@ -192,27 +193,64 @@ namespace _20241211
                 if (e.Key == Key.Left)
                 {
                     t.MyLeft -= 10;
-                    var hor = MyScroll.HorizontalOffset;
-                    var scw = MyScroll.ActualWidth;
-                    var rig = t.MyLeft + t.ActualWidth;
+
+                    var HOffset = MyScroll.HorizontalOffset;
+                    var scWidth = MyScroll.ActualWidth;
+                    var right = t.MyLeft + t.ActualWidth;
+                    var left = t.MyLeft;
+                    var gWidth = t.MyParentThumb?.ActualWidth;
+                    if (HOffset > left)
+                    {
+                        var diff = HOffset - left;
+                        MyScroll.ScrollToHorizontalOffset(left);
+
+                    }
                     if (t.MyLeft < 0)
                     {
+                        //t.MyParentThumb?.ReLayout3();
                         t.MyParentThumb?.ReLayout();
+                        MyRootGroup.MyLeft = 0;
+                        MyRootGroup.MyTop = 0;
+
+                        //if(t.MyParentThumb == MyRootGroup)
+                        //{
+                        //    MyRootGroup.MyLeft = 0;
+                        //    MyRootGroup.MyTop = 0;
+
+                        //}
                     }
+
                     e.Handled = true;
                 }
                 else if (e.Key == Key.Right)
                 {
                     t.MyLeft += 10;
-                    //Thumbの右端が見切れたら、その分をスクロールさせる
-                    var thumbRight = t.MyLeft + t.ActualWidth;
-                    var scrollRight = MyScroll.ActualWidth + MyScroll.HorizontalOffset;
-                    if (thumbRight > scrollRight)
-                    {
-                        MyScroll.ScrollToHorizontalOffset(MyScroll.HorizontalOffset + (thumbRight - scrollRight));
-                    }
+
+                    ////Thumbの右端が見切れたら、その分をスクロールさせる
+                    //double thumbRight = t.MyLeft + t.ActualWidth;
+                    //double parentLeft = t.MyParentThumb?.MyLeft ?? 0;
+                    ////Thumbの右端
+                    //double nowRight = thumbRight + parentLeft;
+                    ////スクロールの右端
+                    //double scrollRight = MyScroll.ActualWidth + MyScroll.HorizontalOffset;
+                    ////Thumbの右端がスクロールの右端を超えていたら
+                    //if (nowRight > scrollRight)
+                    //{
+                    //    MyScroll.ScrollToHorizontalOffset(MyScroll.HorizontalOffset + nowRight - scrollRight);
+                    //}
+
+                    //t.MyParentThumb?.ReLayout3();
+                    //t.MyParentThumb?.ReLayout();
                     e.Handled = true;
                 }
+            }
+        }
+
+        private void KisoThumb_KeyUp(object sender, KeyEventArgs e)
+        {
+            if(sender is KisoThumb t)
+            {
+                t.MyParentThumb?.ReLayout();
             }
         }
 

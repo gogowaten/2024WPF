@@ -227,6 +227,7 @@ namespace _20241211
             {
                 foreach (var item in MyThumbs) { item.MyLeft -= left; }
                 MyLeft += left;
+                //if (MyLeft < 0) {  MyLeft = 0; }
             }
             if (top != 0)
             {
@@ -238,43 +239,74 @@ namespace _20241211
             MyParentThumb?.ReLayout();
         }
 
-        /// <summary>
-        /// ReLayoutの左上座標取得をRectのUnion版、いまいちなので未使用
-        /// </summary>
-        public void ReLayout2()
-        {
-            //子要素すべてが収まる範囲Rectを計算
-            KisoThumb tt = MyThumbs[0];
-            Rect uRect = new(tt.MyLeft, tt.MyTop, tt.ActualWidth, tt.ActualHeight);
-            foreach (var item in MyThumbs)
-            {
-                Rect r = new(item.MyLeft, item.MyTop, item.ActualWidth, item.ActualHeight);
-                uRect.Union(r);
-            }
+        //public void ReLayout3()
+        //{
+        //    //すべての子要素で最も左上の座標を取得
+        //    double left = double.MaxValue; double top = double.MaxValue;
+        //    foreach (var item in MyThumbs)
+        //    {
+        //        if (left > item.MyLeft) { left = item.MyLeft; }
+        //        if (top > item.MyTop) { top = item.MyTop; }
+        //    }
 
-            //今の範囲Rectと比較、座標変化なしなら終了
-            if (uRect.Left == MyLeft && uRect.Top == MyTop) return;
+        //    //自身の座標と比較、同じ(変化なし)なら終了
+        //    if (left == MyLeft && top == MyTop) return;
 
-            //座標変化の場合は、自身と全ての子要素の座標を変更する
-            if (uRect.Left != 0)
-            {
-                foreach (var item in MyThumbs) { item.MyLeft -= uRect.Left; }
-                MyLeft += uRect.Left;
-            }
-            if (uRect.Top != 0)
-            {
-                foreach (var item in MyThumbs) { item.MyTop -= uRect.Top; }
-                MyTop += uRect.Top;
-            }
+        //    //座標変化の場合は、自身と全ての子要素の座標を変更する
+        //    if (left != 0)
+        //    {
+        //        foreach (var item in MyThumbs) { item.MyLeft -= left; }
+        //        if (MyParentThumb != null) MyLeft += left;
+        //    }
+        //    if (top != 0)
+        //    {
+        //        foreach (var item in MyThumbs) { item.MyTop -= top; }
+        //        if (MyParentThumb != null) MyTop += top;
+        //    }
 
-            //ParentThumbにも伝播させる
-            MyParentThumb?.ReLayout2();
-        }
+        //    //ParentThumbにも伝播させる
+        //    MyParentThumb?.ReLayout();
+        //}
+
+
+
+        ///// <summary>
+        ///// ReLayoutの左上座標取得をRectのUnion版、いまいちなので未使用
+        ///// </summary>
+        //public void ReLayout2()
+        //{
+        //    //子要素すべてが収まる範囲Rectを計算
+        //    KisoThumb tt = MyThumbs[0];
+        //    Rect uRect = new(tt.MyLeft, tt.MyTop, tt.ActualWidth, tt.ActualHeight);
+        //    foreach (var item in MyThumbs)
+        //    {
+        //        Rect r = new(item.MyLeft, item.MyTop, item.ActualWidth, item.ActualHeight);
+        //        uRect.Union(r);
+        //    }
+
+        //    //今の範囲Rectと比較、座標変化なしなら終了
+        //    if (uRect.Left == MyLeft && uRect.Top == MyTop) return;
+
+        //    //座標変化の場合は、自身と全ての子要素の座標を変更する
+        //    if (uRect.Left != 0)
+        //    {
+        //        foreach (var item in MyThumbs) { item.MyLeft -= uRect.Left; }
+        //        MyLeft += uRect.Left;
+        //    }
+        //    if (uRect.Top != 0)
+        //    {
+        //        foreach (var item in MyThumbs) { item.MyTop -= uRect.Top; }
+        //        MyTop += uRect.Top;
+        //    }
+
+        //    //ParentThumbにも伝播させる
+        //    MyParentThumb?.ReLayout2();
+        //}
 
     }
 
 
-    
+
     //[ContentProperty(nameof(MyThumbs))]
     //public class GroupThumb2 : KisoThumb
     //{
@@ -318,7 +350,7 @@ namespace _20241211
     //        MyThumbs = [];
     //        Loaded += GroupThumb_Loaded;
     //        MyThumbs.CollectionChanged += MyThumbs_CollectionChanged;
-            
+
     //    }
 
     //    #endregion コンストラクタ
@@ -337,7 +369,7 @@ namespace _20241211
     //                _ = SetBinding(HeightProperty, new Binding() { Source = ec, Path = new PropertyPath(ActualHeightProperty) });
     //            }
     //        }
-            
+
     //        ReLayout2();//これでXAMLで要素追加後にビルドするとサイズが入る、重要
     //    }
 
