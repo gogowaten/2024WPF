@@ -132,6 +132,40 @@ namespace _20241211
 
     }
 
+    public class RectThumb : KisoThumb
+    {
+        //FrameworkElement MyFrameworkElement { get; set; }
+
+        public FrameworkElement MyElement
+        {
+            get { return (FrameworkElement)GetValue(MyElementProperty); }
+            set { SetValue(MyElementProperty, value); }
+        }
+        public static readonly DependencyProperty MyElementProperty =
+            DependencyProperty.Register(nameof(MyElement), typeof(FrameworkElement), typeof(RectThumb), new PropertyMetadata(null));
+
+        //public Brush MyBrush
+        //{
+        //    get { return (Brush)GetValue(MyBrushProperty); }
+        //    set { SetValue(MyBrushProperty, value); }
+        //}
+        //public static readonly DependencyProperty MyBrushProperty =
+        //    DependencyProperty.Register(nameof(MyBrush), typeof(Brush), typeof(RectThumb), new PropertyMetadata(Brushes.Red));
+
+        static RectThumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(RectThumb), new FrameworkPropertyMetadata(typeof(RectThumb)));
+        }
+        public RectThumb()
+        {            
+            
+            
+        }
+    }
+
+
+
+
     [ContentProperty(nameof(MyThumbs))]
     public class GroupThumb : KisoThumb
     {

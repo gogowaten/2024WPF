@@ -21,9 +21,26 @@ namespace _20241211
     /// </summary>
     public partial class MainWindow : Window
     {
+        //RectThumb MyGhostRectThumb { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
+
+            GotFocus += MainWindow_GotFocus;
+            GotKeyboardFocus += MainWindow_GotKeyboardFocus;
+            PreviewGotKeyboardFocus += MainWindow_PreviewGotKeyboardFocus;
+
+            //BindingOperations.ClearBinding(MyRootGroup, KisoThumb.MyLeftProperty);
+            //BindingOperations.ClearBinding(MyRootGroup, KisoThumb.MyTopProperty);
+
+            Loaded += MainWindow_Loaded;
+            //MyGhostRectThumb = new() { Width = 100, Height = 100 };
+            
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
         }
 
         private void KisoThumb_DragDelta(object sender, DragDeltaEventArgs e)
@@ -34,18 +51,20 @@ namespace _20241211
                 t.MyLeft += e.HorizontalChange;
                 t.MyTop += e.VerticalChange;
                 e.Handled = true;
-                GotFocus += MainWindow_GotFocus;
-                GotKeyboardFocus += MainWindow_GotKeyboardFocus;
-                PreviewGotKeyboardFocus += MainWindow_PreviewGotKeyboardFocus;
-
-                //BindingOperations.ClearBinding(MyRootGroup, KisoThumb.MyLeftProperty);
-                //BindingOperations.ClearBinding(MyRootGroup, KisoThumb.MyTopProperty);
-
             }
-
-
-
         }
+        private void KisoThumb_DragDeltaSizeKotei(object sender, DragDeltaEventArgs e)
+        {
+
+            if (sender is KisoThumb t)
+            {
+
+                t.MyLeft += e.HorizontalChange;
+                t.MyTop += e.VerticalChange;
+                e.Handled = true;
+            }
+        }
+
 
         private void MainWindow_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -194,31 +213,31 @@ namespace _20241211
                 {
                     t.MyLeft -= 10;
 
-                    var HOffset = MyScroll.HorizontalOffset;
-                    var scWidth = MyScroll.ActualWidth;
-                    var right = t.MyLeft + t.ActualWidth;
-                    var left = t.MyLeft;
-                    var gWidth = t.MyParentThumb?.ActualWidth;
-                    if (HOffset > left)
-                    {
-                        var diff = HOffset - left;
-                        MyScroll.ScrollToHorizontalOffset(left);
+                    //var HOffset = MyScroll.HorizontalOffset;
+                    //var scWidth = MyScroll.ActualWidth;
+                    //var right = t.MyLeft + t.ActualWidth;
+                    //var left = t.MyLeft;
+                    //var gWidth = t.MyParentThumb?.ActualWidth;
+                    //if (HOffset > left)
+                    //{
+                    //    var diff = HOffset - left;
+                    //    MyScroll.ScrollToHorizontalOffset(left);
 
-                    }
-                    if (t.MyLeft < 0)
-                    {
-                        //t.MyParentThumb?.ReLayout3();
-                        t.MyParentThumb?.ReLayout();
-                        MyRootGroup.MyLeft = 0;
-                        MyRootGroup.MyTop = 0;
+                    //}
+                    //if (t.MyLeft < 0)
+                    //{
+                    //    //t.MyParentThumb?.ReLayout3();
+                    //    t.MyParentThumb?.ReLayout();
+                    //    MyRootGroup.MyLeft = 0;
+                    //    MyRootGroup.MyTop = 0;
 
-                        //if(t.MyParentThumb == MyRootGroup)
-                        //{
-                        //    MyRootGroup.MyLeft = 0;
-                        //    MyRootGroup.MyTop = 0;
+                    //    //if(t.MyParentThumb == MyRootGroup)
+                    //    //{
+                    //    //    MyRootGroup.MyLeft = 0;
+                    //    //    MyRootGroup.MyTop = 0;
 
-                        //}
-                    }
+                    //    //}
+                    //}
 
                     e.Handled = true;
                 }
@@ -226,7 +245,9 @@ namespace _20241211
                 {
                     t.MyLeft += 10;
 
-                    ////Thumbの右端が見切れたら、その分をスクロールさせる
+                    //Thumbの右端が見切れたら、その分をスクロールさせる
+                    //→止めた、無くても良い、キーアップでReLayoutで十分
+
                     //double thumbRight = t.MyLeft + t.ActualWidth;
                     //double parentLeft = t.MyParentThumb?.MyLeft ?? 0;
                     ////Thumbの右端
@@ -243,15 +264,33 @@ namespace _20241211
                     //t.MyParentThumb?.ReLayout();
                     e.Handled = true;
                 }
+                else if (e.Key == Key.Up) { t.MyTop -= 10; e.Handled = true; }
+                else if (e.Key == Key.Down) { t.MyTop += 10; e.Handled = true; }
             }
         }
 
         private void KisoThumb_KeyUp(object sender, KeyEventArgs e)
         {
-            if(sender is KisoThumb t)
+            if (sender is KisoThumb t)
             {
                 t.MyParentThumb?.ReLayout();
             }
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var neko = Myx.MyElement;
+
+            VisualBrush vb = new(MyGroup1) { Stretch = Stretch.Uniform };
+            Myx.Background = vb;
+            
+
+            //if (AdornerLayer.GetAdornerLayer(MyGroup1) is AdornerLayer lay)
+            //{
+            //    MyAdorner ado = new(lay);
+            //    lay.Add(ado);
+            //}
+
         }
 
 

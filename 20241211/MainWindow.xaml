@@ -10,16 +10,19 @@
     <Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
       <!--<EventSetter Event="DragDelta" Handler="KisoThumb_DragDelta2"/>
         <EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted2"/>-->
-      <EventSetter Event="DragDelta" Handler="KisoThumb_DragDelta"/>
+      <!--<EventSetter Event="DragDelta" Handler="KisoThumb_DragDelta"/>-->
       <!--<EventSetter Event="DragDelta" Handler="KisoThumb_DragDeltaSleep1"/>-->
+      <EventSetter Event="DragDelta" Handler="KisoThumb_DragDeltaSizeKotei"/>
       <!--<EventSetter Event="DragDelta" Handler="KisoThumb_DragDeltaSleep2"/>-->
       <EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted"/>
+
       <EventSetter Event="KeyDown" Handler="KisoThumb_KeyDown"/>
       <EventSetter Event="KeyUp" Handler="KisoThumb_KeyUp"/>
     </Style>
     <Style TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}"/>
     <Style TargetType="{x:Type local:TextBlockThumb}" BasedOn="{StaticResource kiso}"/>
     <Style TargetType="{x:Type local:EllipseTextThumb}" BasedOn="{StaticResource kiso}"/>
+    <Style TargetType="{x:Type local:RectThumb}" BasedOn="{StaticResource kiso}"/>
 
   </Window.Resources>
   <Grid>
@@ -38,23 +41,25 @@
               VerticalAlignment="Top"
               Width="{Binding ElementName=MyRootGroup, Path=ActualWidth}"
               Height="{Binding ElementName=MyRootGroup,Path=ActualHeight}">-->
-        
-        
-        <local:GroupThumb x:Name="MyRootGroup" MyLeft="0" MyTop="0" MyText="root" Background="RosyBrown"
+
+
+      <local:GroupThumb x:Name="MyRootGroup" MyLeft="0" MyTop="0" MyText="root" Background="RosyBrown"
                           KeyboardNavigation.TabNavigation="Cycle">
-          <local:TextBlockThumb MyLeft="0" MyTop="0" MyText="Item1" Background="Salmon"/>
-          <local:GroupThumb MyLeft="30" MyTop="30" MyText="Group1" Background="SeaShell">
-            <local:EllipseTextThumb MyLeft="0" MyTop="0" MySize="100" MyText="Item2" Background="Salmon"/>
-            <local:EllipseTextThumb MyLeft="150" MyTop="20" MySize="100" MyText="Item3" Background="Salmon"/>
-            
-          </local:GroupThumb>
+        <local:TextBlockThumb MyLeft="0" MyTop="0" MyText="Item1" Background="Salmon"/>
+        <local:GroupThumb x:Name="MyGroup1" MyLeft="30" MyTop="30" MyText="Group1" Background="SeaShell">
+          <local:EllipseTextThumb MyLeft="0" MyTop="0" MySize="100" MyText="Item2" Background="Salmon"/>
+          <local:EllipseTextThumb MyLeft="150" MyTop="20" MySize="100" MyText="Item3" Background="Salmon"/>
+
+        </local:GroupThumb>
         <local:GroupThumb MyLeft="120" MyTop="100" Background="AliceBlue">
           <local:EllipseTextThumb MyLeft="0" MyTop="0" MySize="100" MyText="Item2-1" Background="Salmon"/>
           <local:EllipseTextThumb MyLeft="100" MyTop="80" MySize="100" MyText="Item2-2" Background="Salmon"/>
+          <!--<local:RectThumb x:Name="Myxx" MyLeft="0" MyTop="110" Width="100" Height="50" MyElement="{Binding ElementName=MyRootGroup}"/>-->
+          <local:RectThumb x:Name="Myx" MyLeft="0" MyTop="110" Width="100" Height="50" Background="MediumAquamarine"/>
         </local:GroupThumb>
-        </local:GroupThumb>
+      </local:GroupThumb>
 
-        <!--<local:GroupThumb2 x:Name="MyRootGroup" MyLeft="0" MyTop="0" Background="RosyBrown">
+      <!--<local:GroupThumb2 x:Name="MyRootGroup" MyLeft="0" MyTop="0" Background="RosyBrown">
           <local:EllipseTextThumb MyLeft="0" MyTop="0" MySize="50" MyText="Item" Background="Salmon"/>
           <local:EllipseTextThumb MyLeft="130" MyTop="30" MySize="50" MyText="Item" Background="Salmon"/>
           <local:TextBlockThumb MyLeft="300" MyTop="20" MyText="Item" Background="Salmon"/>
@@ -81,12 +86,12 @@
           <VisualBrush Visual="{Binding ElementName=MyCanvas}" Stretch="Uniform"/>
         </Grid.Background>
       </Grid>-->
-      <Canvas Width="50" Height="50">
+      <Canvas x:Name="MyNaviCanvas" Width="50" Height="50">
         <Canvas.Background>
           <VisualBrush Visual="{Binding ElementName=MyRootGroup}" Stretch="Uniform"/>
         </Canvas.Background>
       </Canvas>
-
+      <Button Content="adorner" Click="Button_Click"/>
     </StackPanel>
   </Grid>
 </Window>
