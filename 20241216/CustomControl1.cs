@@ -69,7 +69,24 @@ namespace _20241216
             DataContext = this;
             Focusable = true;
             MyType = Type.None;
+            //PreviewGotKeyboardFocus += KisoThumb_PreviewGotKeyboardFocus;
+            PreviewMouseDown += KisoThumb_PreviewMouseDown;    
         }
+
+        private void KisoThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if(sender is KisoThumb t)
+            {
+                t.Focusable = false;
+            }
+        }
+
+
+
+        //private void KisoThumb_PreviewGotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        //{
+        //    //e.Handled= true;
+        //}
     }
 
 
@@ -85,6 +102,7 @@ namespace _20241216
         public AnchorThumb()
         {
             MyType = Type.Anchor;
+            Focusable = false;
         }
     }
 
@@ -200,12 +218,56 @@ namespace _20241216
         #endregion 初期化
 
         /// <summary>
-        /// 再配置、子要素の座標を元に位置を修正する
+        /// 再配置、
+        /// 子要素全体での左上座標を元に
+        /// 子要素全部と自身の位置を修正する
+        /// 自身がrootだった場合は変更があっても0,0に修正
         /// </summary>
-        public void ReLayout()
-        {
-            //すべての子要素で最も左上の座標を取得
+        //public void ReLayout()
+        //{
+        //    //全体での左上座標を取得
+        //    double left = double.MaxValue; double top = double.MaxValue;
+        //    foreach (var item in MyThumbs)
+        //    {
+        //        if (item.MyType != Type.Anchor)
+        //        {
+        //            if (left > item.MyLeft) { left = item.MyLeft; }
+        //            if (top > item.MyTop) { top = item.MyTop; }
+        //        }
+        //    }
 
+        //    //自身の座標と比較、同じ(変化なし)なら終了
+        //    if (left == MyLeft && top == MyTop) return;
+
+        //    //座標変化の場合は、自身と全ての子要素の座標を変更する
+        //    if (left != 0)
+        //    {
+        //        foreach (var item in MyThumbs) { item.MyLeft -= left; }
+        //        //自身がrootだった場合は座標を0に、それ以外なら変更
+        //        if (MyType == Type.Root) { MyLeft = 0; }
+        //        else MyLeft += left;
+        //    }
+
+        //    if (top != 0)
+        //    {
+        //        foreach (var item in MyThumbs) { item.MyTop -= top; }
+        //        if (MyType == Type.Root) { MyTop = 0; }
+        //        else MyTop += top;
+        //    }
+
+        //    //ParentThumbにも伝播させる
+        //    MyParentThumb?.ReLayout();
+        //}
+
+
+        /// <summary>
+        /// 再配置、
+        /// 子要素全体での左上座標を元に子要素全部と自身の位置を修正する
+        /// ただし、自身がrootだった場合は子要素だけを修正する
+        /// </summary>
+        public void ReLayout3()
+        {
+            //全体での左上座標を取得
             double left = double.MaxValue; double top = double.MaxValue;
             foreach (var item in MyThumbs)
             {
@@ -216,27 +278,24 @@ namespace _20241216
                 }
             }
 
-            //自身の座標と比較、同じ(変化なし)なら終了
-            if (left == MyLeft && top == MyTop) return;
-
-            //座標変化の場合は、自身と全ての子要素の座標を変更する
-            if (left != 0)
+            if (left != MyLeft)
             {
+                //座標変化の場合は、自身と全ての子要素の座標を変更する
                 foreach (var item in MyThumbs) { item.MyLeft -= left; }
-                //自身がrootだった場合は座標を0に、それ以外なら変更
-                if (MyType == Type.Root) { MyLeft = 0; }
-                else MyLeft += left;
 
+                //自身がroot以外なら修正
+                if (MyType != Type.Root) { MyLeft += left; }
             }
-            if (top != 0)
+
+            if (top != MyTop)
             {
                 foreach (var item in MyThumbs) { item.MyTop -= top; }
-                if (MyType == Type.Root) { MyTop = 0; }
-                else MyTop += top;
+
+                if (MyType != Type.Root) { MyTop += top; }
             }
 
-            //ParentThumbにも伝播させる
-            MyParentThumb?.ReLayout();
+            //ParentThumbがあれば、そこでも再配置処理
+            MyParentThumb?.ReLayout3();
         }
 
 

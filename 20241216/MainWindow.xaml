@@ -36,14 +36,14 @@
         <local:GroupThumb x:Name="MyGroup1" MyLeft="20" MyTop="20" Background="Salmon">
           <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="0" MyTop="0"
                                 MyText="Group1-1" Background="LightSalmon"/>
-          <local:EllipseTextThumb MyLeft="10" MyTop="250" MySize="60"
+          <local:EllipseTextThumb MyLeft="10" MyTop="350" MySize="60"
                                   MyText="Group1-2" Background="Gold"/>
         </local:GroupThumb>
 
         <local:GroupThumb x:Name="MyGroup2" MyLeft="150" MyTop="140" Background="Violet">
           <local:TextBlockThumb x:Name="MyItem2_1" MyLeft="0" MyTop="0"
                                 MyText="Group2-1" Background="Pink"/>
-          <local:EllipseTextThumb MyLeft="50" MyTop="30" MySize="60"
+          <local:EllipseTextThumb MyLeft="250" MyTop="30" MySize="60"
                                   MyText="Group2-2" Background="Gold"/>
         </local:GroupThumb>
 

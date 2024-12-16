@@ -74,7 +74,7 @@ namespace _20241216
             //MyItem1_1.MyParentThumb?.ReLayout();
         }
 
-        
+
         /// <summary>
         /// ドラッグ移動終了時
         /// アンカーThumbをCollapsed化と再配置後に親要素の再配置
@@ -90,7 +90,7 @@ namespace _20241216
                     anchor.MyLeft = t.MyLeft;
                     anchor.MyTop = t.MyTop;
                 }
-                t.MyParentThumb.ReLayout();
+                t.MyParentThumb.ReLayout3();
             }
 
             //イベントをここで停止
