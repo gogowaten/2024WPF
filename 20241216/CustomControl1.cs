@@ -70,9 +70,28 @@ namespace _20241216
             Focusable = true;
             MyType = Type.None;
             //PreviewGotKeyboardFocus += KisoThumb_PreviewGotKeyboardFocus;
-            PreviewMouseDown += KisoThumb_PreviewMouseDown;    
+            PreviewMouseDown += KisoThumb_PreviewMouseDown;
+            PreviewMouseUp += KisoThumb_PreviewMouseUp;
         }
 
+        /// <summary>
+        /// マウスアップ時、フォーカスを有効化してフォーカスする
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void KisoThumb_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if(sender is  KisoThumb t)
+            {
+                t.Focusable = true;
+                t.Focus();
+            }
+        }
+
+        /// <summary>
+        /// クリックダウン時、フォーカス無効化する。
+        /// フォーカスでスクロール位置がガクッと変更されて不自然なのを防ぐ
+        /// </summary>
         private void KisoThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if(sender is KisoThumb t)

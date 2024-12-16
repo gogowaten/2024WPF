@@ -101,8 +101,6 @@ namespace _20241216
         /// ドラッグ移動開始時
         /// アンカーThumbをHidden化、サイズと位置を移動要素に合わせる
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void KisoThumb_DragStarted(object sender, DragStartedEventArgs e)
         {
             if (e.Source is KisoThumb t)
@@ -120,5 +118,8 @@ namespace _20241216
                 }
             }
         }
+
+
+
     }
 }
