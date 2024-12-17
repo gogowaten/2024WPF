@@ -61,6 +61,7 @@
       <Setter.Value>
         <ControlTemplate>
           <ItemsControl x:Name="PART_ItemsControl"
+                        Focusable="False"
                         ItemsSource="{Binding MyThumbs}"
                         Background="{TemplateBinding Background}">
             <ItemsControl.ItemsPanel>
@@ -68,12 +69,6 @@
                 <local:ExCanvas/>
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <!--<ItemsControl.ItemContainerStyle>
-              <Style TargetType="Thumb">
-                <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
-                <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
-              </Style>
-            </ItemsControl.ItemContainerStyle>-->
           </ItemsControl>
         </ControlTemplate>
       </Setter.Value>
@@ -86,6 +81,7 @@
       <Setter.Value>
         <ControlTemplate>
           <ItemsControl x:Name="PART_ItemsControl"
+                        Focusable="False"
                         ItemsSource="{Binding MyThumbs}"
                         Background="{TemplateBinding Background}">
             <ItemsControl.ItemsPanel>

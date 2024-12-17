@@ -22,6 +22,14 @@ namespace _20241216
         {
             InitializeComponent();
 
+            GotKeyboardFocus += MainWindow_GotKeyboardFocus;
+        }
+
+     
+
+        private void MainWindow_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            MyTextGotKeyFocus.Text ="GotKeyFocus = " + e.NewFocus.GetType().ToString();
         }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
@@ -63,15 +71,7 @@ namespace _20241216
 
         private void MyButtonText_Click(object sender, RoutedEventArgs e)
         {
-            //Canvas.SetLeft(MyRootGroup, double.NaN);
-            //Canvas.SetTop(MyRootGroup, double.NaN);
-            //BindingOperations.ClearBinding(MyRootGroup, KisoThumb.MyLeftProperty);
-            //BindingOperations.ClearBinding(MyRootGroup, KisoThumb.MyTopProperty);
-            //BindingOperations.ClearBinding(MyRootGroup, Canvas.LeftProperty);
-            //BindingOperations.ClearBinding(MyRootGroup, Canvas.TopProperty);
-
-            //MyItem1_1.MyLeft -= 100;
-            //MyItem1_1.MyParentThumb?.ReLayout();
+           
         }
 
 
@@ -89,12 +89,14 @@ namespace _20241216
                     anchor.Visibility = Visibility.Collapsed;
                     anchor.MyLeft = t.MyLeft;
                     anchor.MyTop = t.MyTop;
+                    //イベントをここで停止
+                    e.Handled = true;
                 }
                 t.MyParentThumb.ReLayout3();
             }
 
             //イベントをここで停止
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         /// <summary>
@@ -114,12 +116,40 @@ namespace _20241216
                     anchor.Height = t.ActualHeight;
                     anchor.MyLeft = t.MyLeft;
                     anchor.MyTop = t.MyTop;
-
+                    e.Handled = true;
                 }
             }
         }
 
+        private void KisoThumb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender is KisoThumb t)
+            {
+                if (e.Key == Key.Left)
+                {
+                    t.MyLeft -= 10;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Right) { t.MyLeft += 10; e.Handled = true; }
+                else if (e.Key == Key.Up) { t.MyTop -= 10; e.Handled = true; }
+                else if (e.Key == Key.Down) { t.MyTop += 10; e.Handled = true; }
 
+                //e.Handled = true;//これは各所に必要、ここで実行するとタブキーでのフォーカス移動がキャンセルされる
+            }
+        }
 
+        private void KisoThumb_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (sender is KisoThumb t)
+            {
+                //t.Focus();
+                t.MyParentThumb?.ReLayout3();
+                t.BringIntoView();
+                //wpf コントロール - WPF ScrollViewer が認識されたコンテンツに自動的にスクロールするのを停止する - Stack Overflow
+            //https://stackoverflow.com/questions/8384237/stop-wpf-scrollviewer-automatically-scrolling-to-perceived-content
+
+                e.Handled = true;
+            }
+        }
     }
 }
