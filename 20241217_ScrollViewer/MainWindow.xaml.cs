@@ -1,6 +1,9 @@
 ﻿using System.Windows;
 using System.Windows.Controls.Primitives;
 
+//WPF、子要素のドラッグ移動で自動リサイズするCanvasに、スクロールバーを表示したときの不自然な挙動を改善 - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2024/12/17/153512
+
 namespace _20241217_ScrollViewer
 {
     /// <summary>
