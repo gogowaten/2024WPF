@@ -1,0 +1,44 @@
+﻿<Window x:Class="_20241218_ScrollViewer_BringIntoView.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241218_ScrollViewer_BringIntoView"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="280" Width="440">
+  <Window.Resources>
+    <Style TargetType="Thumb">
+      <Setter Property="Width" Value="100"/>
+      <Setter Property="Height" Value="100"/>
+      <Setter Property="Focusable" Value="True"/>
+      <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+      <EventSetter Event="KeyDown" Handler="Thumb_KeyDown"/>
+      <EventSetter Event="KeyUp" Handler="Thumb_KeyUp"/>
+      <EventSetter Event="PreviewMouseDown" Handler="Thumb_PreviewMouseDown"/>
+      <EventSetter Event="PreviewMouseUp" Handler="Thumb_PreviewMouseUp"/>
+    </Style>
+  </Window.Resources>
+  
+  <Grid Background="PaleGreen">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="120"/>
+    </Grid.ColumnDefinitions>
+    
+    <ScrollViewer x:Name="MyScroll"
+                  HorizontalScrollBarVisibility="Auto"
+                  VerticalScrollBarVisibility="Auto">
+      <Canvas x:Name="MyCanvas" Width="500" Height="500" Background="ForestGreen"
+              KeyboardNavigation.TabNavigation="Cycle">        
+        <Thumb Canvas.Left="50" Canvas.Top="50"/>
+        <Thumb Canvas.Left="160" Canvas.Top="100"/>
+      </Canvas>
+    </ScrollViewer>
+    
+    <Grid Grid.Column="1" Margin="20">
+      <Grid.Background>
+        <VisualBrush Visual="{Binding ElementName=MyCanvas}" Stretch="Uniform"/>
+      </Grid.Background>
+    </Grid>
+  </Grid>
+</Window>

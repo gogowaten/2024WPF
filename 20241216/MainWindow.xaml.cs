@@ -25,11 +25,11 @@ namespace _20241216
             GotKeyboardFocus += MainWindow_GotKeyboardFocus;
         }
 
-     
+
 
         private void MainWindow_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
-            MyTextGotKeyFocus.Text ="GotKeyFocus = " + e.NewFocus.GetType().ToString();
+            MyTextGotKeyFocus.Text = "GotKeyFocus = " + e.NewFocus.GetType().ToString();
         }
 
         private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
@@ -71,7 +71,7 @@ namespace _20241216
 
         private void MyButtonText_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
 
@@ -121,6 +121,10 @@ namespace _20241216
             }
         }
 
+        /// <summary>
+        /// KeyDown時
+        /// 方向キーでそれぞの方向に10ピクセル移動、各移動処理後にイベント終了
+        /// </summary>
         private void KisoThumb_KeyDown(object sender, KeyEventArgs e)
         {
             if (sender is KisoThumb t)
@@ -138,6 +142,14 @@ namespace _20241216
             }
         }
 
+
+        //wpf コントロール - WPF ScrollViewer が認識されたコンテンツに自動的にスクロールするのを停止する - Stack Overflow
+        //https://stackoverflow.com/questions/8384237/stop-wpf-scrollviewer-automatically-scrolling-to-perceived-content
+        /// <summary>
+        /// KeyUp時
+        /// 再配置処理してからBringIntoViewすることで、
+        /// 対象Thumbが表示される位置にスクロールする
+        /// </summary>
         private void KisoThumb_KeyUp(object sender, KeyEventArgs e)
         {
             if (sender is KisoThumb t)
@@ -145,8 +157,6 @@ namespace _20241216
                 //t.Focus();
                 t.MyParentThumb?.ReLayout3();
                 t.BringIntoView();
-                //wpf コントロール - WPF ScrollViewer が認識されたコンテンツに自動的にスクロールするのを停止する - Stack Overflow
-            //https://stackoverflow.com/questions/8384237/stop-wpf-scrollviewer-automatically-scrolling-to-perceived-content
 
                 e.Handled = true;
             }

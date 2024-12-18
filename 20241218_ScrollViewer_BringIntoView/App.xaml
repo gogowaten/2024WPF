@@ -1,0 +1,9 @@
+﻿<Application x:Class="_20241218_ScrollViewer_BringIntoView.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:_20241218_ScrollViewer_BringIntoView"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
