@@ -3,6 +3,9 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 
+//WPF、ScrollViewer内で見えない要素を、見える位置まで自動スクロール調節するにはBringIntoView - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2024/12/18/141443
+
 namespace _20241218_ScrollViewer_BringIntoView
 {
     /// <summary>
@@ -59,6 +62,9 @@ namespace _20241218_ScrollViewer_BringIntoView
             }
         }
 
+        //wpf コントロール - WPF ScrollViewer が認識されたコンテンツに自動的にスクロールするのを停止する - Stack Overflow
+        //https://stackoverflow.com/questions/8384237/stop-wpf-scrollviewer-automatically-scrolling-to-perceived-content
+        //より
         /// <summary>
         /// キーが離されたとき
         /// BringIntoViewを実行することで、Thumbが見える位置までスクロールする
