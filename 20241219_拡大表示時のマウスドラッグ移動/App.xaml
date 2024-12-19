@@ -1,0 +1,9 @@
+﻿<Application x:Class="_20241219_拡大表示時のマウスドラッグ移動.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:_20241219_拡大表示時のマウスドラッグ移動"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+         
+    </Application.Resources>
+</Application>
