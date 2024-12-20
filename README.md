@@ -1,3 +1,11 @@
+20241219<br>
+WPF、Canvasの拡大表示時の子要素のドラッグ移動距離とぼやけ表示の解消 - 午後わてんのブログ<br>
+https://gogowaten.hatenablog.com/entry/2024/12/19/170607<br>
+![Animation20241219_154158](https://github.com/user-attachments/assets/af68637f-4f42-4576-a50b-62bedab1a644)
+<br><br>
+
+
+
 20241218<br>
 WPF、ScrollViewer内で見えない要素を、見える位置まで自動スクロール調節するにはBringIntoView - 午後わてんのブログ<br>
 https://gogowaten.hatenablog.com/entry/2024/12/18/141443<br>
