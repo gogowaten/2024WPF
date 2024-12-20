@@ -7,44 +7,23 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="600">
   <Window.Resources>
-    <Style TargetType="Thumb">
-      <Setter Property="Width" Value="30"/>
-      <Setter Property="Height" Value="30"/>
-      <!--<EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>-->
-      <EventSetter Event="DragDelta" Handler="Thumb_DragDelta2"/>
-      <EventSetter Event="DragStarted" Handler="Thumb_DragStarted"/>
+    <Style x:Key="aaa" TargetType="TextBox">
+      <Setter Property="Background" Value="White"/>
+      <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+      <Style.Triggers>
+        <Trigger Property="IsFocused" Value="True">
+          <Setter Property="Background" Value="Red"/>
+        </Trigger>
+      </Style.Triggers>
     </Style>
   </Window.Resources>
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="150"/>
-      <ColumnDefinition/>
-    </Grid.ColumnDefinitions>
-    <StackPanel Grid.Column="0" Margin="10">
-      <Button Content="100%" Click="Button_Click_100"/>
-      <Button Content="300%" Click="Button_Click_300"/>
-      <Button Content="1000%" Click="Button_Click_1000"/>
-      <!--<TextBlock Text="{Binding ElementName=MyCanvas, Path=(ScaleTransform.ScaleX), StringFormat=表示倍率 0 %}"/>-->
-      <TextBlock Text="{Binding ElementName=MyCanvas, Path=RenderTransform.Value.M11, StringFormat=表示倍率 0 %}"/>
-      <TextBlock Text="{Binding ElementName=MyThumb, Path=(Canvas.Left), StringFormat=Left {0:00.00}}" FontSize="20"/>
-      <Separator Margin="10"/>
-      <TextBlock Text="{Binding ElementName=MyCanvas, Path=UseLayoutRounding, StringFormat=座標丸め \= {0}}"/>
-      <Button Content="座標の丸め切り替え" Click="Button_Click_Rounding"/>
-      <Separator Margin="10"/>
-      <TextBlock Text="{Binding ElementName=MyCanvas, Path=(RenderOptions.EdgeMode), StringFormat=Edge \= {0}}"/>
-      <Button Content="EdgeMode切り替え" Click="Button_Click_EdgeMode"/>
-      <Separator Margin="10"/>
-      <TextBlock Text="{Binding ElementName=MyCanvas, Path=(RenderOptions.BitmapScalingMode), StringFormat=ScaleMode {0}}"/>
-      <ComboBox x:Name="MyComboScaleMode" SelectedValue="{Binding ElementName=MyCanvas, Path=(RenderOptions.BitmapScalingMode)}"/>
-    </StackPanel>
 
-    <Canvas x:Name="MyCanvas" Grid.Column="1" Width="450" Height="400" Background="MintCream">
-      <Canvas.RenderTransform>
-        <ScaleTransform ScaleX="{Binding MyScale}" ScaleY="{Binding MyScale}"/>
-      </Canvas.RenderTransform>
-      <Thumb x:Name="MyThumb" Canvas.Left="0" Canvas.Top="0"/>
-      <Thumb Canvas.Left="20" Canvas.Top="20"/>
-    </Canvas>
 
-  </Grid>
+  <StackPanel PreviewMouseDown="TextBox_PreviewMouseDown"
+              GotFocus="TextBox_GotFocus"
+              LostFocus="TextBox_LostFocus">
+    <Button Content="aaaaaaaaaaaaa" Height="100" Width="100"/>
+    <TextBlock Text="tttttttttt"/>
+    <TextBox Text="bbbbbbbb" Style="{DynamicResource aaa}"/>
+  </StackPanel>
 </Window>
