@@ -13,17 +13,6 @@
   </Style>
 
 
-  <Style x:Key="wakublue" TargetType="{x:Type Rectangle}">
-    <Setter Property="Stroke" Value="Blue"/>
-    <Setter Property="StrokeThickness" Value="1.0"/>
-  </Style>
-  <Style x:Key="wakuwhite" TargetType="{x:Type Rectangle}">
-    <Setter Property="Stroke" Value="White"/>
-    <Setter Property="StrokeThickness" Value="1.0"/>
-    <Setter Property="StrokeDashArray" Value="4.0"/>
-  </Style>
-
-
   <Style TargetType="{x:Type local:AnchorThumb}"
        BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
@@ -36,16 +25,28 @@
   </Style>
 
 
+  <Style x:Key="wakublue" TargetType="{x:Type Rectangle}">
+    <Setter Property="Stroke" Value="Blue"/>
+    <Setter Property="StrokeThickness" Value="1.0"/>
+  </Style>
+  <Style x:Key="wakuwhite" TargetType="{x:Type Rectangle}">
+    <Setter Property="Stroke" Value="White"/>
+    <Setter Property="StrokeThickness" Value="1.0"/>
+    <Setter Property="StrokeDashArray" Value="4.0"/>
+  </Style>
+
+  
+  
   <Style TargetType="{x:Type local:TextBlockThumb}"
          BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <Grid>
-            <Rectangle Style="{StaticResource wakublue}"/>
-            <Rectangle Style="{StaticResource wakuwhite}"/>
+          <Grid x:Name="PART_Grid">
             <TextBlock Text="{Binding MyText}"
                      Background="{TemplateBinding Background}"/>
+            <Rectangle x:Name="stroke1" Style="{StaticResource wakublue}"/>
+            <Rectangle x:Name="stroke2" Style="{StaticResource wakuwhite}"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
@@ -85,12 +86,6 @@
                 <local:ExCanvas/>
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <!--<ItemsControl.ItemContainerStyle>
-              <Style TargetType="Thumb">
-                <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
-                <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
-              </Style>
-            </ItemsControl.ItemContainerStyle>-->
           </ItemsControl>
         </ControlTemplate>
       </Setter.Value>

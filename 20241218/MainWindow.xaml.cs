@@ -37,34 +37,6 @@ namespace _20241218
             }
         }
 
-        ////失敗
-        ////スクロールオフセットでスクロール位置を固定はできない
-        //private void Thumb_DragDelta2(object sender, DragDeltaEventArgs e)
-        //{
-        //    if (sender is KisoThumb t)
-        //    {
-        //        var scrollWidth = MyScrollV.ActualWidth;
-        //        var scrollHOffset = MyScrollV.HorizontalOffset;
-        //        var scrollRight = MyScrollV.ActualWidth + MyScrollV.HorizontalOffset;
-        //        double parentLeft = t.MyParentThumb?.MyLeft ?? 0;
-        //        var thumbRight = parentLeft + t.MyLeft + t.ActualWidth;
-
-        //        t.MyLeft += e.HorizontalChange;
-        //        t.MyTop += e.VerticalChange;
-
-
-        //        var thumbRight2 = parentLeft + t.MyLeft + t.ActualWidth;
-        //        //固定
-        //        if (scrollRight > thumbRight2)
-        //        {
-        //            MyScrollV.ScrollToHorizontalOffset(scrollHOffset);
-        //        }
-
-        //        e.Handled = true;
-        //    }
-        //}
-
-
         /// <summary>
         /// ドラッグ移動終了時
         /// アンカーThumbをCollapsed化と再配置後に親要素の再配置
@@ -95,6 +67,8 @@ namespace _20241218
         {
             if (e.Source is KisoThumb t)
             {
+                t.MyIsSelected = !t.MyIsSelected;
+
                 //アンカーThumbをHidden、在るけど見えないだけ
                 if (t.MyParentThumb is GroupThumb gt)
                 {
@@ -111,4 +85,8 @@ namespace _20241218
 
 
     }
+
+
+
+
 }

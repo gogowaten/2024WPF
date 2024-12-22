@@ -20,7 +20,7 @@ using System.Windows.Shapes;
 namespace _20241218
 {
     //Thumbの種類の識別用
-    public enum Type { None = 0, Root, Group, Item, Anchor }
+    public enum Type { None = 0, Root, Group, Item, Anchor, TextBlock, EllipseText }
 
 
     /// <summary>
@@ -54,6 +54,36 @@ namespace _20241218
         public static readonly DependencyProperty MyTextProperty =
             DependencyProperty.Register(nameof(MyText), typeof(string), typeof(KisoThumb), new PropertyMetadata(string.Empty));
 
+
+        public bool MyIsSelected
+        {
+            get { return (bool)GetValue(MyIsSelectedProperty); }
+            set { SetValue(MyIsSelectedProperty, value); }
+        }
+        public static readonly DependencyProperty MyIsSelectedProperty =
+            DependencyProperty.Register(nameof(MyIsSelected), typeof(bool), typeof(KisoThumb), new PropertyMetadata(false));
+
+
+
+
+        public static Visibility GetMyVisible(DependencyObject obj)
+        {
+            return (Visibility)obj.GetValue(MyVisibleProperty);
+        }
+
+        public static void SetMyVisible(DependencyObject obj, Visibility value)
+        {
+            obj.SetValue(MyVisibleProperty, value);
+        }
+
+        // Using a DependencyProperty as the backing store for MyVisible.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty MyVisibleProperty =
+            DependencyProperty.RegisterAttached("MyVisible", typeof(Visibility), typeof(KisoThumb), new PropertyMetadata(Visibility.Visible));
+
+
+
+
+
         #endregion 依存関係プロパティ
 
         public Type MyType { get; internal set; }
@@ -71,7 +101,43 @@ namespace _20241218
             MyType = Type.None;
             PreviewMouseDown += KisoThumb_PreviewMouseDown;
             PreviewMouseUp += KisoThumb_PreviewMouseUp;
+            Loaded += KisoThumb_Loaded;
         }
+
+        #region 枠の設定        
+
+        private void KisoThumb_Loaded(object sender, RoutedEventArgs e)
+        {
+            var temp = GetTemplateChild("PART_Grid");
+            if (temp is Grid ic)
+            {
+                var stroke1 = GetRectangle(ic, "stroke1");
+                var stroke2 = GetRectangle(ic, "stroke2");
+                if (stroke1 != null && stroke2 != null)
+                {
+                    MyConverterVisible myConv = new();
+                    Binding b;
+                    b = new() { Source = this, Path = new PropertyPath(MyIsSelectedProperty), Converter = myConv };
+                    stroke1.SetBinding(VisibilityProperty, b);
+                    stroke2.SetBinding(VisibilityProperty, b);
+                }
+            }
+        }
+        private static Rectangle? GetRectangle(DependencyObject d, string name)
+        {
+            if (d is Rectangle rectan && rectan.Name == name) { return rectan; }
+
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+            {
+                Rectangle? c = GetRectangle(VisualTreeHelper.GetChild(d, i), name);
+                if (c is not null) { return c; }
+            }
+            return null;
+        }
+
+        #endregion 枠の設定
+
+
 
         /// <summary>
         /// マウスアップ時、フォーカスを有効化してフォーカスする
@@ -98,6 +164,7 @@ namespace _20241218
                 t.Focusable = false;
             }
         }
+
 
     }
 
@@ -126,8 +193,46 @@ namespace _20241218
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBlockThumb), new FrameworkPropertyMetadata(typeof(TextBlockThumb)));
         }
+        public TextBlockThumb()
+        {
+
+            MyType = Type.TextBlock;
+
+            //Loaded += TextBlockThumb_Loaded;
+        }
+
+        //private void TextBlockThumb_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    var temp = GetTemplateChild("PART_Grid");
+        //    if (temp is Grid ic)
+        //    {
+        //        var stroke1 = GetRectangle(ic, "stroke1");
+        //        var stroke2 = GetRectangle(ic, "stroke2");
+        //        if (stroke1 != null && stroke2 != null)
+        //        {
+        //            MyConverterVisible myConv = new();
+        //            Binding b;
+        //            b = new() { Source = this, Path = new PropertyPath(MyIsSelectedProperty), Converter = myConv };
+        //            stroke1.SetBinding(VisibilityProperty, b);
+        //            stroke2.SetBinding(VisibilityProperty, b);
+        //        }
+        //    }
+        //}
+        //private static Rectangle? GetRectangle(DependencyObject d, string name)
+        //{
+        //    if (d is Rectangle rectan && rectan.Name == name) { return rectan; }
+
+        //    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+        //    {
+        //        Rectangle? c = GetRectangle(VisualTreeHelper.GetChild(d, i), name);
+        //        if (c is not null) { return c; }
+        //    }
+        //    return null;
+        //}
 
     }
+
+
 
     public class EllipseTextThumb : TextBlockThumb
     {
@@ -146,6 +251,7 @@ namespace _20241218
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(EllipseTextThumb), new FrameworkPropertyMetadata(typeof(EllipseTextThumb)));
         }
+        public EllipseTextThumb() { MyType = Type.EllipseText; }
 
     }
 
@@ -162,6 +268,8 @@ namespace _20241218
         }
         public static readonly DependencyProperty MyThumbsProperty =
             DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<KisoThumb>), typeof(GroupThumb), new PropertyMetadata(null));
+
+
 
         #endregion 依存関係プロパティ
 
@@ -339,6 +447,68 @@ namespace _20241218
         }
     }
 
+
+    public class WakuRectangle : Shape
+    {
+
+
+
+        public static Visibility GetMyVisi(DependencyObject obj)
+        {
+            return (Visibility)obj.GetValue(MyVisiProperty);
+        }
+
+        public static void SetMyVisi(DependencyObject obj, Visibility value)
+        {
+            obj.SetValue(MyVisiProperty, value);
+        }
+
+        public static readonly DependencyProperty MyVisiProperty =
+            DependencyProperty.RegisterAttached("MyVisi", typeof(Visibility), typeof(WakuRectangle), new PropertyMetadata(Visibility.Visible));
+
+
+
+        static WakuRectangle()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(WakuRectangle), new FrameworkPropertyMetadata(typeof(WakuRectangle)));
+        }
+        public WakuRectangle()
+        {
+
+        }
+
+        protected override Geometry DefiningGeometry
+        {
+            get
+            {
+                RectangleGeometry rectGeo = new() { Rect = new(0, 0, Width, Height) };
+                return rectGeo;
+            }
+        }
+
+        //public Brush MyStroke1
+        //{
+        //    get { return (Brush)GetValue(MyStroke1Property); }
+        //    set { SetValue(MyStroke1Property, value); }
+        //}
+        //public static readonly DependencyProperty MyStroke1Property =
+        //    DependencyProperty.Register(nameof(MyStroke1), typeof(Brush), typeof(WakuRectangle), new PropertyMetadata(Brushes.Transparent));
+
+        //public Brush MyStroke2
+        //{
+        //    get { return (Brush)GetValue(MyStroke2Property); }
+        //    set { SetValue(MyStroke2Property, value); }
+        //}
+        //public static readonly DependencyProperty MyStroke2Property =
+        //    DependencyProperty.Register(nameof(MyStroke2), typeof(Brush), typeof(WakuRectangle), new PropertyMetadata(Brushes.Transparent));
+
+    }
+
+
+    public class WakuRect : KisoThumb
+    {
+
+    }
 
 
 }
