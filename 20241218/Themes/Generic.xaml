@@ -25,18 +25,18 @@
   </Style>
 
 
-  <Style x:Key="wakublue" TargetType="{x:Type Rectangle}">
+  <Style x:Key="PART_stroke1" TargetType="{x:Type Rectangle}">
     <Setter Property="Stroke" Value="Blue"/>
     <Setter Property="StrokeThickness" Value="1.0"/>
   </Style>
-  <Style x:Key="wakuwhite" TargetType="{x:Type Rectangle}">
+  <Style x:Key="PART_stroke2" TargetType="{x:Type Rectangle}">
     <Setter Property="Stroke" Value="White"/>
     <Setter Property="StrokeThickness" Value="1.0"/>
     <Setter Property="StrokeDashArray" Value="4.0"/>
   </Style>
 
-  
-  
+ 
+
   <Style TargetType="{x:Type local:TextBlockThumb}"
          BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
@@ -45,8 +45,8 @@
           <Grid x:Name="PART_Grid">
             <TextBlock Text="{Binding MyText}"
                      Background="{TemplateBinding Background}"/>
-            <Rectangle x:Name="stroke1" Style="{StaticResource wakublue}"/>
-            <Rectangle x:Name="stroke2" Style="{StaticResource wakuwhite}"/>
+            <Rectangle x:Name="stroke1" Style="{StaticResource PART_stroke1}"/>
+            <Rectangle x:Name="stroke2" Style="{StaticResource PART_stroke2}"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
@@ -59,13 +59,15 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <Grid>
+          <Grid x:Name="PART_Grid">
             <Ellipse Width="{Binding MySize}"
                      Height="{Binding MySize}"
                      Fill="{TemplateBinding Background}"/>
             <TextBlock Text="{Binding MyText}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
+            <Rectangle x:Name="stroke1" Style="{StaticResource PART_stroke1}"/>
+            <Rectangle x:Name="stroke2" Style="{StaticResource PART_stroke2}"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
@@ -78,15 +80,19 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <ItemsControl x:Name="PART_ItemsControl"
+          <Grid x:Name="PART_Grid">
+            <ItemsControl x:Name="PART_ItemsControl"
                         ItemsSource="{Binding MyThumbs}"
                         Background="{TemplateBinding Background}">
-            <ItemsControl.ItemsPanel>
-              <ItemsPanelTemplate>
-                <local:ExCanvas/>
-              </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-          </ItemsControl>
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <local:ExCanvas/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ItemsControl>
+            <Rectangle x:Name="stroke1" Style="{StaticResource PART_stroke1}"/>
+            <Rectangle x:Name="stroke2" Style="{StaticResource PART_stroke2}"/>
+          </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
@@ -97,15 +103,17 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <ItemsControl x:Name="PART_ItemsControl"
+          <Grid x:Name="PART_Grid">
+            <ItemsControl x:Name="PART_ItemsControl"
                         ItemsSource="{Binding MyThumbs}"
                         Background="{TemplateBinding Background}">
-            <ItemsControl.ItemsPanel>
-              <ItemsPanelTemplate>
-                <local:ExCanvas/>
-              </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-          </ItemsControl>
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <local:ExCanvas/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ItemsControl>
+          </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>

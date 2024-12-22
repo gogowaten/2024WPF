@@ -111,15 +111,17 @@ namespace _20241218
             var temp = GetTemplateChild("PART_Grid");
             if (temp is Grid ic)
             {
-                var stroke1 = GetRectangle(ic, "stroke1");
-                var stroke2 = GetRectangle(ic, "stroke2");
+                Rectangle? stroke1 = GetRectangle(ic, "stroke1");
+                Rectangle? stroke2 = GetRectangle(ic, "stroke2");
                 if (stroke1 != null && stroke2 != null)
                 {
-                    MyConverterVisible myConv = new();
+
                     Binding b;
-                    b = new() { Source = this, Path = new PropertyPath(MyIsSelectedProperty), Converter = myConv };
+                    b = new() { Source = this, Path = new PropertyPath(MyIsSelectedProperty), Converter = new MyConverterVisible() };
                     stroke1.SetBinding(VisibilityProperty, b);
                     stroke2.SetBinding(VisibilityProperty, b);
+
+
                 }
             }
         }
@@ -198,37 +200,8 @@ namespace _20241218
 
             MyType = Type.TextBlock;
 
-            //Loaded += TextBlockThumb_Loaded;
         }
 
-        //private void TextBlockThumb_Loaded(object sender, RoutedEventArgs e)
-        //{
-        //    var temp = GetTemplateChild("PART_Grid");
-        //    if (temp is Grid ic)
-        //    {
-        //        var stroke1 = GetRectangle(ic, "stroke1");
-        //        var stroke2 = GetRectangle(ic, "stroke2");
-        //        if (stroke1 != null && stroke2 != null)
-        //        {
-        //            MyConverterVisible myConv = new();
-        //            Binding b;
-        //            b = new() { Source = this, Path = new PropertyPath(MyIsSelectedProperty), Converter = myConv };
-        //            stroke1.SetBinding(VisibilityProperty, b);
-        //            stroke2.SetBinding(VisibilityProperty, b);
-        //        }
-        //    }
-        //}
-        //private static Rectangle? GetRectangle(DependencyObject d, string name)
-        //{
-        //    if (d is Rectangle rectan && rectan.Name == name) { return rectan; }
-
-        //    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
-        //    {
-        //        Rectangle? c = GetRectangle(VisualTreeHelper.GetChild(d, i), name);
-        //        if (c is not null) { return c; }
-        //    }
-        //    return null;
-        //}
 
     }
 
@@ -288,6 +261,7 @@ namespace _20241218
             MyThumbs = [];
             MyAnchorThumb = new AnchorThumb() { Visibility = Visibility.Collapsed };
             MyThumbs.Add(MyAnchorThumb);//ダミー設置
+
             Loaded += GroupThumb_Loaded;
             MyThumbs.CollectionChanged += MyThumbs_CollectionChanged;
         }
@@ -313,6 +287,20 @@ namespace _20241218
                 }
             }
         }
+        //private void GroupThumb_Loaded2(object sender, RoutedEventArgs e)
+        //{
+        //    var temp = GetTemplateChild("PART_Grid");
+        //    var temp2 = GetTemplateChild("PART_ItemsControl");
+        //    if (temp is Grid grid)
+        //    {
+        //        var canvas = GetExCanvas2(grid);
+        //        if (canvas != null)
+        //        {
+        //            _ = SetBinding(WidthProperty, new Binding() { Source = canvas, Path = new PropertyPath(ActualWidthProperty) });
+        //            _ = SetBinding(HeightProperty, new Binding() { Source = canvas, Path = new PropertyPath(ActualHeightProperty) });
+        //        }
+        //    }
+        //}
 
         /// <summary>
         /// Templateの中にあるExCanvasの取得
@@ -328,6 +316,20 @@ namespace _20241218
             }
             return null;
         }
+
+        //private static ExCanvas? GetExCanvas2(DependencyObject d)
+        //{
+        //    if (d is ExCanvas canvas) { return canvas; }
+
+        //    for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+        //    {
+        //        ExCanvas? c = GetExCanvas2(VisualTreeHelper.GetChild(d, i));
+        //        if (c is not null) return c;
+        //    }
+        //    return null;
+        //}
+
+
 
         /// <summary>
         /// 子要素の追加時
