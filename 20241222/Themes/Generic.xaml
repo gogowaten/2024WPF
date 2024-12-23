@@ -145,6 +145,11 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
+    <Style.Triggers>
+      <Trigger Property="MyIsSelected" Value="False">
+        
+      </Trigger>
+    </Style.Triggers>
   </Style>
   
   <!--<Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
