@@ -404,9 +404,23 @@ namespace _20241222
         public Kiso2Thumb()
         {
             DataContext = this;
+            PreviewMouseDown += Kiso2Thumb_PreviewMouseDown;
+            //PreviewMouseUp += Kiso2Thumb_PreviewMouseUp;
+        }
+
+        //private void Kiso2Thumb_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        //{
+        //    if(sender is Kiso2Thumb t) { t.Focusable = true; t.Focus(); }
+        //}
+
+        private void Kiso2Thumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is Kiso2Thumb t) { t.MyIsSelected = !t.MyIsSelected; }
+            //if (sender is Kiso2Thumb t) { t.Focusable = false; }
         }
 
         public Rectangle? MyStroke1 { get; set; }
+        public Rectangle? MyStroke2 { get; set; }
 
         #region 依存関係プロパティ
 
@@ -449,13 +463,20 @@ namespace _20241222
 
 
         #endregion 依存関係プロパティ
-    
+
 
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
             MyStroke1 = GetTemplateChild("Stroke1") as Rectangle;
+            MyStroke2 = GetTemplateChild("Stroke2") as Rectangle;
+            if (MyStroke1 != null && MyStroke2 != null)
+            {
+                Binding b = new Binding() { Source = this, Path = new PropertyPath(MyIsSelectedProperty), Converter = new MyConverterVisible() };
+                MyStroke1.SetBinding(VisibilityProperty, b);
+                MyStroke2.SetBinding(VisibilityProperty, b);
 
+            }
         }
     }
 
@@ -560,23 +581,30 @@ namespace _20241222
         #endregion 依存関係プロパティ
 
 
+    }
 
 
 
-        public class MyConverterVisible : IValueConverter
+
+
+
+
+
+    public class MyConverterVisible : IValueConverter
+    {
+        public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
         {
-            public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
-            {
-                if (value is bool b && b == true) { return Visibility.Visible; }
-                else { return Visibility.Collapsed; }
-            }
-
-            public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
+            if (value is bool b && b == true) { return Visibility.Visible; }
+            else { return Visibility.Collapsed; }
         }
 
-
+        public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
     }
+
+
+
+
 }

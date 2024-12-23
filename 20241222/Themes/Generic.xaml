@@ -85,6 +85,17 @@
     </Setter>
   </Style>-->
 
+  <Style x:Key="waku1" TargetType="Rectangle">
+    <Setter Property="Stroke" Value="White"/>
+    <Setter Property="StrokeThickness" Value="1.0"/>
+  </Style>
+  <Style x:Key="waku2" TargetType="Rectangle">
+    <Setter Property="Stroke" Value="DeepPink"/>
+    <Setter Property="StrokeThickness" Value="1.0"/>
+    <Setter Property="StrokeDashArray" Value="4.0"/>
+  </Style>
+  
+
   <Style x:Key="kiso2" TargetType="{x:Type local:Kiso2Thumb}">
     <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
     <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
@@ -92,8 +103,8 @@
       <Setter.Value>
         <ControlTemplate>
           <Grid>
-            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0"/>
-            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0" StrokeDashArray="4.0"/>
+            <Rectangle x:Name="Stroke1" Stroke="White" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke2" Stroke="DodgerBlue" StrokeThickness="1.0" StrokeDashArray="4.0"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
@@ -107,8 +118,8 @@
           <Grid>
             <ContentControl x:Name="myContentControl" Content="{Binding MyContent}"/>
 
-            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0"/>
-            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0" StrokeDashArray="4.0"/>
+            <Rectangle x:Name="Stroke1" Stroke="White" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke2" Stroke="DodgerBlue" StrokeThickness="1.0" StrokeDashArray="4.0"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
@@ -128,15 +139,15 @@
               </ItemsControl.ItemsPanel>
             </ItemsControl>
 
-            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0"/>
-            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0" StrokeDashArray="4.0"/>
+            <Rectangle x:Name="Stroke1" Stroke="White" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke2" Stroke="Magenta" StrokeThickness="1.0" StrokeDashArray="4.0"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
   
-  <Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
+  <!--<Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
     <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
     <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
   </Style>
@@ -153,7 +164,7 @@
         </ControlTemplate>
       </Setter.Value>
     </Setter>
-  </Style>
+  </Style>-->
 
   <!--<Style TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
