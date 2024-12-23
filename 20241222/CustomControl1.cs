@@ -159,14 +159,18 @@ namespace _20241222
         {
             DataContext = this;
         }
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+        }
     }
 
 
 
     /// <summary>
     /// 基礎Thumb、すべてのCustomControlThumbの派生元
-    /// </summary>
-    public class KisoThumb : Thumb
+    /// </summary>    
+    public abstract class KisoThumb : Thumb
     {
         #region 依存関係プロパティ
 
@@ -212,6 +216,7 @@ namespace _20241222
 
         public Type MyType { get; internal set; }
 
+
         //親要素の識別用。自身がグループ化されたときに親要素のGroupThumbを入れておく
         //public GroupThumb? MyParentThumb { get; internal set; }
         static KisoThumb()
@@ -220,48 +225,74 @@ namespace _20241222
         }
         public KisoThumb()
         {
-            DataContext = this;
+            //DataContext = this;
             Focusable = true;
             MyType = Type.None;
+            ApplyTemplate();
             //PreviewMouseDown += KisoThumb_PreviewMouseDown;
             //PreviewMouseUp += KisoThumb_PreviewMouseUp;
+            //Loaded += KisoThumb_Loaded;
             Loaded += KisoThumb_Loaded;
+            OnApplyTemplate();
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            var neko = this.Template;
+        }
+
+        private void KisoThumb_Loaded(object sender, RoutedEventArgs e)
+        {
+            var neko = this.Template;
         }
 
         #region 枠の設定        
 
-        private void KisoThumb_Loaded(object sender, RoutedEventArgs e)
+        //private void KisoThumb_Loaded(object sender, RoutedEventArgs e)
+        //{
+        //    this.ApplyTemplate();
+        //    var neko = this.Template;
+        //    var temp = GetTemplateChild("mytemp");
+        //    MyContentControl = GetTemplateControl<ContentControl>(temp, "PART_ContentControl");
+
+        //    if (MyContentControl != null)
+        //    {
+        //        MyContentControl.SetBinding(ContentControl.ContentProperty, new Binding()
+        //        {
+        //            Source = this,
+        //            Path = new PropertyPath(MyContentProperty),
+        //        });
+
+        //        Rectangle? stroke1 = GetTemplateControl<Rectangle>(temp, "Stroke1");
+        //        Rectangle? stroke2 = GetTemplateControl<Rectangle>(temp, "Stroke2");
+        //        if (stroke1 != null && stroke2 != null)
+        //        {
+        //            Binding b;
+        //            b = new() { Source = this, Path = new PropertyPath(MyIsSelectedProperty), Converter = new MyConverterVisible() };
+        //            stroke1.SetBinding(VisibilityProperty, b);
+        //            stroke2.SetBinding(VisibilityProperty, b);
+        //            SetBinding(MyIsSelectedProperty, new Binding() { Source = this, Path = new PropertyPath(IsKeyboardFocusedProperty) });
+        //            //SetBinding(MyIsSelectedProperty, new Binding() { Source = this, Path = new PropertyPath(IsFocusedProperty) });
+
+        //        }
+        //    }
+
+        //}
+
+
+        internal T? GetTemplateControl<T>(DependencyObject d, string name)
         {
-            var temp = GetTemplateChild("PART_Grid");
-            if (temp is Grid ic)
-            {
-                ContentControl? cc = GetRectangle(ic);
-                
-                if (cc != null)
-                {
-                    cc.Content = new TextBlock() { Text = "22222222222222"};
-
-
-                    //Binding b;
-                    //b = new() { Source = this, Path = new PropertyPath(MyIsSelectedProperty), Converter = new MyConverterVisible() };
-                    //cc.SetBinding(VisibilityProperty, b);
-                    
-
-
-                }
-            }
-        }
-        private static ContentControl? GetRectangle(DependencyObject d)
-        {
-            if (d is ContentControl rectan) { return rectan; }
-
+            if (d == null) { return default; }
+            if (d is FrameworkElement fe && fe.Name == name && fe is T t) { return t; }
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
             {
-                ContentControl? c = GetRectangle(VisualTreeHelper.GetChild(d, i));
+                T? c = GetTemplateControl<T>(VisualTreeHelper.GetChild(d, i), name);
                 if (c is not null) { return c; }
             }
-            return null;
+            return default;
         }
+
 
         #endregion 枠の設定
 
@@ -296,25 +327,256 @@ namespace _20241222
 
     }
 
-
-    
-
-
-
-
-    public class MyConverterVisible : IValueConverter
+    [ContentProperty(nameof(MyContent))]
+    public class ItemThumb : KisoThumb
     {
-        public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
+        static ItemThumb()
         {
-            if (value is bool b && b == true) { return Visibility.Visible; }
-            else { return Visibility.Collapsed; }
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ItemThumb), new FrameworkPropertyMetadata(typeof(ItemThumb)));
+        }
+        public ItemThumb()
+        {
+            Loaded += ItemThumb_Loaded;
         }
 
-        public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture)
+        private void ItemThumb_Loaded(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
+            var temp = this.Template;
+            var neko = GetTemplateChild("mytemp");
         }
+
+        private ContentControl? MyContentControl { get; set; }
+
+        public UIElement MyContent
+        {
+            get { return (UIElement)GetValue(MyContentProperty); }
+            set { SetValue(MyContentProperty, value); }
+        }
+        public static readonly DependencyProperty MyContentProperty =
+            DependencyProperty.Register(nameof(MyContent), typeof(UIElement), typeof(KisoThumb), new PropertyMetadata(null));
+
+
+
+
+
     }
 
 
+
+
+    //public class GroupThumb : KisoThumb
+    //{
+    //    static GroupThumb()
+    //    {
+    //        DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupThumb), new FrameworkPropertyMetadata(typeof(GroupThumb)));
+    //    }
+    //    public GroupThumb()
+    //    {
+
+    //    }
+
+    //    //子要素移動時にスクロールバー固定用のアンカー
+    //    //public AnchorThumb MyAnchorThumb { get; private set; }
+
+    //    #region 依存関係プロパティ
+
+    //    public ObservableCollection<KisoThumb> MyThumbs
+    //    {
+    //        get { return (ObservableCollection<KisoThumb>)GetValue(MyThumbsProperty); }
+    //        set { SetValue(MyThumbsProperty, value); }
+    //    }
+    //    public static readonly DependencyProperty MyThumbsProperty =
+    //        DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<KisoThumb>), typeof(GroupThumb), new PropertyMetadata(null));
+
+
+
+    //    #endregion 依存関係プロパティ
+
+
+    //}
+
+    public class Kiso2Thumb : Thumb
+    {
+        static Kiso2Thumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Kiso2Thumb), new FrameworkPropertyMetadata(typeof(Kiso2Thumb)));
+        }
+        public Kiso2Thumb()
+        {
+            DataContext = this;
+        }
+
+        public Rectangle? MyStroke1 { get; set; }
+
+        #region 依存関係プロパティ
+
+        public double MyLeft
+        {
+            get { return (double)GetValue(MyLeftProperty); }
+            set { SetValue(MyLeftProperty, value); }
+        }
+        public static readonly DependencyProperty MyLeftProperty =
+            DependencyProperty.Register(nameof(MyLeft), typeof(double), typeof(Kiso2Thumb), new PropertyMetadata(0.0));
+
+        public double MyTop
+        {
+            get { return (double)GetValue(MyTopProperty); }
+            set { SetValue(MyTopProperty, value); }
+        }
+        public static readonly DependencyProperty MyTopProperty =
+            DependencyProperty.Register(nameof(MyTop), typeof(double), typeof(Kiso2Thumb), new PropertyMetadata(0.0));
+
+        public string MyText
+        {
+            get { return (string)GetValue(MyTextProperty); }
+            set { SetValue(MyTextProperty, value); }
+        }
+        public static readonly DependencyProperty MyTextProperty =
+            DependencyProperty.Register(nameof(MyText), typeof(string), typeof(Kiso2Thumb), new PropertyMetadata(string.Empty));
+
+
+        public bool MyIsSelected
+        {
+            get { return (bool)GetValue(MyIsSelectedProperty); }
+            set { SetValue(MyIsSelectedProperty, value); }
+        }
+        public static readonly DependencyProperty MyIsSelectedProperty =
+            DependencyProperty.Register(nameof(MyIsSelected), typeof(bool), typeof(Kiso2Thumb), new PropertyMetadata(false));
+
+
+
+
+
+
+        #endregion 依存関係プロパティ
+    
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            MyStroke1 = GetTemplateChild("Stroke1") as Rectangle;
+
+        }
+    }
+
+    [ContentProperty(nameof(MyContent))]
+    public class Kiso3 : Kiso2Thumb
+    {
+        static Kiso3()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Kiso3), new FrameworkPropertyMetadata(typeof(Kiso3)));
+        }
+        public Kiso3()
+        {
+
+        }
+
+
+        public ContentControl? MyContentControl { get; set; }
+
+        public UIElement MyContent
+        {
+            get { return (UIElement)GetValue(MyContentProperty); }
+            set { SetValue(MyContentProperty, value); }
+        }
+        public static readonly DependencyProperty MyContentProperty =
+            DependencyProperty.Register(nameof(MyContent), typeof(UIElement), typeof(Kiso3), new PropertyMetadata(null));
+
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            MyContentControl = GetTemplateChild("myContentControl") as ContentControl;
+
+            //if (MyContentControl != null)
+            //{
+            //    _ = MyContentControl.SetBinding(ContentControl.ContentProperty, new Binding()
+            //    {
+            //        Source = this,
+            //        Path = new PropertyPath(MyContentProperty)
+            //    });
+            //}
+        }
+
+    }
+
+    [ContentProperty(nameof(MyThumbs))]
+    public class Kiso4 : Kiso2Thumb
+    {
+        static Kiso4()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Kiso4), new FrameworkPropertyMetadata(typeof(Kiso4)));
+        }
+        public Kiso4()
+        {
+            MyThumbs = [];
+            Loaded += Kiso4_Loaded;
+
+        }
+
+
+        private void Kiso4_Loaded(object sender, RoutedEventArgs e)
+        {
+            //ここじゃないと取得できない
+            ExCanvas? ex = GetTemplateControl<ExCanvas>(MyItemsControl, "myCanvas");
+            SetBinding(WidthProperty, new Binding() { Source = ex, Path = new PropertyPath(ActualWidthProperty) });
+            SetBinding(HeightProperty, new Binding() { Source = ex, Path = new PropertyPath(ActualHeightProperty) });
+        }
+
+        internal T? GetTemplateControl<T>(DependencyObject? d, string name)
+        {
+            if (d == null) { return default; }
+            if (d is FrameworkElement fe && fe.Name == name && fe is T t) { return t; }
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(d); i++)
+            {
+                T? c = GetTemplateControl<T>(VisualTreeHelper.GetChild(d, i), name);
+                if (c is not null) { return c; }
+            }
+            return default;
+        }
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            MyItemsControl = GetTemplateChild("myItemsControl") as ItemsControl;
+
+
+        }
+
+        public ItemsControl? MyItemsControl { get; set; }
+
+        #region 依存関係プロパティ
+
+        public ObservableCollection<Kiso3> MyThumbs
+        {
+            get { return (ObservableCollection<Kiso3>)GetValue(MyThumbsProperty); }
+            set { SetValue(MyThumbsProperty, value); }
+        }
+        public static readonly DependencyProperty MyThumbsProperty =
+            DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<Kiso3>), typeof(Kiso4), new PropertyMetadata(null));
+
+
+
+        #endregion 依存関係プロパティ
+
+
+
+
+
+        public class MyConverterVisible : IValueConverter
+        {
+            public object Convert(object value, System.Type targetType, object parameter, CultureInfo culture)
+            {
+                if (value is bool b && b == true) { return Visibility.Visible; }
+                else { return Visibility.Collapsed; }
+            }
+
+            public object ConvertBack(object value, System.Type targetType, object parameter, CultureInfo culture)
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+
+    }
 }

@@ -69,20 +69,116 @@
     </Setter>
   </Style>
 
-  <Style TargetType="{x:Type local:KisoThumb}">
+  <!--<Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
+    <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+    <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="local:KisoThumb">
+          <Grid x:Name="mytemp">
+            <ContentControl x:Name="PART_ContentControl"/>
+            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0" StrokeDashArray="4.0"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>-->
+
+  <Style x:Key="kiso2" TargetType="{x:Type local:Kiso2Thumb}">
     <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
     <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <Grid x:Name="PART_Grid" Width="100" Height="100">
-            <ContentControl/>
+          <Grid>
+            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0" StrokeDashArray="4.0"/>
           </Grid>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
   
-  
+  <Style TargetType="{x:Type local:Kiso3}" BasedOn="{StaticResource kiso2}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Grid>
+            <ContentControl x:Name="myContentControl" Content="{Binding MyContent}"/>
 
+            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0" StrokeDashArray="4.0"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <Style TargetType="{x:Type local:Kiso4}" BasedOn="{StaticResource kiso2}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Grid Background="{TemplateBinding Background}">
+            <ItemsControl x:Name="myItemsControl" ItemsSource="{Binding MyThumbs}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <local:ExCanvas x:Name="myCanvas"/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0" StrokeDashArray="4.0"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  
+  <Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
+    <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+    <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+  </Style>
+  
+  <Style x:Key="item" TargetType="{x:Type local:ItemThumb}" BasedOn="{StaticResource kiso}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="local:ItemThumb">
+          <Grid x:Name="mytemp">
+            <ContentControl x:Name="PART_ContentControl"/>
+            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0" StrokeDashArray="4.0"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
+  <!--<Style TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Grid x:Name="PART_Grid2">
+            <ContentControl x:Name="PART_ContentControl">
+              <ItemsControl ItemsSource="{Binding MyThumbs}" Background="{TemplateBinding Background}">
+                <ItemsControl.ItemsPanel>
+                  <ItemsPanelTemplate>
+                    <local:ExCanvas/>
+                  </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+              </ItemsControl>
+            </ContentControl>
+            <Rectangle x:Name="Stroke1" Stroke="DodgerBlue" StrokeThickness="1.0"/>
+            <Rectangle x:Name="Stroke2" Stroke="White" StrokeThickness="1.0" StrokeDashArray="4.0"/>
+          </Grid>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>-->
+
+  
+  
+  
+  
 </ResourceDictionary>

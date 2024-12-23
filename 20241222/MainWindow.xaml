@@ -6,20 +6,42 @@
         xmlns:local="clr-namespace:_20241222"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="600">
-    <Grid>
+  <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
       <ColumnDefinition Width="150"/>
     </Grid.ColumnDefinitions>
-    <Canvas>
-
+    <Canvas UseLayoutRounding="True">
+      <Canvas.Resources>
+        <Style TargetType="local:Kiso3">
+          <EventSetter Event="DragDelta" Handler="Kiso3_DragDelta"/>
+        </Style>
+        <Style TargetType="local:Kiso4">
+          <EventSetter Event="DragDelta" Handler="Kiso3_DragDelta"/>
+        </Style>
+      </Canvas.Resources>
 
       <local:CustomItemsThumb MyX="50" MyY="20" x:Name="MyItemsThumb" Background="RosyBrown">
         <local:CustomTextThumb MyX="0" MyY="0" MyText="text0" DragDelta="CustomTextThumb_DragDelta" x:Name="MyTextThumb"/>
         <local:CustomTextThumb MyX="80" MyY="80" MyText="text1" DragDelta="CustomTextThumb_DragDelta"/>
       </local:CustomItemsThumb>
-      <local:KisoThumb/>
+      <!--<local:ItemThumb DragDelta="KisoThumb_DragDelta">
+        <TextBlock Text="aaaaaaaaaaaa" FontSize="30"/>
+      </local:ItemThumb>-->
+      <!--<local:Kiso2Thumb/>-->
+      <local:Kiso3>
+        <TextBlock Text="kkkkkkkkk"/>
+      </local:Kiso3>
+      <local:Kiso4 MyLeft="100" MyTop="50" Background="Gold">
+        <local:Kiso3 MyLeft="0" MyTop="0">
+          <TextBlock Text="bbbbbbbbb"/>
+        </local:Kiso3>
+        <local:Kiso3 MyLeft="50" MyTop="30">
+          <TextBlock Text="ccccccccccc"/>
+        </local:Kiso3>
 
+      </local:Kiso4>
+      
     </Canvas>
     <StackPanel Grid.Column="1">
       <Button Canvas.Left="200" x:Name="MyButton" Content="test"/>

@@ -32,5 +32,23 @@ namespace _20241222
             }
         }
 
+        private void KisoThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (sender is KisoThumb t)
+            {
+                t.MyLeft += e.HorizontalChange;
+                t.MyTop += e.VerticalChange;
+            }
+        }
+
+        private void Kiso3_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (sender is Kiso2Thumb t)
+            {
+                t.MyLeft += e.HorizontalChange;
+                t.MyTop += e.VerticalChange;
+                e.Handled = true;
+            }
+        }
     }
 }
