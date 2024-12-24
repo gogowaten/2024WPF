@@ -1,3 +1,8 @@
+20241224<br>
+![20241224_171115](https://github.com/user-attachments/assets/29e309ee-3e44-486f-8683-f662fcc336b0)
+<br><br>
+
+
 20241219<br>
 WPF、Canvasの拡大表示時の子要素のドラッグ移動距離とぼやけ表示の解消 - 午後わてんのブログ<br>
 https://gogowaten.hatenablog.com/entry/2024/12/19/170607<br>
