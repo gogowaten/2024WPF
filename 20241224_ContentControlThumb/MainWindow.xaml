@@ -1,0 +1,78 @@
+﻿<Window x:Class="_20241224_ContentControlThumb.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241224_ContentControlThumb"
+        mc:Ignorable="d"
+          Title="MainWindow" Height="350" Width="450">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="150"/>
+    </Grid.ColumnDefinitions>
+
+    <Canvas UseLayoutRounding="True">
+      <Canvas.Resources>
+        <Style TargetType="local:Kiso3">
+          <EventSetter Event="DragDelta" Handler="Kiso3_DragDelta"/>
+        </Style>
+        <Style TargetType="local:Kiso4">
+          <EventSetter Event="DragDelta" Handler="Kiso3_DragDelta"/>
+        </Style>
+      </Canvas.Resources>
+      
+      <local:Kiso3>
+        <local:ExCanvas Background="Linen">
+          <TextBlock Text="動かせない"/>
+          <local:Kiso3 MyLeft="100" MyTop="30">
+            <TextBlock Text="動く"/>
+          </local:Kiso3>
+        </local:ExCanvas>
+      </local:Kiso3>
+      
+      <local:Kiso4 x:Name="MyGroupThumb" MyLeft="20" MyTop="50" Background="Khaki">
+        <local:Kiso3 MyLeft="0" MyTop="0">
+          <TextBlock Text="textblock" Background="LightCoral"/>
+        </local:Kiso3>
+        <local:Kiso3 MyLeft="30" MyTop="30">
+          <Button Content="button"/>
+        </local:Kiso3>
+        <local:Kiso3 x:Name="MyCalender" MyLeft="20" MyTop="50">
+          <Calendar/>
+        </local:Kiso3>
+        <local:Kiso3 MyLeft="120" MyTop="0">
+          <GroupBox Header="groupbox" Background="Turquoise">
+            <StackPanel Margin="5">
+              <TextBlock Text="textblock"/>
+              <CheckBox Content="chackbox"/>
+            </StackPanel>
+          </GroupBox>
+        </local:Kiso3>
+      </local:Kiso4>
+
+    </Canvas>
+    <StackPanel Grid.Column="1">
+      <GroupBox DataContext="{Binding ElementName=MyCalender}" 
+                Header="{Binding Path=Name}" Margin="5">
+        <StackPanel>
+          <TextBlock Text="{Binding Path=(local:Kiso3.MyLeft), StringFormat=MyLeft \= {0:0.0}}"/>
+          <TextBlock Text="{Binding Path=(local:Kiso3.MyTop), StringFormat=MyTop \= 0.0}"/>
+          <TextBlock Text="{Binding Path=ActualWidth, StringFormat=ActWidth \= {0:0.0}}"/>
+        </StackPanel>
+      </GroupBox>
+
+      <GroupBox DataContext="{Binding ElementName=MyGroupThumb}"
+                Header="{Binding Path=Name}" Margin="5">
+        <StackPanel>
+          <TextBlock Text="{Binding Path=ActualWidth, StringFormat=ActWidth \= 0.0}"/>
+          <TextBlock Text="{Binding Path=ActualHeight, StringFormat=ActHeight \= 0.0}"/>
+          <TextBlock Text="{Binding Path=(local:Kiso4.MyLeft), StringFormat=MyLeft \= {0:0.0}}"/>
+        </StackPanel>
+      </GroupBox>
+
+    </StackPanel>
+
+
+  </Grid>
+</Window>
