@@ -29,6 +29,7 @@
         </Setter>
       </Style>
     </Style.Resources>
+    
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
@@ -38,6 +39,12 @@
                 <Canvas/>
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemContainerStyle>
+              <Style TargetType="Thumb">
+                <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+                <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+              </Style>
+            </ItemsControl.ItemContainerStyle>
           </ItemsControl>
         </ControlTemplate>
       </Setter.Value>

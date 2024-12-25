@@ -16,12 +16,14 @@ namespace _20241225
     /// </summary>
     public partial class MainWindow : Window
     {
+        public List<MyDD> myDDs { get; set; }
         public MainWindow()
         {
             InitializeComponent();
             //DataContext = MyData.Items;
 
-            List<MyDD> myDDs = new() { new MyDD(ThumbType.Text), new MyDD(ThumbType.Ellipse) };
+            myDDs = new() { new MyDD(ThumbType.Text), new MyDD(ThumbType.Ellipse) };
+            myDDs[0].MyText = "iii";
             DataContext = myDDs;
             Loaded += MainWindow_Loaded;
         }
@@ -38,6 +40,12 @@ namespace _20241225
             //var uma = this.FindResource("MyStyle1");//error
             ItemsControl tako = ItemsControl.ItemsControlFromItemContainer(this);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            myDDs[0].MyText = "aaa";
+            myDDs[1].MyLeft = 100;
+        }
     }
 
     public class MySelector : StyleSelector
@@ -45,9 +53,33 @@ namespace _20241225
         public Style Style1 { get; set; }
         public Style Style2 { get; set; }
 
-       
+
         public override Style SelectStyle(object item, DependencyObject container)
         {
+            
+            if (item is not MyDD dd)
+            {
+                return base.SelectStyle(item, container);
+            }
+
+            return dd.Type switch
+            {
+                ThumbType.Text => Style1,
+                ThumbType.Ellipse => Style2,
+                _ => base.SelectStyle(item, container)
+            };
+        }
+    }
+    
+    public class MySelector2 : StyleSelector
+    {
+        public Style Style1 { get; set; }
+        public Style Style2 { get; set; }
+
+
+        public override Style SelectStyle(object item, DependencyObject container)
+        {
+            
             if (item is not MyDD dd)
             {
                 return base.SelectStyle(item, container);
@@ -63,9 +95,36 @@ namespace _20241225
     }
 
     public enum ThumbType { None = 0, Text, Ellipse, }
-    public class MyDD
+    public class MyDD : DependencyObject
     {
         public ThumbType Type { get; }
+
+        public string MyText
+        {
+            get { return (string)GetValue(MyTextProperty); }
+            set { SetValue(MyTextProperty, value); }
+        }
+        public static readonly DependencyProperty MyTextProperty =
+            DependencyProperty.Register(nameof(MyText), typeof(string), typeof(MyDD), new PropertyMetadata(string.Empty));
+
+
+        public double MyLeft
+        {
+            get { return (double)GetValue(MyLeftProperty); }
+            set { SetValue(MyLeftProperty, value); }
+        }
+        public static readonly DependencyProperty MyLeftProperty =
+            DependencyProperty.Register(nameof(MyLeft), typeof(double), typeof(MyDD), new PropertyMetadata(10.0));
+
+        public double MyTop
+        {
+            get { return (double)GetValue(MyTopProperty); }
+            set { SetValue(MyTopProperty, value); }
+        }
+        public static readonly DependencyProperty MyTopProperty =
+            DependencyProperty.Register(nameof(MyTop), typeof(double), typeof(MyDD), new PropertyMetadata(0.0));
+
+
         public MyDD(ThumbType type)
         {
             if (type == ThumbType.None) { Type = ThumbType.None; }
@@ -74,6 +133,12 @@ namespace _20241225
 
         }
     }
+
+    public class MyClass : System.Windows.Controls.Primitives.Selector
+    {
+
+    }
+
 
     class MyItemContaierStyleSelector : StyleSelector
     {

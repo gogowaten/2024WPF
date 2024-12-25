@@ -10,8 +10,8 @@
     <Style x:Key="testkey" TargetType="ListBoxItem">
       <Setter Property="Template">
         <Setter.Value>
-          <ControlTemplate>            
-            <TextBlock Text="aaa"/>
+          <ControlTemplate>
+            <TextBlock Text="{Binding MyText}"/>
           </ControlTemplate>
         </Setter.Value>
       </Setter>
@@ -24,6 +24,7 @@
           </ControlTemplate>
         </Setter.Value>
       </Setter>
+      <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
     </Style>
     <Style x:Key="ttt" TargetType="Thumb">
       <Setter Property="Template">
@@ -35,8 +36,37 @@
       </Setter>
     </Style>
     <local:MySelector x:Key="kkk" Style1="{StaticResource testkey}" Style2="{StaticResource testkey2}"/>
+  
+
+    <Style x:Key="testkey3" TargetType="ContentPresenter">
+      <Setter Property="ContentTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <TextBlock Text="{Binding MyText}"/>
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="testkey4" TargetType="ContentPresenter">
+      <Setter Property="ContentTemplate">
+        <Setter.Value>
+          <DataTemplate>          
+            <Ellipse Width="30" Height="30" Fill="DodgerBlue"/>
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+      <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+      <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+    </Style>
+    
+    <local:MySelector x:Key="kkk2" Style1="{StaticResource testkey3}" Style2="{StaticResource testkey4}"/>
   </Window.Resources>
+
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
     <Canvas x:Name="MyCanvas">
       <!--<ListBox x:Name="MyItemsControl"
                     ItemsSource="{Binding}"
@@ -50,7 +80,34 @@
           </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
       </ListBox>
+      
+      <Thumb Canvas.Left="10" Canvas.Top="70">
+        <Thumb.Template>
+          <ControlTemplate>
+            <ItemsControl ItemsSource="{Binding}" ItemContainerStyleSelector="{StaticResource kkk2}">
+              <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                  <Canvas/>
+                </ItemsPanelTemplate>
+              </ItemsControl.ItemsPanel>
+              
+            </ItemsControl>
+          </ControlTemplate>
+        </Thumb.Template>
+      </Thumb>
     </Canvas>
+
+    <local:MyClass>
+      <local:MyClass.ItemsPanel>
+        <ItemsPanelTemplate>
+          <Canvas/>
+        </ItemsPanelTemplate>
+      </local:MyClass.ItemsPanel>
+    </local:MyClass>
+    
+    <StackPanel Grid.Column="1">
+      <Button Content="test" Click="Button_Click"/>
+    </StackPanel>
     <!--<DockPanel x:Name="MyDockPanel">
       <TextBlock DockPanel.Dock="Top" Margin="5" FontSize="14" >
             <Run Text="ItemContainerStyleSelector" />
