@@ -1,0 +1,116 @@
+﻿<Window x:Class="_20241225.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241225"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="400">
+  <Window.Resources>
+    <Style x:Key="testkey" TargetType="ListBoxItem">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate>            
+            <TextBlock Text="aaa"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="testkey2" TargetType="ListBoxItem">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Ellipse Width="50" Height="50" Fill="Gold"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <Style x:Key="ttt" TargetType="Thumb">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <TextBlock Text="bbbbb"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+    <local:MySelector x:Key="kkk" Style1="{StaticResource testkey}" Style2="{StaticResource testkey2}"/>
+  </Window.Resources>
+  <Grid>
+    <Canvas x:Name="MyCanvas">
+      <!--<ListBox x:Name="MyItemsControl"
+                    ItemsSource="{Binding}"
+                    ItemContainerStyleSelector="{StaticResource kkk}">
+        
+      </ListBox>-->
+      <ListBox x:Name="MyListBox" ItemsSource="{Binding}" ItemContainerStyleSelector="{StaticResource kkk}">
+        <ListBox.ItemsPanel>
+          <ItemsPanelTemplate>
+            <Canvas Width="200" Height="200"/>
+          </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+      </ListBox>
+    </Canvas>
+    <!--<DockPanel x:Name="MyDockPanel">
+      <TextBlock DockPanel.Dock="Top" Margin="5" FontSize="14" >
+            <Run Text="ItemContainerStyleSelector" />
+            <LineBreak />
+            <Run Text="元リストの並びのままでデータ種別に応じて表示形式を切り替える" />
+            <LineBreak />
+            <Run Text="　左：元リスト" />
+            <LineBreak />
+            <Run Text="　右：処理済みリスト" />
+      </TextBlock>
+
+      <Grid x:Name="MyGrid">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*" />
+          <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Panel.Resources>
+          <Style x:Key="MyStyle1" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate>
+                  <CheckBox IsChecked="{Binding BoolValue, Mode=TwoWay}" Background="LightGreen" />
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+
+          <Style x:Key="MyStyle2" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate>
+                  <TextBlock Text="{Binding IntValue}" Background="LightCyan" />
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+
+          <Style x:Key="MyStyle3" TargetType="{x:Type ListBoxItem}">
+            <Setter Property="Template">
+              <Setter.Value>
+                <ControlTemplate>
+                  <TextBox Text="{Binding StringValue}" Background="LightPink" />
+                </ControlTemplate>
+              </Setter.Value>
+            </Setter>
+          </Style>
+
+          <local:MyItemContaierStyleSelector x:Key="MyItemContainerStyleSelector"
+                                                   Style1="{StaticResource MyStyle1}"
+                                                   Style2="{StaticResource MyStyle2}"
+                                                   Style3="{StaticResource MyStyle3}" />
+        </Panel.Resources>
+
+        <ListBox ItemsSource="{Binding}" />
+
+        <ListBox Grid.Column="1"
+                     ItemsSource="{Binding}"
+                     ItemContainerStyleSelector="{StaticResource MyItemContainerStyleSelector}" />
+      </Grid>
+    </DockPanel>-->
+  </Grid>
+</Window>

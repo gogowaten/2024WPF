@@ -21,6 +21,7 @@
         <TextBlock x:Name="MyTextBlock" Text="aaaaaaaa" FontSize="50"
                  Canvas.Left="100" Canvas.Top="50" Background="AliceBlue"/>
       </Canvas>
+      
     </ScrollViewer>
     <StackPanel Grid.Column="1">
       <TextBlock Text="{Binding ElementName=MyCanvas, Path=ActualWidth}"/>
