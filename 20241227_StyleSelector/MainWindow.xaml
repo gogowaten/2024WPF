@@ -5,8 +5,91 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241227_StyleSelector"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="MainWindow" Height="450" Width="600">
+  <Window.Resources>
+    <Style x:Key="bbb">
+      <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+      <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+    </Style>
+    
+    <Style x:Key="ccc" TargetType="Thumb">
+      <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+      <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+      <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+    </Style>
+    
+    <Style x:Key="text" TargetType="ListBoxItem" BasedOn="{StaticResource bbb}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <TextBlock Text="{Binding MyText}"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
 
-    </Grid>
+    <Style x:Key="ellipse" TargetType="ListBoxItem" BasedOn="{StaticResource bbb}">
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate>
+            <Ellipse Width="30" Height="30" Fill="DodgerBlue"/>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <!--ドラッグ移動できるようにしたいけど、できない
+    コンテナがListBoxだと、子要素はListBoxItemに限定されるみたいで、
+    これだとDragDeltaが使えない、そこで、ListBoxItemのTemplateを変更しようとしたけど、
+    起動時にエラーになる、そこで、エラーにならないようにTemplateからContentTemplateに変更、
+    伴ってValueをDataTemplate型に変更、これでエラーになならないけど、今度はBindingができなくて、
+    中のThumbが移動しない、というかThumbが移動してもListBoxItemが移動するわけじゃないから意味ない感じ-->
+    <Style x:Key="ellipse2" TargetType="ListBoxItem" BasedOn="{StaticResource bbb}">
+      <Setter Property="ContentTemplate">
+        <Setter.Value>
+          <DataTemplate>
+            <Thumb>
+              <Thumb.Template>
+                <ControlTemplate>
+                  <Ellipse Width="30" Height="30" Fill="DodgerBlue"/>
+                </ControlTemplate>
+              </Thumb.Template>
+              <!--ここのThumbのCanvas.Leftを変更しても動かない、意味ない-->
+              <Thumb.Style>
+                <Style TargetType="Thumb">
+                  <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+                  <Setter Property="Canvas.Left" Value="100"/>
+                </Style>
+              </Thumb.Style>
+            </Thumb>
+          </DataTemplate>
+        </Setter.Value>
+      </Setter>
+    </Style>
+
+    <local:MySelector x:Key="aaa"
+                      Style1="{StaticResource text}"
+                      Style2="{StaticResource ellipse2}"/>
+  </Window.Resources>
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition/>
+    </Grid.ColumnDefinitions>
+    <ListBox x:Name="MyListBox"
+             ItemsSource="{Binding}"
+             ItemContainerStyleSelector="{StaticResource aaa}">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <Canvas/>
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+    </ListBox>
+
+    <!--Dataの値を直接変更する分には、期待通りに移動する-->
+    <StackPanel Grid.Column="1">
+      <Button Content="test" Click="Button_Click"/>
+    </StackPanel>
+  </Grid>
 </Window>
