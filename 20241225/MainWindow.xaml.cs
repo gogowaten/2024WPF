@@ -23,7 +23,7 @@ namespace _20241225
             InitializeComponent();
             //DataContext = MyData.Items;
 
-            myDDs = new() { new MyDD(ThumbType.Text), new MyDD(ThumbType.Ellipse) };
+            myDDs = [new MyDD(ThumbType.Text) { MyLeft = 20, MyTop = 10 }, new MyDD(ThumbType.Ellipse) { MyLeft = 30, MyTop = 80 }];
             myDDs[0].MyText = "iii";
             DataContext = myDDs;
             Loaded += MainWindow_Loaded;
@@ -50,9 +50,9 @@ namespace _20241225
 
         private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
-            if(sender is Thumb t)
+            if (sender is Thumb t)
             {
-                 var hori = Canvas.GetLeft(t);
+                var hori = Canvas.GetLeft(t);
                 Canvas.SetLeft(t, Canvas.GetLeft(t) + e.HorizontalChange);
                 Canvas.SetTop(t, Canvas.GetTop(t) + e.VerticalChange);
             }
@@ -67,7 +67,7 @@ namespace _20241225
 
         public override Style SelectStyle(object item, DependencyObject container)
         {
-            
+
             if (item is not MyDD dd)
             {
                 return base.SelectStyle(item, container);
@@ -81,7 +81,7 @@ namespace _20241225
             };
         }
     }
-    
+
     public class MySelector2 : StyleSelector
     {
         public Style Style1 { get; set; }
@@ -90,7 +90,7 @@ namespace _20241225
 
         public override Style SelectStyle(object item, DependencyObject container)
         {
-            
+
             if (item is not MyDD dd)
             {
                 return base.SelectStyle(item, container);
@@ -102,6 +102,27 @@ namespace _20241225
                 ThumbType.Ellipse => Style2,
                 _ => base.SelectStyle(item, container)
             };
+        }
+    }
+
+    public class MyDTSelector : DataTemplateSelector
+    {
+        public DataTemplate? DT1 { get; set; }
+        public DataTemplate? DT2 { get; set; }
+        public override DataTemplate? SelectTemplate(object item, DependencyObject container)
+        {
+
+            if (item is not MyDD)
+            {
+                return base.SelectTemplate(item, container);
+            }
+            else if (item is MyDD dd)
+            {
+                if (dd.Type == ThumbType.Text) { return DT1; }
+                else if (dd.Type == ThumbType.Ellipse) { return DT2; }
+                else { return base.SelectTemplate(item, container); }
+            }
+            return base.SelectTemplate(item, container);
         }
     }
 
@@ -125,7 +146,7 @@ namespace _20241225
             set { SetValue(MyLeftProperty, value); }
         }
         public static readonly DependencyProperty MyLeftProperty =
-            DependencyProperty.Register(nameof(MyLeft), typeof(double), typeof(MyDD), new PropertyMetadata(10.0));
+            DependencyProperty.Register(nameof(MyLeft), typeof(double), typeof(MyDD), new PropertyMetadata(0.0));
 
         public double MyTop
         {

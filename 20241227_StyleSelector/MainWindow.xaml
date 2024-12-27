@@ -57,8 +57,11 @@
               <!--ここのThumbのCanvas.Leftを変更しても動かない、意味ない-->
               <Thumb.Style>
                 <Style TargetType="Thumb">
+                  <!--下4つともに無意味-->
                   <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
                   <Setter Property="Canvas.Left" Value="100"/>
+                  <!--<Setter Property="Canvas.Left" Value="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=MyData.MyLeft}"/>-->
+                  <!--<Setter Property="Canvas.Left" Value="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem}, Path=MyLeft}"/>-->
                 </Style>
               </Thumb.Style>
             </Thumb>

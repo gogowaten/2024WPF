@@ -38,28 +38,22 @@
     <local:MySelector x:Key="kkk" Style1="{StaticResource testkey}" Style2="{StaticResource testkey2}"/>
 
 
-    <Style x:Key="testkey3" TargetType="ContentPresenter">
-      <Setter Property="ContentTemplate">
+    <Style x:Key="testkey3" TargetType="Thumb">
+      <Setter Property="Template">
         <Setter.Value>
-          <DataTemplate>
+          <ControlTemplate>
             <TextBlock Text="{Binding MyText}"/>
-          </DataTemplate>
+          </ControlTemplate>
         </Setter.Value>
       </Setter>
     </Style>
-    <Style x:Key="testkey4" TargetType="ContentPresenter">
-      <Setter Property="ContentTemplate">
+
+    <Style x:Key="testkey4" TargetType="Thumb">
+      <Setter Property="Template">
         <Setter.Value>
-          <DataTemplate>
-            <Thumb DragDelta="Thumb_DragDelta">
-              <Thumb.Template>
-                <ControlTemplate>
-                  <Ellipse Width="30" Height="30" Fill="DodgerBlue"/>
-                </ControlTemplate>
-              </Thumb.Template>
-            </Thumb>
-            <!--<Ellipse Width="30" Height="30" Fill="DodgerBlue"/>-->
-          </DataTemplate>
+          <ControlTemplate>
+            <Ellipse Width="30" Height="30" Fill="DodgerBlue"/>
+          </ControlTemplate>
         </Setter.Value>
       </Setter>
       <!--<Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>-->
@@ -67,6 +61,27 @@
     </Style>
 
     <local:MySelector x:Key="kkk2" Style1="{StaticResource testkey3}" Style2="{StaticResource testkey4}"/>
+
+    <DataTemplate x:Key="ddText" DataType="local:MyDD">
+      <TextBlock Text="{Binding MyText}"/>
+    </DataTemplate>
+    <DataTemplate x:Key="ddEllipse" DataType="local:MyDD">
+      <Thumb>
+        <Thumb.Template>
+          <ControlTemplate>
+            <Ellipse Width="30" Height="30" Fill="Khaki"/>
+          </ControlTemplate>
+        </Thumb.Template>
+        <Thumb.Style>
+          <Style TargetType="Thumb">
+            <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+            <Setter Property="Canvas.Left" Value="{Binding MyLeft, Mode=TwoWay}"/>
+            <Setter Property="Canvas.Top" Value="{Binding MyTop, Mode=TwoWay}"/>
+          </Style>
+        </Thumb.Style>
+      </Thumb>
+    </DataTemplate>
+
   </Window.Resources>
 
   <Grid>
@@ -80,51 +95,39 @@
                     ItemContainerStyleSelector="{StaticResource kkk}">
         
       </ListBox>-->
-      <ListBox x:Name="MyListBox" ItemsSource="{Binding}" ItemContainerStyleSelector="{StaticResource kkk}">
-        <ListBox.ItemsPanel>
+      <ItemsControl ItemsSource="{Binding}">
+        <ItemsControl.ItemTemplateSelector>
+          <local:MyDTSelector DT1="{StaticResource ddText}" DT2="{StaticResource ddEllipse}"/>
+        </ItemsControl.ItemTemplateSelector>
+        <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
-            <Canvas Width="200" Height="200"/>
+            <Canvas/>
           </ItemsPanelTemplate>
-        </ListBox.ItemsPanel>
-      </ListBox>
-
-      <Thumb Canvas.Left="10" Canvas.Top="70">
-        <Thumb.Template>
-          <ControlTemplate>
-            <ItemsControl ItemsSource="{Binding}" ItemContainerStyleSelector="{StaticResource kkk2}">
-              <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                  <Canvas/>
-                </ItemsPanelTemplate>
-              </ItemsControl.ItemsPanel>
-
-            </ItemsControl>
-          </ControlTemplate>
-        </Thumb.Template>
-      </Thumb>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemContainerStyle>
+          <Style TargetType="ContentPresenter">
+            <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+            <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+          </Style>
+        </ItemsControl.ItemContainerStyle>
+      </ItemsControl>
     </Canvas>
 
-    <local:MyClass>
-      <local:MyClass.ItemsPanel>
-        <ItemsPanelTemplate>
-          <Canvas/>
-        </ItemsPanelTemplate>
-      </local:MyClass.ItemsPanel>
-    </local:MyClass>
 
-    <TreeView>
-      <TreeViewItem Header="root">
-        <TreeViewItem Header="item1"/>
-      </TreeViewItem>
-    </TreeView>
-    
-    
+
     <StackPanel Grid.Column="1">
       <Button Content="test" Click="Button_Click"/>
+      <TreeView ItemsSource="{Binding}">
+        <TreeView.ItemTemplate>
+          <DataTemplate DataType="{x:Type local:MyDD}">
+            <TextBlock Text="{Binding MyLeft}"/>
+          </DataTemplate>
+        </TreeView.ItemTemplate>
+      </TreeView>
     </StackPanel>
-    
-    
-    
+
+
+
     <!--<DockPanel x:Name="MyDockPanel">
       <TextBlock DockPanel.Dock="Top" Margin="5" FontSize="14" >
             <Run Text="ItemContainerStyleSelector" />
