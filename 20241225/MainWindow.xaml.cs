@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -45,6 +46,16 @@ namespace _20241225
         {
             myDDs[0].MyText = "aaa";
             myDDs[1].MyLeft = 100;
+        }
+
+        private void Thumb_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            if(sender is Thumb t)
+            {
+                 var hori = Canvas.GetLeft(t);
+                Canvas.SetLeft(t, Canvas.GetLeft(t) + e.HorizontalChange);
+                Canvas.SetTop(t, Canvas.GetTop(t) + e.VerticalChange);
+            }
         }
     }
 

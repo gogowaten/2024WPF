@@ -36,7 +36,7 @@
       </Setter>
     </Style>
     <local:MySelector x:Key="kkk" Style1="{StaticResource testkey}" Style2="{StaticResource testkey2}"/>
-  
+
 
     <Style x:Key="testkey3" TargetType="ContentPresenter">
       <Setter Property="ContentTemplate">
@@ -50,15 +50,22 @@
     <Style x:Key="testkey4" TargetType="ContentPresenter">
       <Setter Property="ContentTemplate">
         <Setter.Value>
-          <DataTemplate>          
-            <Ellipse Width="30" Height="30" Fill="DodgerBlue"/>
+          <DataTemplate>
+            <Thumb DragDelta="Thumb_DragDelta">
+              <Thumb.Template>
+                <ControlTemplate>
+                  <Ellipse Width="30" Height="30" Fill="DodgerBlue"/>
+                </ControlTemplate>
+              </Thumb.Template>
+            </Thumb>
+            <!--<Ellipse Width="30" Height="30" Fill="DodgerBlue"/>-->
           </DataTemplate>
         </Setter.Value>
       </Setter>
-      <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+      <!--<Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>-->
       <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
     </Style>
-    
+
     <local:MySelector x:Key="kkk2" Style1="{StaticResource testkey3}" Style2="{StaticResource testkey4}"/>
   </Window.Resources>
 
@@ -80,7 +87,7 @@
           </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
       </ListBox>
-      
+
       <Thumb Canvas.Left="10" Canvas.Top="70">
         <Thumb.Template>
           <ControlTemplate>
@@ -90,7 +97,7 @@
                   <Canvas/>
                 </ItemsPanelTemplate>
               </ItemsControl.ItemsPanel>
-              
+
             </ItemsControl>
           </ControlTemplate>
         </Thumb.Template>
@@ -104,10 +111,20 @@
         </ItemsPanelTemplate>
       </local:MyClass.ItemsPanel>
     </local:MyClass>
+
+    <TreeView>
+      <TreeViewItem Header="root">
+        <TreeViewItem Header="item1"/>
+      </TreeViewItem>
+    </TreeView>
+    
     
     <StackPanel Grid.Column="1">
       <Button Content="test" Click="Button_Click"/>
     </StackPanel>
+    
+    
+    
     <!--<DockPanel x:Name="MyDockPanel">
       <TextBlock DockPanel.Dock="Top" Margin="5" FontSize="14" >
             <Run Text="ItemContainerStyleSelector" />
