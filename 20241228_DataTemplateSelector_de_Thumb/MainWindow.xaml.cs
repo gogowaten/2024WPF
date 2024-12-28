@@ -2,6 +2,9 @@
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 
+//DataTemplateSelector使ってみた、実際便利 - 午後わてんのブログ
+//https://gogowaten.hatenablog.com/entry/2024/12/28/154715
+
 namespace _20241228_DataTemplateSelector_de_Thumb
 {
     /// <summary>
