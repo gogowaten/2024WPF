@@ -1,3 +1,10 @@
+20241228<br>
+DataTemplateSelector使ってみた、実際便利 - 午後わてんのブログ<br>
+https://gogowaten.hatenablog.com/entry/2024/12/28/154715<br>
+![Animation20241228_121726](https://github.com/user-attachments/assets/f0f2dba2-1f64-47d7-9dcf-ba060ae7b590)
+<br><br>
+
+
 20241224<br>
 Rectangle2つ使って破線表示<br>
 ![20241224_171115](https://github.com/user-attachments/assets/29e309ee-3e44-486f-8683-f662fcc336b0)
