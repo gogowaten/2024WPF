@@ -1,0 +1,98 @@
+﻿<Window x:Class="_20241228_DataTemplateSelector_de_Thumb.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_20241228_DataTemplateSelector_de_Thumb"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="500">
+
+  <Window.Resources>
+
+    <Style x:Key="ts" TargetType="Thumb">
+      <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+      <Setter Property="Canvas.Left" Value="{Binding MyLeft, Mode=TwoWay}"/>
+      <Setter Property="Canvas.Top" Value="{Binding MyTop, Mode=TwoWay}"/>
+    </Style>
+
+    <DataTemplate x:Key="ddText" DataType="local:MyData">
+      <Thumb Style="{StaticResource ts}">
+        <Thumb.Template>
+          <ControlTemplate>
+            <TextBlock Text="{Binding MyText}"/>
+          </ControlTemplate>
+        </Thumb.Template>
+      </Thumb>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ddEllipse" DataType="local:MyData">
+      <Thumb Style="{StaticResource ts}">
+        <Thumb.Template>
+          <ControlTemplate>
+            <Grid>
+              <Ellipse Width="{Binding MyVolume}" Height="{Binding MyVolume}" Fill="Gold"/>
+              <TextBlock Text="{Binding MyText}" VerticalAlignment="Center"/>
+            </Grid>
+          </ControlTemplate>
+        </Thumb.Template>
+      </Thumb>
+    </DataTemplate>
+
+    <DataTemplate x:Key="ddRect" DataType="local:MyData">
+      <Thumb Style="{StaticResource ts}">
+        <Thumb.Template>
+          <ControlTemplate>
+            <Grid>
+              <Rectangle Width="{Binding MyVolume}" Height="{Binding MyVolume}" Fill="DodgerBlue"/>
+              <TextBlock Text="{Binding MyText}" VerticalAlignment="Center"/>
+            </Grid>
+          </ControlTemplate>
+        </Thumb.Template>
+      </Thumb>
+    </DataTemplate>
+
+  </Window.Resources>
+
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition/>
+      <ColumnDefinition Width="150"/>
+    </Grid.ColumnDefinitions>
+
+    <ItemsControl x:Name="ic" ItemsSource="{Binding}" FontSize="30">
+      <ItemsControl.ItemTemplateSelector>
+        <local:MyDTSelector
+            DT1="{StaticResource ddText}"
+            DT2="{StaticResource ddEllipse}"
+            DT3="{StaticResource ddRect}"/>
+      </ItemsControl.ItemTemplateSelector>
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <Canvas/>
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemContainerStyle>
+        <Style TargetType="ContentPresenter">
+          <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+          <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+        </Style>
+      </ItemsControl.ItemContainerStyle>
+    </ItemsControl>
+
+    <!--動作確認用Panel-->
+    <StackPanel Grid.Column="1">
+      <Button Content="test" Click="Button_Click"/>
+      <ListBox ItemsSource="{Binding}">
+        <ListBox.ItemTemplate>
+          <DataTemplate DataType="{x:Type local:MyData}">
+            <StackPanel>
+              <TextBlock Text="{Binding MyLeft, StringFormat=left {0:0.0}}"/>
+              <TextBlock Text="{Binding MyTop, StringFormat=top {0:0.0}}"/>
+              <Separator/>
+            </StackPanel>
+          </DataTemplate>
+        </ListBox.ItemTemplate>
+      </ListBox>
+    </StackPanel>
+  </Grid>
+</Window>
