@@ -9,6 +9,8 @@
   <Window.Resources>
     <Style x:Key="kiso" TargetType="local:KisoThumb">
       <EventSetter Event="DragDelta" Handler="KisoThumb_DragDelta"/>
+      <EventSetter Event="DragStarted" Handler="KisoThumb_DragStarted"/>
+      <EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted"/>
     </Style>
     <Style TargetType="local:TextThumb" BasedOn="{StaticResource kiso}"/>
     <Style TargetType="local:GroupThumb" BasedOn="{StaticResource kiso}"/>

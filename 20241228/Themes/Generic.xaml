@@ -8,6 +8,16 @@
     <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
   </Style>
 
+  <Style TargetType="{x:Type local:AnchorThumb}" BasedOn="{StaticResource kiso}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Rectangle/>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+
   <Style TargetType="{x:Type local:TextThumb}" BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
       <Setter.Value>
