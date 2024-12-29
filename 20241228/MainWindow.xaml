@@ -7,119 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="600">
   <Window.Resources>
-
-    <Style x:Key="ts" TargetType="Thumb">
-      <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
-      <Setter Property="Canvas.Left" Value="{Binding MyLeft, Mode=TwoWay}"/>
-      <Setter Property="Canvas.Top" Value="{Binding MyTop, Mode=TwoWay}"/>
+    <Style x:Key="kiso" TargetType="local:KisoThumb">
+      <EventSetter Event="DragDelta" Handler="KisoThumb_DragDelta"/>
     </Style>
-
-    <DataTemplate x:Key="ddText" DataType="local:MyData">
-      <Thumb Style="{StaticResource ts}">
-        <Thumb.Template>
-          <ControlTemplate>
-            <TextBlock Text="{Binding MyText}"/>
-          </ControlTemplate>
-        </Thumb.Template>
-      </Thumb>
-    </DataTemplate>
-    
-    <DataTemplate x:Key="ddText2" DataType="local:MyData">
-      <local:TextThumb Style="{StaticResource ts}"/>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ddGroup2" DataType="local:MyData">
-      <local:GroupThumb Style="{StaticResource ts}" MyDatas="{Binding MyDatas, Mode=TwoWay}"/>
-
-
-    </DataTemplate>
-    
-    <DataTemplate x:Key="ddEllipse" DataType="local:MyData">
-      <Thumb Style="{StaticResource ts}">
-        <Thumb.Template>
-          <ControlTemplate>
-            <Grid>
-              <Ellipse Width="{Binding MyVolume}" Height="{Binding MyVolume}" Fill="{Binding MyBrush}"/>
-              <TextBlock Text="{Binding MyText}" VerticalAlignment="Center"/>
-            </Grid>
-          </ControlTemplate>
-        </Thumb.Template>
-      </Thumb>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ddRect" DataType="local:MyData">
-      <Thumb Style="{StaticResource ts}">
-        <Thumb.Template>
-          <ControlTemplate>
-            <Grid>
-              <Rectangle Width="{Binding MyVolume}" Height="{Binding MyVolume}" Fill="{Binding MyBrush}"/>
-              <TextBlock Text="{Binding MyText}" VerticalAlignment="Center"/>
-            </Grid>
-          </ControlTemplate>
-        </Thumb.Template>
-      </Thumb>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ddKisoGroup" DataType="local:MyData">
-      <Thumb Style="{StaticResource ts}">
-        <Thumb.Template>
-          <ControlTemplate>
-            <ItemsControl ItemsSource="{Binding MyDatas}">
-              <ItemsControl.ItemTemplateSelector>
-                <local:MyDTSelector DT1="{StaticResource ddText}"
-                                    DT2="{StaticResource ddEllipse}"
-                                    DT3="{StaticResource ddRect}"
-                                    />
-              </ItemsControl.ItemTemplateSelector>
-              <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                  <Canvas/>
-                </ItemsPanelTemplate>
-              </ItemsControl.ItemsPanel>
-              <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                  <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
-                  <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
-                </Style>
-              </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-          </ControlTemplate>
-        </Thumb.Template>
-      </Thumb>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ddGroup" DataType="local:MyData">
-      <Thumb Style="{StaticResource ts}">
-        <Thumb.Template>
-          <ControlTemplate>
-            <ItemsControl ItemsSource="{Binding MyDatas}">
-              <ItemsControl.ItemTemplateSelector>
-                <local:MyDTSelector DT1="{StaticResource ddText}"
-                                    DT2="{StaticResource ddEllipse}"
-                                    DT3="{StaticResource ddRect}"
-                                    DT4="{StaticResource ddKisoGroup}"/>
-              </ItemsControl.ItemTemplateSelector>
-              <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                  <Canvas Width="200" Height="200" Background="Red"/>
-                </ItemsPanelTemplate>
-              </ItemsControl.ItemsPanel>
-              <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                  <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
-                  <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
-                </Style>
-              </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-          </ControlTemplate>
-        </Thumb.Template>
-      </Thumb>
-    </DataTemplate>
-
-    <!--<HierarchicalDataTemplate DataType="local:MyData" >
-      
-    </HierarchicalDataTemplate>-->
-    
+    <Style TargetType="local:TextThumb" BasedOn="{StaticResource kiso}"/>
+    <Style TargetType="local:GroupThumb" BasedOn="{StaticResource kiso}"/>
   </Window.Resources>
 
   <Grid>
@@ -129,52 +21,12 @@
       <ColumnDefinition Width="150"/>
     </Grid.ColumnDefinitions>
 
-
-    <ItemsControl x:Name="ic" ItemsSource="{Binding}" FontSize="30">
-      <ItemsControl.ItemTemplateSelector>
-        <local:MyDTSelector
-            DT1="{StaticResource ddText}"
-            DT2="{StaticResource ddEllipse}"
-            DT3="{StaticResource ddRect}"
-            DT4="{StaticResource ddGroup}"
-            DT5="{StaticResource ddText2}"/>
-      </ItemsControl.ItemTemplateSelector>
-      <ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-          <Canvas/>
-        </ItemsPanelTemplate>
-      </ItemsControl.ItemsPanel>
-      <ItemsControl.ItemContainerStyle>
-        <Style TargetType="ContentPresenter">
-          <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
-          <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
-        </Style>
-      </ItemsControl.ItemContainerStyle>
-    </ItemsControl>
-    
-    <!--<ListBox>
-      <ListBox.ItemsSource>
-        <CompositeCollection>
-          <CollectionContainer Collection="{Binding }"/>
-        </CompositeCollection>
-      </ListBox.ItemsSource>
-    </ListBox>-->
-
-    <!--<TreeView Grid.Column="1" ItemsSource="{Binding}">
-      --><!--<TreeView.ItemTemplate>
-        <HierarchicalDataTemplate DataType="local:MyData" ItemsSource="{Binding MyDatas}">          
-          --><!--<TextBlock Text="{Binding MyLeft}"/>--><!--
-        </HierarchicalDataTemplate>        
-      </TreeView.ItemTemplate>--><!--
-      <TreeView.ItemTemplateSelector>
-        <local:MyDTSelector DT1="{StaticResource ddText}"/>
-      </TreeView.ItemTemplateSelector>
-      <ItemContainerTemplate>
-        
-      </ItemContainerTemplate>
-      
-    </TreeView>-->
-    
-    
+    <Canvas>
+      <local:TextThumb MyLeft="10" MyTop="10" MyText="aaabccaaa"/>
+      <local:GroupThumb MyLeft="10" MyTop="30">
+        <local:TextThumb MyText="item 1-1"/>
+        <local:TextThumb MyLeft="0" MyTop="30" MyText="item 1-2"/>
+      </local:GroupThumb>
+    </Canvas>
   </Grid>
 </Window>

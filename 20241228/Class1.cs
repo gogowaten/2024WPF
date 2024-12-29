@@ -13,7 +13,7 @@ namespace _20241228
     /// <summary>
     /// データタイプの識別用列挙体
     /// </summary>
-    public enum ThumbType { None = 0, Text, Ellipse, Rect, Group, Text2, Group2 }
+    public enum ThumbType { None = 0, Text, Ellipse, Rect, Group, Anchor, Root }
 
     /// <summary>
     /// データ用
@@ -26,7 +26,10 @@ namespace _20241228
         public MyData(ThumbType type)
         {
             this.Type = type;
-            MyDatas = [];
+            if (type == ThumbType.Group)
+            {
+                MyDatas = [];
+            }
         }
 
         #region 依存関係プロパティ
@@ -71,7 +74,7 @@ namespace _20241228
             set { SetValue(MyBrushProperty, value); }
         }
         public static readonly DependencyProperty MyBrushProperty =
-            DependencyProperty.Register(nameof(MyBrush), typeof(Brush), typeof(MyData), new PropertyMetadata(Brushes.Transparent));
+            DependencyProperty.Register(nameof(MyBrush), typeof(Brush), typeof(MyData), new PropertyMetadata(null));
 
 
         public ObservableCollection<MyData> MyDatas
@@ -86,42 +89,42 @@ namespace _20241228
     }
 
 
-    public class MyDTSelector : DataTemplateSelector
-    {
-        public DataTemplate? DT1 { get; set; }
-        public DataTemplate? DT2 { get; set; }
-        public DataTemplate? DT3 { get; set; }
-        public DataTemplate? DT4 { get; set; }
-        public DataTemplate? DT5 { get; set; }
-        public DataTemplate? DT6 { get; set; }
+    //public class MyDTSelector : DataTemplateSelector
+    //{
+    //    public DataTemplate? DT1 { get; set; }
+    //    public DataTemplate? DT2 { get; set; }
+    //    public DataTemplate? DT3 { get; set; }
+    //    public DataTemplate? DT4 { get; set; }
+    //    public DataTemplate? DT5 { get; set; }
+    //    public DataTemplate? DT6 { get; set; }
 
-        /// <summary>
-        /// 今回の場合だと、引数のitemにMyDataが入っているので、
-        /// データタイプを識別してそれぞれに合ったDataTemplateを返している
-        /// それぞれのDataTemplateの設定はXAMLの方で行っている
-        /// </summary>
-        /// <param name="item"></param>
-        /// <param name="container"></param>
-        /// <returns></returns>
-        public override DataTemplate? SelectTemplate(object item, DependencyObject container)
-        {
+    //    /// <summary>
+    //    /// 今回の場合だと、引数のitemにMyDataが入っているので、
+    //    /// データタイプを識別してそれぞれに合ったDataTemplateを返している
+    //    /// それぞれのDataTemplateの設定はXAMLの方で行っている
+    //    /// </summary>
+    //    /// <param name="item"></param>
+    //    /// <param name="container"></param>
+    //    /// <returns></returns>
+    //    public override DataTemplate? SelectTemplate(object item, DependencyObject container)
+    //    {
 
-            if (item is not MyData)
-            {
-                return base.SelectTemplate(item, container);
-            }
-            else if (item is MyData dd)
-            {
-                if (dd.Type == ThumbType.Text) { return DT1; }
-                else if (dd.Type == ThumbType.Ellipse) { return DT2; }
-                else if (dd.Type == ThumbType.Rect) { return DT3; }
-                else if (dd.Type == ThumbType.Group) { return DT4; }
-                else if (dd.Type == ThumbType.Text2) { return DT5; }
-                else if (dd.Type == ThumbType.Group2) { return DT6; }
-                else { return base.SelectTemplate(item, container); }
-            }
-            return base.SelectTemplate(item, container);
-        }
-    }
+    //        if (item is not MyData)
+    //        {
+    //            return base.SelectTemplate(item, container);
+    //        }
+    //        else if (item is MyData dd)
+    //        {
+    //            if (dd.Type == ThumbType.Text) { return DT1; }
+    //            else if (dd.Type == ThumbType.Ellipse) { return DT2; }
+    //            else if (dd.Type == ThumbType.Rect) { return DT3; }
+    //            else if (dd.Type == ThumbType.Group) { return DT4; }
+    //            else if (dd.Type == ThumbType.Text2) { return DT5; }
+    //            else if (dd.Type == ThumbType.Group2) { return DT6; }
+    //            else { return base.SelectTemplate(item, container); }
+    //        }
+    //        return base.SelectTemplate(item, container);
+    //    }
+    //}
 
 }

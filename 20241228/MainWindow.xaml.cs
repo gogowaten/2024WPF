@@ -32,61 +32,51 @@ namespace _20241228
         {
             InitializeComponent();
 
-            MyDatas = [
-                new MyData(ThumbType.Text)
-                {
-                    MyLeft = 30,
-                    MyTop = 10,
-                    MyText = "textblock thumb"
-                },
-                new MyData(ThumbType.Ellipse)
-                {
-                    MyLeft = 30,
-                    MyTop = 80,
-                    MyVolume = 100,
-                    MyBrush = Brushes.Gold
-                },
-                new MyData(ThumbType.Rect)
-                {
-                    MyLeft = 130,
-                    MyTop= 140,
-                    MyVolume = 100,
-                    MyBrush = Brushes.DodgerBlue
-                },
-                new MyData(ThumbType.Group)
-                {
-                    MyLeft= 30,
-                    MyTop= 30,
+            //MyDatas = [
+            //    new MyData(ThumbType.Text)
+            //    {
+            //        MyLeft = 30,
+            //        MyTop = 10,
+            //        MyText = "textblock thumb"
+            //    },
+            //    new MyData(ThumbType.Ellipse)
+            //    {
+            //        MyLeft = 30,
+            //        MyTop = 80,
+            //        MyVolume = 100,
+            //        MyBrush = Brushes.Gold
+            //    },
+            //    new MyData(ThumbType.Rect)
+            //    {
+            //        MyLeft = 130,
+            //        MyTop= 140,
+            //        MyVolume = 100,
+            //        MyBrush = Brushes.DodgerBlue
+            //    },
+            //    new MyData(ThumbType.Group)
+            //    {
+            //        MyLeft= 30,
+            //        MyTop= 30,
 
-                },
-                new MyData(ThumbType.Text2)
-                {
-                    MyLeft= 30,
-                    MyTop = 30,
-                    MyText="custom control"
-                }];
+            //    }];
 
-            DataContext = MyDatas;
-            MyData data = new(ThumbType.Text) { MyLeft = 30, MyTop = 10, MyText = "group item 1" };
-            MyDatas[3].MyDatas.Add(data);
-            MyDatas[3].MyDatas.Add(new(ThumbType.Ellipse) { MyLeft = 30, MyTop = 80, MyVolume = 30, MyBrush = Brushes.Salmon });
+            //DataContext = MyDatas;
+            //MyData data = new(ThumbType.Text) { MyLeft = 30, MyTop = 10, MyText = "group item 1" };
+            //MyDatas[3].MyDatas.Add(data);
+            //MyDatas[3].MyDatas.Add(new(ThumbType.Ellipse) { MyLeft = 30, MyTop = 80, MyVolume = 30, MyBrush = Brushes.Salmon });
 
-            //group2
-            data = new(ThumbType.Group2) { MyLeft = 30, MyTop = 100, };
-            data.MyDatas.Add(new MyData(ThumbType.Text2) { MyLeft = 30, MyTop = 10, MyText = "group2 text1" });
-            MyDatas.Add(data);
         }
 
 
-        private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
-        {
-            if (sender is Thumb t)
-            {
-                Canvas.SetLeft(t, Canvas.GetLeft(t) + e.HorizontalChange);
-                Canvas.SetTop(t, Canvas.GetTop(t) + e.VerticalChange);
-                e.Handled = true;
-            }
-        }
+        //private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
+        //{
+        //    if (sender is Thumb t)
+        //    {
+        //        Canvas.SetLeft(t, Canvas.GetLeft(t) + e.HorizontalChange);
+        //        Canvas.SetTop(t, Canvas.GetTop(t) + e.VerticalChange);
+        //        e.Handled = true;
+        //    }
+        //}
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -95,5 +85,14 @@ namespace _20241228
             MyDatas[2].MyTop += 10;
         }
 
+        private void KisoThumb_DragDelta(object sender, DragDeltaEventArgs e)
+        {
+            if (sender is KisoThumb kiso)
+            {
+                kiso.MyLeft += e.HorizontalChange;
+                kiso.MyTop += e.VerticalChange;
+                e.Handled = true;
+            }
+        }
     }
 }

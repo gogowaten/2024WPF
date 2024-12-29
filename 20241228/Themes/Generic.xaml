@@ -3,21 +3,12 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:_20241228">
 
+  <Style x:Key="kiso" TargetType="{x:Type local:KisoThumb}">
+    <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
+    <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
+  </Style>
 
-    <Style TargetType="{x:Type local:CustomControl1}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type local:CustomControl1}">
-                    <Border Background="{TemplateBinding Background}"
-                            BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}">
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-
-  <Style TargetType="{x:Type local:TextThumb}">
+  <Style TargetType="{x:Type local:TextThumb}" BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
@@ -27,25 +18,22 @@
     </Setter>
   </Style>
 
-  <Style TargetType="{x:Type local:GroupThumb}">
+  <Style TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
-          <ItemsControl ItemsSource="{Binding MyDatas}">
-            <ItemsPanelTemplate>
-              <Canvas Width="200" Height="200" Background="Red"/>
-            </ItemsPanelTemplate>
-            <ItemsControl.ItemTemplateSelector>
-              <local:MyDTSelector DT1="{StaticResource ddText}"
-                                  DT2="{StaticResource ddEllipse}"
-                                  DT3="{StaticResource ddRect}"
-                                  DT4="{StaticResource ddKisoGroup}"
-                                  DT5="{StaticResource ddText2}"/>
-            </ItemsControl.ItemTemplateSelector>
+          <ItemsControl x:Name="PART_ItemsControl" 
+                        ItemsSource="{Binding MyThumbs}"
+                        Background="{Binding MyBrush}">
+            <ItemsControl.ItemsPanel>
+              <ItemsPanelTemplate>
+                <local:ExCanvas x:Name="PART_ExCanvas"/>
+              </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
           </ItemsControl>
         </ControlTemplate>
       </Setter.Value>
     </Setter>
   </Style>
-  
+
 </ResourceDictionary>
