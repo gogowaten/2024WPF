@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -11,29 +10,19 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace _20241228
+namespace _20241229_DataTemplateSelector_de_GroupThumb
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        //public List<MyData> MyDatas { get; set; }
-
-        public ObservableCollection<MyData> MyDatas
-        {
-            get { return (ObservableCollection<MyData>)GetValue(MyDatasProperty); }
-            set { SetValue(MyDatasProperty, value); }
-        }
-        public static readonly DependencyProperty MyDatasProperty =
-            DependencyProperty.Register(nameof(MyDatas), typeof(ObservableCollection<MyData>), typeof(MainWindow), new PropertyMetadata(null));
-
+        public List<MyData> MyDatas { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-
             MyDatas = [
-                new MyData(ThumbType.Text)
+                   new MyData(ThumbType.Text)
                 {
                     MyLeft = 30,
                     MyTop = 10,
@@ -58,23 +47,18 @@ namespace _20241228
                     MyLeft= 30,
                     MyTop= 30,
 
-                },
-                new MyData(ThumbType.Text2)
-                {
-                    MyLeft= 30,
-                    MyTop = 30,
-                    MyText="custom control"
                 }];
+               
 
             DataContext = MyDatas;
             MyData data = new(ThumbType.Text) { MyLeft = 30, MyTop = 10, MyText = "group item 1" };
             MyDatas[3].MyDatas.Add(data);
             MyDatas[3].MyDatas.Add(new(ThumbType.Ellipse) { MyLeft = 30, MyTop = 80, MyVolume = 30, MyBrush = Brushes.Salmon });
 
-            //group2
-            data = new(ThumbType.Group2) { MyLeft = 30, MyTop = 100, };
-            data.MyDatas.Add(new MyData(ThumbType.Text2) { MyLeft = 30, MyTop = 10, MyText = "group2 text1" });
-            MyDatas.Add(data);
+            ////group2
+            //data = new(ThumbType.Group2) { MyLeft = 30, MyTop = 100, };
+            //data.MyDatas.Add(new MyData(ThumbType.Text2) { MyLeft = 30, MyTop = 10, MyText = "group2 text1" });
+            //MyDatas.Add(data);
         }
 
 

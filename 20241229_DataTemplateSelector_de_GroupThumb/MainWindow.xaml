@@ -1,11 +1,11 @@
-﻿<Window x:Class="_20241228.MainWindow"
+﻿<Window x:Class="_20241229_DataTemplateSelector_de_GroupThumb.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:_20241228"
+        xmlns:local="clr-namespace:_20241229_DataTemplateSelector_de_GroupThumb"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600">
+           Title="MainWindow" Height="450" Width="600">
   <Window.Resources>
 
     <Style x:Key="ts" TargetType="Thumb">
@@ -23,17 +23,8 @@
         </Thumb.Template>
       </Thumb>
     </DataTemplate>
-    
-    <DataTemplate x:Key="ddText2" DataType="local:MyData">
-      <local:TextThumb Style="{StaticResource ts}"/>
-    </DataTemplate>
-
-    <DataTemplate x:Key="ddGroup2" DataType="local:MyData">
-      <local:GroupThumb Style="{StaticResource ts}" MyDatas="{Binding MyDatas, Mode=TwoWay}"/>
 
 
-    </DataTemplate>
-    
     <DataTemplate x:Key="ddEllipse" DataType="local:MyData">
       <Thumb Style="{StaticResource ts}">
         <Thumb.Template>
@@ -60,33 +51,8 @@
       </Thumb>
     </DataTemplate>
 
-    <DataTemplate x:Key="ddKisoGroup" DataType="local:MyData">
-      <Thumb Style="{StaticResource ts}">
-        <Thumb.Template>
-          <ControlTemplate>
-            <ItemsControl ItemsSource="{Binding MyDatas}">
-              <ItemsControl.ItemTemplateSelector>
-                <local:MyDTSelector DT1="{StaticResource ddText}"
-                                    DT2="{StaticResource ddEllipse}"
-                                    DT3="{StaticResource ddRect}"
-                                    />
-              </ItemsControl.ItemTemplateSelector>
-              <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                  <Canvas/>
-                </ItemsPanelTemplate>
-              </ItemsControl.ItemsPanel>
-              <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                  <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
-                  <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
-                </Style>
-              </ItemsControl.ItemContainerStyle>
-            </ItemsControl>
-          </ControlTemplate>
-        </Thumb.Template>
-      </Thumb>
-    </DataTemplate>
+
+    <DataTemplate x:Key="ddKisoGroup"/>
 
     <DataTemplate x:Key="ddGroup" DataType="local:MyData">
       <Thumb Style="{StaticResource ts}">
@@ -101,7 +67,8 @@
               </ItemsControl.ItemTemplateSelector>
               <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                  <Canvas Width="200" Height="200" Background="Red"/>
+                  <local:ExCanvas Background="Red"/>
+                  <!--<Canvas Width="200" Height="200" Background="Red"/>-->
                 </ItemsPanelTemplate>
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemContainerStyle>
@@ -116,10 +83,6 @@
       </Thumb>
     </DataTemplate>
 
-    <!--<HierarchicalDataTemplate DataType="local:MyData" >
-      
-    </HierarchicalDataTemplate>-->
-    
   </Window.Resources>
 
   <Grid>
@@ -136,8 +99,7 @@
             DT1="{StaticResource ddText}"
             DT2="{StaticResource ddEllipse}"
             DT3="{StaticResource ddRect}"
-            DT4="{StaticResource ddGroup}"
-            DT5="{StaticResource ddText2}"/>
+            DT4="{StaticResource ddGroup}"/>
       </ItemsControl.ItemTemplateSelector>
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
@@ -151,30 +113,29 @@
         </Style>
       </ItemsControl.ItemContainerStyle>
     </ItemsControl>
-    
-    <!--<ListBox>
-      <ListBox.ItemsSource>
-        <CompositeCollection>
-          <CollectionContainer Collection="{Binding }"/>
-        </CompositeCollection>
-      </ListBox.ItemsSource>
-    </ListBox>-->
 
-    <!--<TreeView Grid.Column="1" ItemsSource="{Binding}">
-      --><!--<TreeView.ItemTemplate>
-        <HierarchicalDataTemplate DataType="local:MyData" ItemsSource="{Binding MyDatas}">          
-          --><!--<TextBlock Text="{Binding MyLeft}"/>--><!--
-        </HierarchicalDataTemplate>        
-      </TreeView.ItemTemplate>--><!--
-      <TreeView.ItemTemplateSelector>
+    
+    <TreeView Grid.Column="1" ItemsSource="{Binding}">
+
+      <TreeView.ItemTemplate>
+        <HierarchicalDataTemplate DataType="local:MyData" ItemsSource="{Binding MyDatas}" x:Name="aaa">
+
+          <StackPanel>
+            <TextBlock Text="{Binding MyText}"/>
+            <TextBlock Text="{Binding MyLeft, StringFormat=left {0:0.0} }"/>
+            <TextBlock Text="{Binding MyTop, StringFormat=top {0:0.0} }"/>
+            <Separator/>
+          </StackPanel>
+
+        </HierarchicalDataTemplate>
+      </TreeView.ItemTemplate>
+
+      <!--<TreeView.ItemTemplateSelector>
         <local:MyDTSelector DT1="{StaticResource ddText}"/>
-      </TreeView.ItemTemplateSelector>
-      <ItemContainerTemplate>
-        
-      </ItemContainerTemplate>
-      
-    </TreeView>-->
-    
-    
+      </TreeView.ItemTemplateSelector>-->
+
+    </TreeView>
+
+
   </Grid>
 </Window>
