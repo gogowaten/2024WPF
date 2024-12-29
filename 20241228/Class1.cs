@@ -13,7 +13,7 @@ namespace _20241228
     /// <summary>
     /// データタイプの識別用列挙体
     /// </summary>
-    public enum ThumbType { None = 0, Text, Ellipse, Rect, Group }
+    public enum ThumbType { None = 0, Text, Ellipse, Rect, Group, Text2, Group2 }
 
     /// <summary>
     /// データ用
@@ -92,6 +92,8 @@ namespace _20241228
         public DataTemplate? DT2 { get; set; }
         public DataTemplate? DT3 { get; set; }
         public DataTemplate? DT4 { get; set; }
+        public DataTemplate? DT5 { get; set; }
+        public DataTemplate? DT6 { get; set; }
 
         /// <summary>
         /// 今回の場合だと、引数のitemにMyDataが入っているので、
@@ -114,6 +116,8 @@ namespace _20241228
                 else if (dd.Type == ThumbType.Ellipse) { return DT2; }
                 else if (dd.Type == ThumbType.Rect) { return DT3; }
                 else if (dd.Type == ThumbType.Group) { return DT4; }
+                else if (dd.Type == ThumbType.Text2) { return DT5; }
+                else if (dd.Type == ThumbType.Group2) { return DT6; }
                 else { return base.SelectTemplate(item, container); }
             }
             return base.SelectTemplate(item, container);

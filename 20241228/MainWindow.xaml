@@ -23,7 +23,17 @@
         </Thumb.Template>
       </Thumb>
     </DataTemplate>
+    
+    <DataTemplate x:Key="ddText2" DataType="local:MyData">
+      <local:TextThumb Style="{StaticResource ts}"/>
+    </DataTemplate>
 
+    <DataTemplate x:Key="ddGroup2" DataType="local:MyData">
+      <local:GroupThumb Style="{StaticResource ts}" MyDatas="{Binding MyDatas}"/>
+
+
+    </DataTemplate>
+    
     <DataTemplate x:Key="ddEllipse" DataType="local:MyData">
       <Thumb Style="{StaticResource ts}">
         <Thumb.Template>
@@ -91,7 +101,7 @@
               </ItemsControl.ItemTemplateSelector>
               <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                  <Canvas/>
+                  <Canvas Width="200" Height="200" Background="Red"/>
                 </ItemsPanelTemplate>
               </ItemsControl.ItemsPanel>
               <ItemsControl.ItemContainerStyle>
@@ -106,6 +116,10 @@
       </Thumb>
     </DataTemplate>
 
+    <!--<HierarchicalDataTemplate DataType="local:MyData" >
+      
+    </HierarchicalDataTemplate>-->
+    
   </Window.Resources>
 
   <Grid>
@@ -122,7 +136,8 @@
             DT1="{StaticResource ddText}"
             DT2="{StaticResource ddEllipse}"
             DT3="{StaticResource ddRect}"
-            DT4="{StaticResource ddGroup}"/>
+            DT4="{StaticResource ddGroup}"
+            DT5="{StaticResource ddText2}"/>
       </ItemsControl.ItemTemplateSelector>
       <ItemsControl.ItemsPanel>
         <ItemsPanelTemplate>
@@ -136,17 +151,30 @@
         </Style>
       </ItemsControl.ItemContainerStyle>
     </ItemsControl>
+    
+    <!--<ListBox>
+      <ListBox.ItemsSource>
+        <CompositeCollection>
+          <CollectionContainer Collection="{Binding }"/>
+        </CompositeCollection>
+      </ListBox.ItemsSource>
+    </ListBox>-->
 
-
-    <TreeView Grid.Column="1" ItemsSource="{Binding}">
-      <TreeView.ItemTemplate>
+    <!--<TreeView Grid.Column="1" ItemsSource="{Binding}">
+      --><!--<TreeView.ItemTemplate>
         <HierarchicalDataTemplate DataType="local:MyData" ItemsSource="{Binding MyDatas}">          
-          <!--<TextBlock Text="{Binding MyLeft}"/>-->
+          --><!--<TextBlock Text="{Binding MyLeft}"/>--><!--
         </HierarchicalDataTemplate>        
-      </TreeView.ItemTemplate>
+      </TreeView.ItemTemplate>--><!--
       <TreeView.ItemTemplateSelector>
         <local:MyDTSelector DT1="{StaticResource ddText}"/>
       </TreeView.ItemTemplateSelector>
-    </TreeView>
+      <ItemContainerTemplate>
+        
+      </ItemContainerTemplate>
+      
+    </TreeView>-->
+    
+    
   </Grid>
 </Window>

@@ -48,6 +48,12 @@ namespace _20241228
                     MyLeft= 30,
                     MyTop= 30,
 
+                },
+                new MyData(ThumbType.Text2)
+                {
+                    MyLeft= 30,
+                    MyTop = 30,
+                    MyText="custom control"
                 }];
 
             DataContext = MyDatas;
@@ -55,6 +61,10 @@ namespace _20241228
             MyDatas[3].MyDatas.Add(data);
             MyDatas[3].MyDatas.Add(new(ThumbType.Ellipse) { MyLeft = 30, MyTop = 80, MyVolume = 30, MyBrush = Brushes.Salmon });
 
+            //group2
+            data = new(ThumbType.Group2) { MyLeft = 30, MyTop = 100, };
+            data.MyDatas.Add(new MyData(ThumbType.Text2) { MyLeft = 30, MyTop = 10, MyText = "group2 text1" });
+            MyDatas.Add(data);
         }
 
 
