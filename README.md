@@ -1,3 +1,9 @@
+20241229<br>
+DataTemplateSelectorでGroupThumb<br>
+![20241229_172213](https://github.com/user-attachments/assets/2d37ad84-86c2-44f8-b6b1-02d2fc26daa7)
+<br><br>
+
+
 20241228<br>
 DataTemplateSelector使ってみた、実際便利 - 午後わてんのブログ<br>
 https://gogowaten.hatenablog.com/entry/2024/12/28/154715<br>
