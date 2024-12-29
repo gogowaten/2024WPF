@@ -20,13 +20,13 @@ namespace _20241228
     {
         //public List<MyData> MyDatas { get; set; }
 
-        public ObservableCollection<MyData> MyDatas
-        {
-            get { return (ObservableCollection<MyData>)GetValue(MyDatasProperty); }
-            set { SetValue(MyDatasProperty, value); }
-        }
-        public static readonly DependencyProperty MyDatasProperty =
-            DependencyProperty.Register(nameof(MyDatas), typeof(ObservableCollection<MyData>), typeof(MainWindow), new PropertyMetadata(null));
+        //public ObservableCollection<MyData> MyDatas
+        //{
+        //    get { return (ObservableCollection<MyData>)GetValue(MyDatasProperty); }
+        //    set { SetValue(MyDatasProperty, value); }
+        //}
+        //public static readonly DependencyProperty MyDatasProperty =
+        //    DependencyProperty.Register(nameof(MyDatas), typeof(ObservableCollection<MyData>), typeof(MainWindow), new PropertyMetadata(null));
 
         public MainWindow()
         {
@@ -80,9 +80,9 @@ namespace _20241228
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MyDatas[0].MyText += "👍️";
-            MyDatas[1].MyLeft += 10;
-            MyDatas[2].MyTop += 10;
+            //MyDatas[0].MyText += "👍️";
+            //MyDatas[1].MyLeft += 10;
+            //MyDatas[2].MyTop += 10;
         }
 
         private void KisoThumb_DragDelta(object sender, DragDeltaEventArgs e)

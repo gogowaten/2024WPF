@@ -21,19 +21,7 @@ namespace _20241228
 
     public abstract class KisoThumb : Thumb
     {
-        static KisoThumb()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(KisoThumb), new FrameworkPropertyMetadata(typeof(KisoThumb)));
-        }
-        public KisoThumb()
-        {
-            Focusable = true;
-            MyData = new(ThumbType.None);
-            DataContext = this;
 
-            MySetBindings();
-
-        }
 
         public MyData MyData { get; set; }
 
@@ -108,6 +96,35 @@ namespace _20241228
 
         #endregion 依存関係プロパティ
 
+        static KisoThumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(KisoThumb), new FrameworkPropertyMetadata(typeof(KisoThumb)));
+        }
+        public KisoThumb()
+        {
+            Focusable = true;
+            MyData = new(ThumbType.None);
+            DataContext = this;
+
+            MySetBindings();
+
+            PreviewMouseDown += KisoThumb_PreviewMouseDown;
+            PreviewMouseUp += KisoThumb_PreviewMouseUp;
+        }
+
+        private void KisoThumb_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is KisoThumb t)
+            {
+                t.Focusable = true;
+                t.Focus();
+            }
+        }
+
+        private void KisoThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (sender is KisoThumb t) { t.Focusable = false; }
+        }
 
 
         private void MySetBindings()
@@ -163,22 +180,11 @@ namespace _20241228
     [ContentProperty(nameof(MyThumbs))]
     public class GroupThumb : KisoThumb
     {
-        static GroupThumb()
-        {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupThumb), new FrameworkPropertyMetadata(typeof(GroupThumb)));
-        }
-        public GroupThumb()
-        {
-            MyType= ThumbType.Group;
-            MyThumbs = [];
-            MyDatas = [];
 
-            Loaded += GroupThumb_Loaded;
-            MyThumbs.CollectionChanged += MyThumbs_CollectionChanged;
-        }
-
-
+        #region プロパティ
+        
         public ItemsControl? MyItemsControl { get; set; }
+        public AnchorThumb MyAnchorThumb { get; private set; }
 
         public ObservableCollection<KisoThumb> MyThumbs
         {
@@ -187,6 +193,25 @@ namespace _20241228
         }
         public static readonly DependencyProperty MyThumbsProperty =
             DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<KisoThumb>), typeof(GroupThumb), new PropertyMetadata(null));
+        #endregion プロパティ
+
+        static GroupThumb()
+        {
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupThumb), new FrameworkPropertyMetadata(typeof(GroupThumb)));
+        }
+        public GroupThumb()
+        {
+            MyType = ThumbType.Group;
+            MyThumbs = [];
+            MyDatas = [];
+
+            //アンカーThumb作成と設置
+            MyAnchorThumb = new() { Visibility = Visibility.Collapsed };
+            MyThumbs.Add(MyAnchorThumb);
+
+            Loaded += GroupThumb_Loaded;
+            MyThumbs.CollectionChanged += MyThumbs_CollectionChanged;
+        }
 
         private void MyThumbs_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
@@ -288,7 +313,11 @@ namespace _20241228
     }
 
 
-    public class RootThumb:GroupThumb
+    /// <summary>
+    /// root用Thumb
+    /// rootは移動させない、というか移動させないときの識別用クラス
+    /// </summary>
+    public class RootThumb : GroupThumb
     {
         static RootThumb()
         {
@@ -296,7 +325,7 @@ namespace _20241228
         }
         public RootThumb()
         {
-            MyType= ThumbType.Root;
+            MyType = ThumbType.Root;
         }
     }
 

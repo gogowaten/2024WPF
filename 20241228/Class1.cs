@@ -74,7 +74,7 @@ namespace _20241228
             set { SetValue(MyBrushProperty, value); }
         }
         public static readonly DependencyProperty MyBrushProperty =
-            DependencyProperty.Register(nameof(MyBrush), typeof(Brush), typeof(MyData), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(MyBrush), typeof(Brush), typeof(MyData), new PropertyMetadata(Brushes.LimeGreen));
 
 
         public ObservableCollection<MyData> MyDatas
