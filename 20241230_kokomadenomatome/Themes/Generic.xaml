@@ -55,6 +55,7 @@
   </Style>
 
 
+
   <Style TargetType="{x:Type local:GroupThumb}"
          BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
@@ -62,18 +63,13 @@
         <ControlTemplate>
           <ItemsControl x:Name="PART_ItemsControl"
                         ItemsSource="{Binding MyThumbs}"
-                        Background="{TemplateBinding Background}">
+                        Background="{TemplateBinding Background}"
+                        Focusable="False">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
                 <local:ExCanvas/>
               </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-            <!--<ItemsControl.ItemContainerStyle>
-              <Style TargetType="Thumb">
-                <Setter Property="Canvas.Left" Value="{Binding MyLeft}"/>
-                <Setter Property="Canvas.Top" Value="{Binding MyTop}"/>
-              </Style>
-            </ItemsControl.ItemContainerStyle>-->
           </ItemsControl>
         </ControlTemplate>
       </Setter.Value>
@@ -87,7 +83,8 @@
         <ControlTemplate>
           <ItemsControl x:Name="PART_ItemsControl"
                         ItemsSource="{Binding MyThumbs}"
-                        Background="{TemplateBinding Background}">
+                        Background="{TemplateBinding Background}"
+                        Focusable="False">
             <ItemsControl.ItemsPanel>
               <ItemsPanelTemplate>
                 <local:ExCanvas/>
@@ -100,5 +97,23 @@
   </Style>
 
 
+  <!--<Style TargetType="{x:Type local:ExItemsControl}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate>
+          <Border Focusable="False" Background="{TemplateBinding Background}">
+            <ItemsPresenter Focusable="False"/>
+          </Border>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+    <Setter Property="ItemsControl.ItemsPanel">
+      <Setter.Value>
+        <ItemsPanelTemplate>
+          <local:ExCanvas/>
+        </ItemsPanelTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>-->
 
 </ResourceDictionary>

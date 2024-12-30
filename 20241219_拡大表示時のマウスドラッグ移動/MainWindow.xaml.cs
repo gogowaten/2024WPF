@@ -69,30 +69,39 @@ namespace _20241219_拡大表示時のマウスドラッグ移動
         /// <param name="e"></param>
         private void Thumb_DragDelta2(object sender, DragDeltaEventArgs e)
         {
-            if (sender is Thumb t)
+            if(sender is Thumb t)
             {
                 MyDelta.Text = $"HorizontalChange = {e.HorizontalChange:0.00}";
-                double hc = e.HorizontalChange;
-                if (hc > 0)
-                {
-                    Canvas.SetLeft(t, Canvas.GetLeft(t) + (int)(hc + 0.5));
-                }
-                else if (hc < 0)
-                {
-                    Canvas.SetLeft(t, Canvas.GetLeft(t) + (int)(hc - 0.5));
-                }
-
-                double vc = e.VerticalChange;
-                if (vc > 0)
-                {
-                    Canvas.SetTop(t, Canvas.GetTop(t) + (int)(vc + 0.5));
-                }
-                else if (vc < 0)
-                {
-                    Canvas.SetTop(t, Canvas.GetTop(t) + (int)(vc - 0.5));
-                }
+                Canvas.SetLeft(t,Canvas.GetLeft(t) + (int)(e.HorizontalChange + 0.5));
+                Canvas.SetTop(t, Canvas.GetTop(t) + (int)(e.VerticalChange + 0.5));
                 e.Handled = true;
             }
+
+            //以下のように書いてもほぼ同じ
+            //if (sender is Thumb t)
+            //{
+            //    MyDelta.Text = $"HorizontalChange = {e.HorizontalChange:0.00}";
+            //    double hc = e.HorizontalChange;
+            //    if (hc > 0)
+            //    {
+            //        Canvas.SetLeft(t, Canvas.GetLeft(t) + (int)(hc + 0.5));
+            //    }
+            //    else if (hc < 0)
+            //    {
+            //        Canvas.SetLeft(t, Canvas.GetLeft(t) + (int)(hc - 0.5));
+            //    }
+
+            //    double vc = e.VerticalChange;
+            //    if (vc > 0)
+            //    {
+            //        Canvas.SetTop(t, Canvas.GetTop(t) + (int)(vc + 0.5));
+            //    }
+            //    else if (vc < 0)
+            //    {
+            //        Canvas.SetTop(t, Canvas.GetTop(t) + (int)(vc - 0.5));
+            //    }
+            //    e.Handled = true;
+            //}
         }
 
         private void Button_Click_100(object sender, RoutedEventArgs e)

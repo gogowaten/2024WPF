@@ -17,21 +17,38 @@ namespace _20241230_kokomadenomatome
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+
+            DataContext = this;
+            GotKeyboardFocus += MainWindow_GotKeyboardFocus;
+            GotFocus += MainWindow_GotFocus;
         }
 
-
-        private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
+        private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is KisoThumb t)
-            {
-                t.MyLeft += e.HorizontalChange;
-                t.MyTop += e.VerticalChange;
-                e.Handled = true;
-            }
+            MyString1.Text =e.Source.GetType().ToString();
+            MyString2.Text =sender.GetType().ToString();
         }
+
+        private void MainWindow_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            
+            MyString.Text = e.NewFocus.GetType().ToString();
+        }
+
+
+        //private void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
+        //{
+        //    if (sender is KisoThumb t)
+        //    {
+        //        t.MyLeft += e.HorizontalChange;
+        //        t.MyTop += e.VerticalChange;
+        //        e.Handled = true;
+        //    }
+        //}
 
         ////失敗
         ////スクロールオフセットでスクロール位置を固定はできない
@@ -106,4 +123,6 @@ namespace _20241230_kokomadenomatome
         //}
 
     }
+
+
 }

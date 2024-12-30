@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,12 @@ using System.Windows.Shapes;
 namespace _20241230_kokomadenomatome
 {
     //Thumbの種類の識別用
-    public enum Type { None = 0, Root, Group, Item, Anchor }
+    public enum Type { None = 0, Root, Group, Text, Ellipse, Rect, Anchor }
 
     /// <summary>
     /// 基礎Thumb、すべてのCustomControlThumbの派生元
     /// </summary>
+    [DebuggerDisplay("{MyType} {MyText}")]
     public abstract class KisoThumb : Thumb
     {
         #region 依存関係プロパティ
@@ -72,6 +74,57 @@ namespace _20241230_kokomadenomatome
             PreviewMouseUp += KisoThumb_PreviewMouseUp;
             DragStarted += KisoThumb_DragStarted;
             DragCompleted += KisoThumb_DragCompleted;
+            //DragDelta += Thumb_DragDelta;
+            DragDelta += Thumb_DragDelta2;
+            KeyDown += KisoThumb_KeyDown;
+            KeyUp += KisoThumb_KeyUp;
+        }
+
+        /// <summary>
+        /// KeyUp時
+        /// 再配置処理してからBringIntoViewすることで、
+        /// 対象Thumbが表示される位置にスクロールする
+        /// </summary>
+        internal void KisoThumb_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (sender is KisoThumb t)
+            {
+                t.MyParentThumb?.ReLayout3();
+                t.BringIntoView();
+                e.Handled = true;
+            }
+        }
+
+
+        /// <summary>
+        /// 方向キーの方向へ10ピクセル移動
+        /// </summary>
+        internal void KisoThumb_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (sender is KisoThumb t)
+            {
+                if (e.Key == Key.Left)
+                {
+                    t.MyLeft -= 10;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Right)
+                {
+                    t.MyLeft += 10;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Up)
+                {
+                    t.MyTop -= 10;
+                    e.Handled = true;
+                }
+                else if (e.Key == Key.Down)
+                {
+                    t.MyTop += 10;
+                    e.Handled = true;
+                }
+
+            }
         }
 
         /// <summary>
@@ -79,9 +132,14 @@ namespace _20241230_kokomadenomatome
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void KisoThumb_PreviewMouseUp(object sender, MouseButtonEventArgs e)
+        internal void KisoThumb_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
-            if (sender is KisoThumb t)
+            //if (sender is KisoThumb t)
+            //{
+            //    //t.Focusable = true;
+            //    t.Focus();
+            //}
+            if (e.OriginalSource is KisoThumb t)
             {
                 t.Focusable = true;
                 t.Focus();
@@ -92,11 +150,45 @@ namespace _20241230_kokomadenomatome
         /// クリックダウン時、フォーカス無効化する。
         /// フォーカスでスクロール位置がガクッと変更されて不自然なのを防ぐ
         /// </summary>
-        private void KisoThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        internal void KisoThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
+            var sou = e.Source;
+            var ori = e.OriginalSource;
+            var sen = sender;
             if (sender is KisoThumb t)
             {
                 t.Focusable = false;
+                //e.Handled = true;//これだとドラッグ移動イベントに到達しない
+            }
+            //if(e.OriginalSource is KisoThumb t)
+            //{
+            //    t.Focusable = false;
+            //    e.Handled = true;
+            //}
+        }
+
+        //internal void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
+        //{
+        //    if (sender is KisoThumb t)
+        //    {
+        //        t.MyLeft += e.HorizontalChange;
+        //        t.MyTop += e.VerticalChange;
+        //        e.Handled = true;
+        //    }
+        //}
+
+        /// <summary>
+        /// 移動距離を四捨五入(丸めて)ドラッグ移動
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        internal void Thumb_DragDelta2(object sender, DragDeltaEventArgs e)
+        {
+            if (sender is KisoThumb t)
+            {
+                t.MyLeft += (int)(e.HorizontalChange + 0.5);
+                t.MyTop += (int)(e.VerticalChange + 0.5);
+                e.Handled = true;
             }
         }
 
@@ -104,7 +196,7 @@ namespace _20241230_kokomadenomatome
         /// ドラッグ移動終了時
         /// アンカーThumbをCollapsed化と再配置後に親要素の再配置
         /// </summary>
-        private void KisoThumb_DragCompleted(object sender, DragCompletedEventArgs e)
+        internal void KisoThumb_DragCompleted(object sender, DragCompletedEventArgs e)
         {
             if (sender is KisoThumb t && t.MyParentThumb is not null)
             {
@@ -116,31 +208,38 @@ namespace _20241230_kokomadenomatome
                     anchor.MyTop = t.MyTop;
                 }
                 t.MyParentThumb.ReLayout3();
+                //t.Focusable = true;
+                //t.Focus();
+                e.Handled = true;
             }
 
             //イベントをここで停止
-            e.Handled = true;
+            //e.Handled = true;
         }
 
         /// <summary>
         /// ドラッグ移動開始時
         /// アンカーThumbをHidden化、サイズと位置を移動要素に合わせる
         /// </summary>
-        private void KisoThumb_DragStarted(object sender, DragStartedEventArgs e)
+        internal void KisoThumb_DragStarted(object sender, DragStartedEventArgs e)
         {
             if (e.Source is KisoThumb t)
             {
-                //アンカーThumbをHidden、在るけど見えないだけ
                 if (t.MyParentThumb is GroupThumb gt)
                 {
+                    //アンカーThumbをHidden(在るけど見えないだけ)にする
                     AnchorThumb anchor = gt.MyAnchorThumb;
                     anchor.Visibility = Visibility.Hidden;
                     anchor.Width = t.ActualWidth;
                     anchor.Height = t.ActualHeight;
                     anchor.MyLeft = t.MyLeft;
                     anchor.MyTop = t.MyTop;
-
+                    //座標を四捨五入で整数にしてぼやけ回避
+                    t.MyLeft = (int)(t.MyLeft + 0.5);
+                    t.MyTop = (int)(t.MyTop + 0.5);
                 }
+                t.Focusable = false;
+                e.Handled = true;
             }
         }
     }
@@ -159,6 +258,9 @@ namespace _20241230_kokomadenomatome
         {
             MyType = Type.Anchor;
             Focusable = false;
+            DragDelta -= Thumb_DragDelta2;
+            DragStarted -= KisoThumb_DragStarted;
+            DragCompleted -= KisoThumb_DragCompleted;
         }
     }
 
@@ -170,7 +272,10 @@ namespace _20241230_kokomadenomatome
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(TextBlockThumb), new FrameworkPropertyMetadata(typeof(TextBlockThumb)));
         }
-
+        public TextBlockThumb()
+        {
+            MyType = Type.Text;
+        }
     }
 
     public class EllipseTextThumb : TextBlockThumb
@@ -190,7 +295,10 @@ namespace _20241230_kokomadenomatome
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(EllipseTextThumb), new FrameworkPropertyMetadata(typeof(EllipseTextThumb)));
         }
-
+        public EllipseTextThumb()
+        {
+            MyType = Type.Ellipse;
+        }
     }
 
 
@@ -329,7 +437,6 @@ namespace _20241230_kokomadenomatome
     /// root用Thumb
     /// rootは移動させない、というか移動させないときの識別用クラス
     /// </summary>
-    
     public class RootThumb : GroupThumb
     {
         static RootThumb()
@@ -339,7 +446,25 @@ namespace _20241230_kokomadenomatome
         public RootThumb()
         {
             MyType = Type.Root;
+            DragDelta -= Thumb_DragDelta2;
+            DragStarted -= KisoThumb_DragStarted;
+            DragCompleted -= KisoThumb_DragCompleted;
+            KeyDown -= KisoThumb_KeyDown;
+            KeyUp -= KisoThumb_KeyUp;
         }
     }
+
+    //public class ExItemsControl : ItemsControl
+    //{
+    //    static ExItemsControl()
+    //    {
+    //        DefaultStyleKeyProperty.OverrideMetadata(typeof(ExItemsControl), new FrameworkPropertyMetadata(typeof(ExItemsControl)));
+    //    }
+    //    public ExItemsControl() { }
+
+    //}
+
+
+
 }
 

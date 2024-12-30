@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241230_kokomadenomatome"
         mc:Ignorable="d"
-      Title="MainWindow" Height="400" Width="500">
+      Title="MainWindow" Height="500" Width="500">
   <Window.Resources>
     <Style TargetType="{x:Type local:KisoThumb}" x:Key="kiso">
       <!--<EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted"/>-->
-      <EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>
+      <!--<EventSetter Event="DragDelta" Handler="Thumb_DragDelta"/>-->
       <!--<EventSetter Event="DragStarted" Handler="KisoThumb_DragStarted"/>-->
     </Style>
     <Style TargetType="{x:Type local:TextBlockThumb}" BasedOn="{StaticResource kiso}"/>
@@ -19,10 +19,10 @@
   </Window.Resources>
 
 
-  <Grid>
+  <Grid UseLayoutRounding="True">
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
-      <ColumnDefinition Width="150"/>
+      <ColumnDefinition Width="250"/>
     </Grid.ColumnDefinitions>
 
     <ScrollViewer x:Name="MyScrollV"
@@ -30,30 +30,38 @@
                   VerticalAlignment="Top"
                   HorizontalScrollBarVisibility="Auto"
                   VerticalScrollBarVisibility="Auto">
-      <local:RootThumb x:Name="MyRootGroup" Background="Lavender">
-        <local:TextBlockThumb MyText="Group0-1" Background="LightSteelBlue"/>
+      <Canvas Width="{Binding ElementName=MyRootGroup, Path=ActualWidth}"
+              Height="{Binding ElementName=MyRootGroup, Path=ActualHeight}">
+        <!--拡大はRenderTransformじゃなくて、LayoutTransformを使う-->
+        <Canvas.LayoutTransform>
+          <ScaleTransform ScaleX="{Binding ElementName=MyScaleSlider, Path=Value}"
+                          ScaleY="{Binding ElementName=MyScaleSlider, Path=Value}"/>
+        </Canvas.LayoutTransform>
 
-        <local:GroupThumb x:Name="MyGroup1" MyLeft="20" MyTop="20" Background="Salmon">
-          <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="0" MyTop="0"
-                                MyText="Group1-1" Background="LightSalmon"/>
-          <local:EllipseTextThumb MyLeft="100" MyTop="350" MySize="60"
-                                  MyText="Group1-2" Background="Gold"/>
-        </local:GroupThumb>
+        <local:RootThumb x:Name="MyRootGroup" Background="Lavender">
+          <local:TextBlockThumb MyText="Group0-1" Background="LightSteelBlue"/>
 
-        <local:GroupThumb x:Name="MyGroup2" MyLeft="150" MyTop="140" Background="DodgerBlue">
-          <local:TextBlockThumb x:Name="MyItem2_1" MyLeft="0" MyTop="0"
-                                MyText="Group2-1" Background="Pink"/>
-          <local:EllipseTextThumb MyLeft="250" MyTop="30" MySize="60"
-                                  MyText="Group2-2" Background="Gold"/>
-          <local:GroupThumb MyLeft="10" MyTop="30" x:Name="MyGroup3" Background="Khaki">
-            <local:TextBlockThumb MyText="Item 2-3-1"/>
-            <local:TextBlockThumb MyLeft="100" MyTop="50" MyText="Item 2-3-2"/>
-            <local:TextBlockThumb MyLeft="200" MyTop="100" MyText="Item 2-3-3"/>
+          <local:GroupThumb x:Name="MyGroup1" MyLeft="20" MyTop="20" Background="Salmon">
+            <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="0" MyTop="0"
+                                MyText="Item 1-1" Background="LightSalmon"/>
+            <local:EllipseTextThumb MyLeft="100" MyTop="350" MySize="60"
+                                  MyText="Item 1-2" Background="Gold"/>
           </local:GroupThumb>
-        </local:GroupThumb>
 
-      </local:RootThumb>
+          <local:GroupThumb x:Name="MyGroup2" MyLeft="150" MyTop="140" Background="DodgerBlue">
+            <local:TextBlockThumb x:Name="MyItem2_1" MyLeft="0" MyTop="0"
+                                MyText="Item 2-1-1" Background="Pink"/>
+            <local:EllipseTextThumb MyLeft="250" MyTop="30" MySize="60"
+                                  MyText="Item 2-2-1" Background="Gold"/>
+            <local:GroupThumb MyLeft="10" MyTop="30" x:Name="MyGroup3" Background="Khaki">
+              <local:TextBlockThumb MyText="Item 2-3-1"/>
+              <local:TextBlockThumb MyLeft="100" MyTop="50" MyText="Item 2-3-2"/>
+              <local:TextBlockThumb MyLeft="200" MyTop="100" MyText="Item 2-3-3"/>
+            </local:GroupThumb>
+          </local:GroupThumb>
 
+        </local:RootThumb>
+      </Canvas>
     </ScrollViewer>
 
     <StackPanel Grid.Column="1">
@@ -86,6 +94,13 @@
           <VisualBrush Visual="{Binding ElementName=MyRootGroup}" Stretch="Uniform"/>
         </Canvas.Background>
       </Canvas>
+      <TextBlock x:Name="MyString" Text="focusedItem"/>
+      <TextBlock x:Name="MyString1" Text="focusedItem"/>
+      <TextBlock x:Name="MyString2" Text="focusedItem"/>
+      <DockPanel>
+        <TextBlock Text="{Binding ElementName=MyScaleSlider, Path=Value, StringFormat=拡大率 {0:0.0  }}"/>
+        <Slider x:Name="MyScaleSlider" Minimum="1" Maximum="10"/>
+      </DockPanel>
     </StackPanel>
   </Grid>
 </Window>
