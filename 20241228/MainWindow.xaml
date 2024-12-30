@@ -9,8 +9,8 @@
   <Window.Resources>
     <Style x:Key="kiso" TargetType="local:KisoThumb">
       <EventSetter Event="DragDelta" Handler="KisoThumb_DragDelta"/>
-      <EventSetter Event="DragStarted" Handler="KisoThumb_DragStarted"/>
-      <EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted"/>
+      <!--<EventSetter Event="DragStarted" Handler="KisoThumb_DragStarted"/>
+      <EventSetter Event="DragCompleted" Handler="KisoThumb_DragCompleted"/>-->
     </Style>
     <Style TargetType="local:TextThumb" BasedOn="{StaticResource kiso}"/>
     <Style TargetType="local:GroupThumb" BasedOn="{StaticResource kiso}"/>
@@ -24,11 +24,27 @@
     </Grid.ColumnDefinitions>
 
     <Canvas>
-      <local:TextThumb MyLeft="10" MyTop="10" MyText="aaabccaaa"/>
-      <local:GroupThumb MyLeft="10" MyTop="30">
-        <local:TextThumb MyText="item 1-1"/>
-        <local:TextThumb MyLeft="0" MyTop="30" MyText="item 1-2"/>
+      <local:GroupThumb x:Name="MyItem">
+
+        <local:GroupThumb>
+          <local:TextThumb MyText="kkkkkkkkkk"/>
+          <!--<local:TextThumb MyTop="50" MyText="kkkkkkkkkk"/>-->
+        </local:GroupThumb>
+
+        <!--<local:TextThumb MyLeft="10" MyTop="10" MyText="aaabccaaa"/>
+        <local:GroupThumb MyLeft="10" MyTop="30">
+          <local:TextThumb MyText="item 1-1"/>
+          <local:TextThumb MyLeft="30" MyTop="30" MyText="item 1-2"/>
+        </local:GroupThumb>
+        <local:GroupThumb MyLeft="150" MyTop="100">
+          <local:TextThumb MyText="item 2-1"/>
+          <local:TextThumb MyLeft="30" MyTop="30" MyText="item 2-2"/>
+        </local:GroupThumb>-->
       </local:GroupThumb>
     </Canvas>
+
+    <StackPanel Grid.Column="1">
+      <Button Content="button" Click="Button_Click_1"/>
+    </StackPanel>
   </Grid>
 </Window>

@@ -28,7 +28,7 @@
     </Setter>
   </Style>
 
-  <Style TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}">
+  <Style x:Key="group" TargetType="{x:Type local:GroupThumb}" BasedOn="{StaticResource kiso}">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
@@ -46,4 +46,7 @@
     </Setter>
   </Style>
 
+  <Style TargetType="{x:Type local:RootThumb}" BasedOn="{StaticResource group}">
+    
+  </Style>
 </ResourceDictionary>

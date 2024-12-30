@@ -110,6 +110,45 @@ namespace _20241228
 
             PreviewMouseDown += KisoThumb_PreviewMouseDown;
             PreviewMouseUp += KisoThumb_PreviewMouseUp;
+            DragStarted += KisoThumb_DragStarted;
+            DragCompleted += KisoThumb_DragCompleted;
+        }
+
+        /// <summary>
+        /// ドラッグ移動終了時
+        /// アンカーThumbをCollapsed化と再配置後に親要素の再配置
+        /// </summary>
+        private void KisoThumb_DragCompleted(object sender, DragCompletedEventArgs e)
+        {
+            if (sender is KisoThumb t)
+            {
+                if (t.MyParentThumb is GroupThumb gt)
+                {
+                    AnchorThumb anchor = gt.MyAnchorThumb;
+                    anchor.Visibility = Visibility.Collapsed;
+                    anchor.MyLeft = t.MyLeft;
+                    anchor.MyTop = t.MyTop;
+                }
+                t.MyParentThumb?.ReLayout();
+                e.Handled = true;
+            }
+        }
+
+        /// <summary>
+        /// ドラッグ移動開始時
+        /// アンカーThumbをHidden化、サイズと位置を移動要素に合わせる
+        /// </summary>
+        private void KisoThumb_DragStarted(object sender, DragStartedEventArgs e)
+        {
+            if (sender is KisoThumb t && t.MyParentThumb is GroupThumb gt)
+            {
+                AnchorThumb anchor = gt.MyAnchorThumb;
+                anchor.Visibility = Visibility.Hidden;
+                anchor.Width = t.ActualWidth;
+                anchor.Height = t.ActualHeight;
+                anchor.MyLeft = t.MyLeft;
+                anchor.MyTop = t.MyTop;
+            }
         }
 
         private void KisoThumb_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -182,7 +221,7 @@ namespace _20241228
     {
 
         #region プロパティ
-        
+
         public ItemsControl? MyItemsControl { get; set; }
         public AnchorThumb MyAnchorThumb { get; private set; }
 
@@ -199,6 +238,7 @@ namespace _20241228
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(GroupThumb), new FrameworkPropertyMetadata(typeof(GroupThumb)));
         }
+
         public GroupThumb()
         {
             MyType = ThumbType.Group;
@@ -213,7 +253,7 @@ namespace _20241228
             MyThumbs.CollectionChanged += MyThumbs_CollectionChanged;
         }
 
-        private void MyThumbs_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        internal void MyThumbs_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (e.Action == System.Collections.Specialized.NotifyCollectionChangedAction.Add && e.NewItems?[0] is KisoThumb ni)
             {
@@ -275,7 +315,7 @@ namespace _20241228
         /// 子要素全体での左上座標を元に子要素全部と自身の位置を修正する
         /// ただし、自身がrootだった場合は子要素だけを修正する
         /// </summary>
-        public void ReLayout3()
+        public void ReLayout()
         {
             //全体での左上座標を取得
             double left = double.MaxValue; double top = double.MaxValue;
@@ -305,7 +345,7 @@ namespace _20241228
             }
 
             //ParentThumbがあれば、そこでも再配置処理
-            MyParentThumb?.ReLayout3();
+            MyParentThumb?.ReLayout();
         }
 
 
@@ -317,6 +357,7 @@ namespace _20241228
     /// root用Thumb
     /// rootは移動させない、というか移動させないときの識別用クラス
     /// </summary>
+    
     public class RootThumb : GroupThumb
     {
         static RootThumb()

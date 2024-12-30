@@ -134,11 +134,16 @@ namespace _20241228
                     anchor.MyLeft = t.MyLeft;
                     anchor.MyTop = t.MyTop;
                 }
-                t.MyParentThumb.ReLayout3();
+                t.MyParentThumb.ReLayout();
             }
 
             //イベントをここで停止
             e.Handled = true;
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            var neko = MyItem.MyThumbs;
         }
     }
 }
