@@ -31,6 +31,16 @@ namespace _20241230_kokomadenomatome
     {
         #region 依存関係プロパティ
 
+
+        public ObservableCollection<KisoThumb> MyThumbs
+        {
+            get { return (ObservableCollection<KisoThumb>)GetValue(MyThumbsProperty); }
+            set { SetValue(MyThumbsProperty, value); }
+        }
+        public static readonly DependencyProperty MyThumbsProperty =
+            DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<KisoThumb>), typeof(GroupThumb), new PropertyMetadata(null));
+
+
         public double MyLeft
         {
             get { return (double)GetValue(MyLeftProperty); }
@@ -78,6 +88,7 @@ namespace _20241230_kokomadenomatome
             DragDelta += Thumb_DragDelta2;
             KeyDown += KisoThumb_KeyDown;
             KeyUp += KisoThumb_KeyUp;
+
         }
 
         /// <summary>
@@ -160,11 +171,6 @@ namespace _20241230_kokomadenomatome
                 t.Focusable = false;
                 //e.Handled = true;//これだとドラッグ移動イベントに到達しない
             }
-            //if(e.OriginalSource is KisoThumb t)
-            //{
-            //    t.Focusable = false;
-            //    e.Handled = true;
-            //}
         }
 
         //internal void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
@@ -307,13 +313,13 @@ namespace _20241230_kokomadenomatome
     {
         #region 依存関係プロパティ
 
-        public ObservableCollection<KisoThumb> MyThumbs
-        {
-            get { return (ObservableCollection<KisoThumb>)GetValue(MyThumbsProperty); }
-            set { SetValue(MyThumbsProperty, value); }
-        }
-        public static readonly DependencyProperty MyThumbsProperty =
-            DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<KisoThumb>), typeof(GroupThumb), new PropertyMetadata(null));
+        //public ObservableCollection<KisoThumb> MyThumbs
+        //{
+        //    get { return (ObservableCollection<KisoThumb>)GetValue(MyThumbsProperty); }
+        //    set { SetValue(MyThumbsProperty, value); }
+        //}
+        //public static readonly DependencyProperty MyThumbsProperty =
+        //    DependencyProperty.Register(nameof(MyThumbs), typeof(ObservableCollection<KisoThumb>), typeof(GroupThumb), new PropertyMetadata(null));
 
         #endregion 依存関係プロパティ
 
@@ -439,6 +445,7 @@ namespace _20241230_kokomadenomatome
     /// </summary>
     public class RootThumb : GroupThumb
     {
+        
         static RootThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RootThumb), new FrameworkPropertyMetadata(typeof(RootThumb)));
@@ -451,7 +458,25 @@ namespace _20241230_kokomadenomatome
             DragCompleted -= KisoThumb_DragCompleted;
             KeyDown -= KisoThumb_KeyDown;
             KeyUp -= KisoThumb_KeyUp;
+            GotKeyboardFocus += RootThumb_GotKeyboardFocus;
         }
+
+        private void RootThumb_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        {
+            if(e.NewFocus is KisoThumb t)
+            {
+                MyClickedThumb = t;
+            }
+        }
+
+        public KisoThumb MyClickedThumb
+        {
+            get { return (KisoThumb)GetValue(MyClickedThumbProperty); }
+            set { SetValue(MyClickedThumbProperty, value); }
+        }
+        public static readonly DependencyProperty MyClickedThumbProperty =
+            DependencyProperty.Register(nameof(MyClickedThumb), typeof(KisoThumb), typeof(RootThumb), new PropertyMetadata(null));
+
     }
 
     //public class ExItemsControl : ItemsControl
