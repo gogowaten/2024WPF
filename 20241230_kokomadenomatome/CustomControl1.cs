@@ -1,22 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace _20241230_kokomadenomatome
 {
@@ -82,8 +73,8 @@ namespace _20241230_kokomadenomatome
             MyType = Type.None;
             PreviewMouseDown += KisoThumb_PreviewMouseDown;
             PreviewMouseUp += KisoThumb_PreviewMouseUp;
-            DragStarted += KisoThumb_DragStarted;
-            DragCompleted += KisoThumb_DragCompleted;
+            DragStarted += KisoThumb_DragStarted2;
+            DragCompleted += KisoThumb_DragCompleted2;
             //DragDelta += Thumb_DragDelta;
             DragDelta += Thumb_DragDelta2;
             KeyDown += KisoThumb_KeyDown;
@@ -165,7 +156,6 @@ namespace _20241230_kokomadenomatome
         {
             var sou = e.Source;
             var ori = e.OriginalSource;
-            var sen = sender;
             if (sender is KisoThumb t)
             {
                 t.Focusable = false;
@@ -173,18 +163,8 @@ namespace _20241230_kokomadenomatome
             }
         }
 
-        //internal void Thumb_DragDelta(object sender, DragDeltaEventArgs e)
-        //{
-        //    if (sender is KisoThumb t)
-        //    {
-        //        t.MyLeft += e.HorizontalChange;
-        //        t.MyTop += e.VerticalChange;
-        //        e.Handled = true;
-        //    }
-        //}
-
         /// <summary>
-        /// 移動距離を四捨五入(丸めて)ドラッグ移動
+        /// 移動距離を四捨五入(丸めて)整数ドラッグ移動
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -200,18 +180,15 @@ namespace _20241230_kokomadenomatome
 
         /// <summary>
         /// ドラッグ移動終了時
-        /// アンカーThumbをCollapsed化と再配置後に親要素の再配置
+        /// アンカーThumbを削除と要素再配置後に親要素の再配置
         /// </summary>
-        internal void KisoThumb_DragCompleted(object sender, DragCompletedEventArgs e)
+        internal void KisoThumb_DragCompleted2(object sender, DragCompletedEventArgs e)
         {
             if (sender is KisoThumb t && t.MyParentThumb is not null)
             {
                 if (t.MyParentThumb is GroupThumb gt)
                 {
-                    AnchorThumb anchor = gt.MyAnchorThumb;
-                    anchor.Visibility = Visibility.Collapsed;
-                    anchor.MyLeft = t.MyLeft;
-                    anchor.MyTop = t.MyTop;
+                    gt.RemoveAnchorThumb();
                 }
                 t.MyParentThumb.ReLayout3();
                 //t.Focusable = true;
@@ -223,31 +200,30 @@ namespace _20241230_kokomadenomatome
             //e.Handled = true;
         }
 
+        
         /// <summary>
         /// ドラッグ移動開始時
-        /// アンカーThumbをHidden化、サイズと位置を移動要素に合わせる
+        /// アンカーThumbを作成追加、
         /// </summary>
-        internal void KisoThumb_DragStarted(object sender, DragStartedEventArgs e)
+        internal void KisoThumb_DragStarted2(object sender, DragStartedEventArgs e)
         {
             if (e.Source is KisoThumb t)
             {
                 if (t.MyParentThumb is GroupThumb gt)
                 {
-                    //アンカーThumbをHidden(在るけど見えないだけ)にする
-                    AnchorThumb anchor = gt.MyAnchorThumb;
-                    anchor.Visibility = Visibility.Hidden;
-                    anchor.Width = t.ActualWidth;
-                    anchor.Height = t.ActualHeight;
-                    anchor.MyLeft = t.MyLeft;
-                    anchor.MyTop = t.MyTop;
+                    //アンカーThumbを作成追加
+                    gt.AddAnchorThumb(t.MyLeft, t.MyTop, t.ActualWidth, t.ActualHeight);
+
                     //座標を四捨五入で整数にしてぼやけ回避
                     t.MyLeft = (int)(t.MyLeft + 0.5);
                     t.MyTop = (int)(t.MyTop + 0.5);
+                    t.Focusable = false;
+                    e.Handled = true;
                 }
-                t.Focusable = false;
-                e.Handled = true;
             }
         }
+
+
     }
 
 
@@ -265,8 +241,8 @@ namespace _20241230_kokomadenomatome
             MyType = Type.Anchor;
             Focusable = false;
             DragDelta -= Thumb_DragDelta2;
-            DragStarted -= KisoThumb_DragStarted;
-            DragCompleted -= KisoThumb_DragCompleted;
+            DragStarted -= KisoThumb_DragStarted2;
+            DragCompleted -= KisoThumb_DragCompleted2;
         }
     }
 
@@ -324,7 +300,7 @@ namespace _20241230_kokomadenomatome
         #endregion 依存関係プロパティ
 
         //子要素移動時にスクロールバー固定用のアンカー
-        public AnchorThumb MyAnchorThumb { get; private set; }
+        public AnchorThumb? MyAnchorThumb { get; private set; }
 
         #region コンストラクタ
 
@@ -336,8 +312,6 @@ namespace _20241230_kokomadenomatome
         {
             MyType = Type.Group;
             MyThumbs = [];
-            MyAnchorThumb = new AnchorThumb() { Visibility = Visibility.Collapsed };
-            MyThumbs.Add(MyAnchorThumb);//ダミー設置
             Loaded += GroupThumb_Loaded;
             MyThumbs.CollectionChanged += MyThumbs_CollectionChanged;
         }
@@ -396,6 +370,35 @@ namespace _20241230_kokomadenomatome
         }
         #endregion 初期化
 
+        #region publicメソッド
+
+        /// <summary>
+        /// アンカーThumbを追加
+        /// </summary>
+        public void AddAnchorThumb(double left, double top, double width, double height)
+        {
+            MyAnchorThumb = new AnchorThumb
+            {
+                Visibility = Visibility.Hidden,
+                Width = width,
+                Height = height,
+                MyLeft = left,
+                MyTop = top
+            };
+            MyThumbs.Add(MyAnchorThumb);
+        }
+
+        /// <summary>
+        /// アンカーThumbを削除
+        /// </summary>
+        public void RemoveAnchorThumb()
+        {
+            if (MyAnchorThumb is not null)
+            {
+                MyThumbs.Remove(MyAnchorThumb);
+                MyAnchorThumb = null;
+            }
+        }
 
         /// <summary>
         /// 再配置、ReLayoutからの改変、余計な処理をなくした。
@@ -435,7 +438,7 @@ namespace _20241230_kokomadenomatome
             MyParentThumb?.ReLayout3();
         }
 
-
+        #endregion publicメソッド
 
     }
 
@@ -445,7 +448,7 @@ namespace _20241230_kokomadenomatome
     /// </summary>
     public class RootThumb : GroupThumb
     {
-        
+
         static RootThumb()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(RootThumb), new FrameworkPropertyMetadata(typeof(RootThumb)));
@@ -454,18 +457,27 @@ namespace _20241230_kokomadenomatome
         {
             MyType = Type.Root;
             DragDelta -= Thumb_DragDelta2;
-            DragStarted -= KisoThumb_DragStarted;
-            DragCompleted -= KisoThumb_DragCompleted;
+            DragStarted -= KisoThumb_DragStarted2;
+            DragCompleted -= KisoThumb_DragCompleted2;
             KeyDown -= KisoThumb_KeyDown;
             KeyUp -= KisoThumb_KeyUp;
-            GotKeyboardFocus += RootThumb_GotKeyboardFocus;
+            PreviewMouseDown += RootThumb_PreviewMouseDown;
         }
 
-        private void RootThumb_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
+        /// <summary>
+        /// クリックダウン時、クリックされたThumbを記憶
+        /// 結構強引な方法で、クリックされたThumbを取得している
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RootThumb_PreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.NewFocus is KisoThumb t)
+            if (e.OriginalSource is FrameworkElement fe)
             {
-                MyClickedThumb = t;
+                if (fe.DataContext is KisoThumb kiso)
+                {
+                    MyClickedThumb = kiso;
+                }
             }
         }
 

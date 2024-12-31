@@ -22,34 +22,6 @@ namespace _20241230_kokomadenomatome
         {
             InitializeComponent();
 
-            DataContext = this;
-            GotKeyboardFocus += MainWindow_GotKeyboardFocus;
-            GotFocus += MainWindow_GotFocus;
-
         }
-
-
-
-        private void MainWindow_GotFocus(object sender, RoutedEventArgs e)
-        {
-            MyString1.Text = e.Source.GetType().ToString();
-            MyString2.Text = sender.GetType().ToString();
-        }
-
-        private void MainWindow_GotKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
-        {
-            if (e.NewFocus is KisoThumb t)
-            {
-                MyString.Text = $"{t.MyType}, {t.MyText}";
-            }
-            else
-            {
-                MyString.Text = e.NewFocus.GetType().ToString();
-            }
-        }
-
-
     }
-
-
 }

@@ -5,12 +5,12 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_20241230_kokomadenomatome"
         mc:Ignorable="d"
-      Title="MainWindow" Height="600" Width="500">
+      Title="MainWindow" Height="500" Width="500">
 
   <Grid UseLayoutRounding="True">
     <Grid.ColumnDefinitions>
       <ColumnDefinition/>
-      <ColumnDefinition Width="150"/>
+      <ColumnDefinition Width="200"/>
     </Grid.ColumnDefinitions>
 
     <ScrollViewer x:Name="MyScrollV"
@@ -26,87 +26,126 @@
                           ScaleY="{Binding ElementName=MyScaleSlider, Path=Value}"/>
         </Canvas.LayoutTransform>
 
-        <local:RootThumb x:Name="MyRootGroup" Background="Lavender">
-          <local:TextBlockThumb MyText="Group0-1" Background="LightSteelBlue"/>
+        <local:RootThumb x:Name="MyRootGroup" Background="LightCyan">
+          <local:TextBlockThumb MyText="Item1" Background="Beige"/>
 
-          <local:GroupThumb x:Name="MyGroup1" MyLeft="20" MyTop="20" Background="Salmon">
-            <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="0" MyTop="0"
-                                MyText="Item 1-1" Background="LightSalmon"/>
-            <local:EllipseTextThumb MyLeft="100" MyTop="150" MySize="60"
-                                  MyText="Item 1-2" Background="Gold"/>
+          <local:GroupThumb x:Name="MyGroup1" MyText="Group1" MyLeft="20" MyTop="20" Background="DodgerBlue">
+            <local:TextBlockThumb x:Name="MyItem1_1" MyLeft="100" MyTop="0"
+                                MyText="Item 2-1" Background="Beige"/>
+            <local:EllipseTextThumb MyLeft="0" MyTop="150" MySize="60"
+                                  MyText="Item 2-2" Background="Gold"/>
           </local:GroupThumb>
 
-          <local:GroupThumb x:Name="MyGroup2" MyLeft="150" MyTop="140" Background="DodgerBlue">
-            <local:TextBlockThumb x:Name="MyItem2_1" MyLeft="0" MyTop="0"
-                                MyText="Item 2-1-1" Background="Pink"/>
+          <local:GroupThumb x:Name="MyGroup2" MyText="Group2" MyLeft="150" MyTop="140" Background="DeepSkyBlue">
+            <local:TextBlockThumb x:Name="MyItem3_1" MyLeft="0" MyTop="0"
+                                MyText="Item 3-1" Background="Beige"/>
             <local:EllipseTextThumb MyLeft="250" MyTop="30" MySize="60"
-                                  MyText="Item 2-2-1" Background="Gold"/>
-            <local:GroupThumb MyLeft="10" MyTop="30" x:Name="MyGroup3" Background="Khaki">
-              <local:TextBlockThumb MyText="Item 2-3-1"/>
-              <local:TextBlockThumb MyLeft="100" MyTop="50" MyText="Item 2-3-2"/>
-              <local:TextBlockThumb MyLeft="200" MyTop="100" MyText="Item 2-3-3"/>
+                                  MyText="Item 3-2" Background="Gold"/>
+            <local:GroupThumb MyText="Group3" MyLeft="10" MyTop="30" x:Name="MyGroup3" Background="SkyBlue">
+              <local:TextBlockThumb MyText="Item 3-3-1" Background="Beige"/>
+              <local:TextBlockThumb MyLeft="100" MyTop="50" MyText="Item 3-3-2" Background="Beige"/>
+              <local:TextBlockThumb MyLeft="200" MyTop="100" MyText="Item 3-3-3" Background="Beige"/>
             </local:GroupThumb>
           </local:GroupThumb>
 
         </local:RootThumb>
       </Canvas>
     </ScrollViewer>
+    
+    
+    <TabControl Grid.Column="1">
+      <TabItem Header="Tab1">
+        <StackPanel>
+          <GroupBox Header="Root" Background="{Binding Background}" DataContext="{Binding ElementName=MyRootGroup}">
+            <StackPanel>
+              <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
+              <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
+              <TextBlock Text="{Binding Path=ActualWidth, StringFormat={}{0:0.0} width}"/>
+              <TextBlock Text="{Binding Path=ActualHeight, StringFormat={}{0:0.0} height}"/>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="Group1" Background="{Binding Background}" DataContext="{Binding ElementName=MyGroup1}">
+            <StackPanel>
+              <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
+              <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="Group2" Background="{Binding Background}" DataContext="{Binding ElementName=MyGroup2}">
+            <StackPanel>
+              <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
+              <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
+            </StackPanel>
+          </GroupBox>
+          <GroupBox Header="Group3" Background="{Binding Background}" DataContext="{Binding ElementName=MyGroup3}">
+            <StackPanel>
+              <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
+              <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
+            </StackPanel>
+          </GroupBox>
 
-    <StackPanel Grid.Column="1">
-      <GroupBox Header="Root" Background="{Binding Background}" DataContext="{Binding ElementName=MyRootGroup}">
-        <StackPanel>
-          <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
-          <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
-          <TextBlock Text="{Binding Path=ActualWidth, StringFormat={}{0:0.0} width}"/>
-          <TextBlock Text="{Binding Path=ActualHeight, StringFormat={}{0:0.0} height}"/>
+          <Separator/>
+          <TextBlock Text="全体"/>
+          <Canvas Width="100" Height="100">
+            <Canvas.Background>
+              <VisualBrush Visual="{Binding ElementName=MyRootGroup}" Stretch="Uniform"/>
+            </Canvas.Background>
+          </Canvas>
+          <Separator/>
+          <DockPanel>
+            <TextBlock Text="{Binding ElementName=MyScaleSlider, Path=Value, StringFormat=拡大率 {0:0.0  }}"/>
+            <Slider x:Name="MyScaleSlider" Minimum="1" Maximum="10"/>
+          </DockPanel>
         </StackPanel>
-      </GroupBox>
-      <GroupBox Header="Group1" Background="{Binding Background}" DataContext="{Binding ElementName=MyGroup1}">
-        <StackPanel>
-          <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
-          <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
+      </TabItem>
+
+      <TabItem Header="Tab2">
+        <StackPanel DataContext="{Binding ElementName=MyRootGroup, Path=MyClickedThumb}">
+          <GroupBox Header="ClickedThumb" Margin="5">
+            <StackPanel>
+              <TextBlock Text="{Binding MyType, StringFormat=ThumbType \= {0}}"/>
+              <TextBlock Text="{Binding MyLeft, StringFormat=Left {0:0.0}}"/>
+              <TextBlock Text="{Binding MyTop, StringFormat=Top {0:0.0}}"/>
+              <Rectangle Width="100" Height="100">
+                <Rectangle.Fill>
+                  <VisualBrush Visual="{Binding ElementName=MyRootGroup, Path=MyClickedThumb}" Stretch="Uniform"/>
+                </Rectangle.Fill>
+              </Rectangle>
+            </StackPanel>
+          </GroupBox>
+          <Separator/>
+          <GroupBox Header="ParentThumb" Margin="5">
+            <StackPanel>
+              <TextBlock Text="{Binding MyParentThumb.MyType, StringFormat=ThumbType \= {0}}"/>
+              <TextBlock Text="{Binding MyParentThumb.MyLeft, StringFormat=Left {0:0.0}}"/>
+              <TextBlock Text="{Binding MyParentThumb.MyTop, StringFormat=Top {0:0.0}}"/>
+              <Rectangle Width="100" Height="100">
+                <Rectangle.Fill>
+                  <VisualBrush Visual="{Binding MyParentThumb}" Stretch="Uniform"/>
+                </Rectangle.Fill>
+              </Rectangle>
+            </StackPanel>
+          </GroupBox>
         </StackPanel>
-      </GroupBox>
-      <GroupBox Header="Group2" Background="{Binding Background}" DataContext="{Binding ElementName=MyGroup2}">
-        <StackPanel>
-          <TextBlock Text="{Binding Path=MyLeft, StringFormat={}{0:0.0} Left}"/>
-          <TextBlock Text="{Binding Path=MyTop, StringFormat={}{0:0.0} Top}"/>
-        </StackPanel>
-      </GroupBox>
-      <Canvas Width="100" Height="100">
-        <Canvas.Background>
-          <VisualBrush Visual="{Binding ElementName=MyRootGroup}" Stretch="Uniform"/>
-        </Canvas.Background>
-      </Canvas>
-      <TextBlock Text="{Binding ElementName=MyRootGroup, Path=MyClickedThumb.MyType}"/>
-      <Rectangle Width="100" Height="100">
-        <Rectangle.Fill>
-          <VisualBrush Visual="{Binding ElementName=MyRootGroup, Path=MyClickedThumb}" Stretch="Uniform"/>
-        </Rectangle.Fill>
-      </Rectangle>
-      <TextBlock x:Name="MyString" Text="focusedItem"/>
-      <TextBlock x:Name="MyString1" Text="focusedItem"/>
-      <TextBlock x:Name="MyString2" Text="focusedItem"/>
-      <DockPanel>
-        <TextBlock Text="{Binding ElementName=MyScaleSlider, Path=Value, StringFormat=拡大率 {0:0.0  }}"/>
-        <Slider x:Name="MyScaleSlider" Minimum="1" Maximum="10"/>
-      </DockPanel>
-      <ScrollViewer>
-        <TreeView ItemsSource="{Binding ElementName=MyRootGroup, Path=MyThumbs}">
-          <TreeView.ItemTemplate>
-            <HierarchicalDataTemplate DataType="local:RootThumb" ItemsSource="{Binding MyThumbs}">
-              <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding MyType}" VerticalAlignment="Center" Margin="10"/>
-                <Rectangle Width="50" Height="50">
-                  <Rectangle.Fill>
-                    <VisualBrush Visual="{Binding}" Stretch="Uniform"/>
-                  </Rectangle.Fill>
-                </Rectangle>
-              </StackPanel>
-            </HierarchicalDataTemplate>
-          </TreeView.ItemTemplate>
-        </TreeView>
-      </ScrollViewer>
-    </StackPanel>
+      </TabItem>
+
+      <TabItem Header="Tab3">
+        <ScrollViewer>
+          <TreeView ItemsSource="{Binding ElementName=MyRootGroup, Path=MyThumbs}">
+            <TreeView.ItemTemplate>
+              <HierarchicalDataTemplate DataType="local:RootThumb" ItemsSource="{Binding MyThumbs}">
+                <StackPanel Orientation="Horizontal">
+                  <TextBlock Text="{Binding MyType}" VerticalAlignment="Center" Margin="10"/>
+                  <Rectangle Width="50" Height="50">
+                    <Rectangle.Fill>
+                      <VisualBrush Visual="{Binding}" Stretch="Uniform"/>
+                    </Rectangle.Fill>
+                  </Rectangle>
+                </StackPanel>
+              </HierarchicalDataTemplate>
+            </TreeView.ItemTemplate>
+          </TreeView>
+        </ScrollViewer>
+      </TabItem>
+    </TabControl>
   </Grid>
 </Window>

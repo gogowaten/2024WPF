@@ -78,6 +78,7 @@
 
   <Style TargetType="{x:Type local:RootThumb}"
          BasedOn="{StaticResource kiso}">
+    <Setter Property="KeyboardNavigation.TabNavigation" Value="Cycle"/>
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate>
