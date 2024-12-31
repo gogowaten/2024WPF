@@ -1,3 +1,10 @@
+20241231<br>
+WPF、この一ヶ月でのカスタムコントロールThumbのマウスドラッグ移動のまとめ - 午後わてんのブログ<br>
+https://gogowaten.hatenablog.com/entry/2024/12/31/173207<br>
+![Animation20241231_144855](https://github.com/user-attachments/assets/3cad3b81-f5a4-4ce9-832a-76ab83317c07)
+<br><br>
+
+
 20241229<br>
 DataTemplateSelectorでGroupThumb<br>
 ![20241229_172213](https://github.com/user-attachments/assets/2d37ad84-86c2-44f8-b6b1-02d2fc26daa7)
